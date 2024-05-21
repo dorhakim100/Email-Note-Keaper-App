@@ -1,1 +1,12 @@
  /* mail list */
+
+ .mail-container{
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+ }
+
+ .mail-container>*{
+    padding: 15px;
+ }

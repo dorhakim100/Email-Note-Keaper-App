@@ -1,0 +1,12 @@
+.nav-bar-container{
+    grid-row: 1/-1;
+    grid-column: 1/2;
+
+    transition-duration: 0.4s;
+}
+
+.nav-bar-container:hover{
+    /* width: 15em; */
+
+    background-color: red;
+}
