@@ -1,5 +1,6 @@
-import { storageService } from '../../../services/async-storage.service.js'
+import { storageService } from '../../../services/storage.service.js'
 import { utilService } from '../../../services/util.service.js'
+import { storageAsyncService } from '../../../services/async-storage.service.js'
 
 const NOTE_KEY = 'noteDB'
 
@@ -14,7 +15,7 @@ export const noteService = {
 }
 
 function query(filterBy = {}) {
-    return storageService.query(NOTE_KEY)
+    return storageAsyncService.query(NOTE_KEY)
         .then(notes => {
             if (filterBy.txt) {
                 const regExp = new RegExp(filterBy.txt, 'i')
@@ -25,14 +26,14 @@ function query(filterBy = {}) {
 }
 
 function get(noteId) {
-    return storageService.get(NOTE_KEY, noteId)
+    return storageAsyncService.get(NOTE_KEY, noteId)
         .then(note => {
             return note
         })
 }
 
 function remove(noteId) {
-    return storageService.remove(NOTE_KEY, noteId)
+    return storageAsyncService.remove(NOTE_KEY, noteId)
 }
 
 function save(note) {
@@ -44,24 +45,20 @@ function save(note) {
 }
 
 function notes() {
-    const notes = utilService.loadFromStorage(NOTE_KEY)
-    if (notes) return
+    const notes = storageService.loadFromStorage(NOTE_KEY)
+    // if (notes) return
 
     let notesToAdd = []
     const note = {
         id: utilService.makeId(),
         type: 'NoteTxt',
-        style: {
-            backgroundColor: '#00d'
-        },
-        info: {
-            txt: 'Hello Notes'
-        }
+        style: { backgroundColor: '#00d' },
+        info: { txt: 'Lorem ipsum dolor sit amet' }
 
     }
     notesToAdd.push(note)
-
-    utilService.saveToStorage(NOTE_KEY, notesToAdd)
+    storageService.saveToStorage(NOTE_KEY, notesToAdd)
+    return notesToAdd
 }
 
 
