@@ -1,0 +1,13 @@
+.filter-search-container{
+    display: grid;
+    grid-template-rows: repeat(2,1fr);
+}
+
+.search-container{
+    background-color: aliceblue;
+    width: fit-content;
+
+    padding: 15px;
+
+    border-radius: 15px;
+}

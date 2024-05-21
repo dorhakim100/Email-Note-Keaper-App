@@ -57,3 +57,7 @@ function createMails() {
     return mails
   }
 }
+
+function getDefaultFilter(filterBy = { txt: '' }) {
+  return { txt: filterBy.txt }
+}

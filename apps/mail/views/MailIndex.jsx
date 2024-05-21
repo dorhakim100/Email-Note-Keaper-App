@@ -12,11 +12,13 @@ export function MailIndex() {
 
   const mails = storageService.loadFromStorage(MAIL_KEY)
 
+  const [mailsList, setMails] = useState(mails)
+
   return (
     <section className='body-container'>
-      <NavBar />
-      <SearchFilter />
-      <MailList mails={mails} />
+      <NavBar mailsList={mailsList} />
+      <SearchFilter mailsList={mailsList} setMails={setMails} />
+      <MailList mailsList={mailsList} />
     </section>
   )
 }
