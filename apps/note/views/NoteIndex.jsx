@@ -1,6 +1,7 @@
 import { utilService } from '../../../services/util.service.js'
 import { noteService, NOTE_KEY } from '../services/note.service.js'
 import { storageService } from '../../../services/storage.service.js'
+import { NoteList } from '../cmps/NoteList.jsx'
 const { useState, useEffect } = React
 
 export function NoteIndex() {
@@ -35,7 +36,7 @@ export function NoteIndex() {
         setNewNoteText('')
     }
 
-    function editNote(noteId, newText) {
+    function onEditNote(noteId, newText) {
         const updatedNotes = notes.map(note => {
             if (note.id === noteId) {
                 return {
@@ -52,7 +53,7 @@ export function NoteIndex() {
         storageService.saveToStorage(NOTE_KEY, updatedNotes)
     }
 
-    function changeNoteColor(noteId, newColor) {
+    function onChangeNoteColor(noteId, newColor) {
         const updatedNotes = notes.map(note => {
             if (note.id === noteId) {
                 return {
@@ -69,7 +70,7 @@ export function NoteIndex() {
         storageService.saveToStorage(NOTE_KEY, updatedNotes)
     }
 
-    function duplicateNote(noteId) {
+    function onDuplicateNote(noteId) {
         const noteToDuplicate = notes.find(note => note.id === noteId)
 
         const duplicatedNote = {
@@ -85,32 +86,21 @@ export function NoteIndex() {
 
     }
 
-    return <section>
+    return <section className='notes-main-page'>
         <h2>Notes:</h2>
         <input
             type="text"
             value={newNoteText}
             onChange={(event) => setNewNoteText(event.target.value)}
-            placeholder="Enter Note Text"
+            placeholder="Enter Note Text:"
         />
         <button onClick={addNote}>Add Note <i className="fa-solid fa-plus"></i></button>
-        <ul className='noteList'>
-            {notes.map(note => <li key={note.id} style={{ backgroundColor: note.style.backgroundColor }}>
-                <span>{note.info.txt}</span>
-                <button onClick={() => {
-                    const newText = prompt('Enter new text for the note:', note.info.txt)
-                    if (newText !== null) {
-                        editNote(note.id, newText)
-                    }
-                }}><i className="fa-solid fa-pen-to-square"></i></button>
-                <button onClick={() => duplicateNote(note.id)}><i className="fa-solid fa-copy"></i></button>
-                <input
-                    type="color"
-                    value={note.style.backgroundColor}
-                    onChange={(event) => changeNoteColor(note.id, event.target.value)}
-                />
-                <button onClick={() => onRemoveNote(note.id)}><i className="fa-solid fa-trash"></i></button>
-            </li>)}
-        </ul>
+        <NoteList
+            notes={notes}
+            onRemoveNote={onRemoveNote}
+            onEditNote={onEditNote}
+            onChangeNoteColor={onChangeNoteColor}
+            onDuplicateNote={onDuplicateNote}
+        />
     </section>
 }

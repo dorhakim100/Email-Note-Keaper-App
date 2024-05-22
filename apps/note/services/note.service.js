@@ -5,43 +5,13 @@ import { utilService } from '../../../services/util.service.js'
 export const NOTE_KEY = 'noteDB'
 
 export const noteService = {
+    notes,
     // query,
     // get,
     // remove,
     // save,
-    notes,
 
 }
-
-// function query(filterBy = {}) {
-//     return storageAsyncService.query(NOTE_KEY)
-//         .then(notes => {
-//             if (filterBy.txt) {
-//                 const regExp = new RegExp(filterBy.txt, 'i')
-//                 notes = notes.filter(note => regExp.test(note.type))
-//             }
-//             return notes
-//         })
-// }
-
-// function get(noteId) {
-//     return storageAsyncService.get(NOTE_KEY, noteId)
-//         .then(note => {
-//             return note
-//         })
-// }
-
-// function remove(noteId) {
-//     return storageAsyncService.remove(NOTE_KEY, noteId)
-// }
-
-// function save(note) {
-//     if (note.id) {
-//         return storageService.put(NOTE_KEY, note)
-//     } else {
-//         return storageService.post(NOTE_KEY, note)
-//     }
-// }
 
 function notes() {
     let notes = storageService.loadFromStorage(NOTE_KEY)
@@ -62,8 +32,36 @@ function notes() {
     return notes
 }
 
+// function query(filterBy = {}) {
+//     return storageAsyncService.query(NOTE_KEY)
+//         .then(notes => {
+//             if (filterBy.txt) {
+//                 const regExp = new RegExp(filterBy.txt, 'i')
+//                 notes = notes.filter(note => regExp.test(note.type))
+//             }
+//             return notes
+//         })
+// }
 
-
+// function get(noteId) {
+//     return storageAsyncService.get(NOTE_KEY, noteId)
+//         .then(note => {
+//             return note
+//         })
+// }
+//
+// function remove(noteId) {
+//     return storageAsyncService.remove(NOTE_KEY, noteId)
+// }
+//
+// function save(note) {
+//     if (note.id) {
+//         return storageService.put(NOTE_KEY, note)
+//     } else {
+//         return storageService.post(NOTE_KEY, note)
+//     }
+// }
+//
 // note service
 // const notes = [
 //     {
