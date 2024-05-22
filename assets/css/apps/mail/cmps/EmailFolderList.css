@@ -18,6 +18,8 @@
 
 }
 
+
+
 .nav-bar-container>div>i{
     padding: 25px;
     /* background-color: green; */
@@ -39,7 +41,7 @@
     background-color: aliceblue;
 }
 
-.nav-bar-container>div{
+.folder{
     display: flex;
     align-items: center;
     
@@ -48,11 +50,13 @@
 
 
 }
-
+.active-folder{
+    background-color: white;
+}
 .nav-text{
     display: none;
 }
 
-.nav-bar-container>div:hover>.nav-text{
+.nav-bar-container:hover>div>.nav-text{
     display: block;
 }

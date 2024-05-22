@@ -10,19 +10,21 @@ import { mailService } from '../services/mail.service.js'
 
 export function MailIndex() {
   const MAIL_KEY = mailService.MAIL_KEY
-
+  // localStorage.clear()
   const [mailsList, setMails] = useState([])
 
   useEffect(() => {
     storageService.query(MAIL_KEY).then((mails) => {
       console.log(mails)
-      setMails(mails.received)
+      setMails(mails.filter((mail) => mail.isReceived))
     })
   }, [])
   // localStorage.clear()
   // console.log(mails)
 
   const emailComposeRef = useRef()
+
+  const folder = useRef('received')
 
   function toggleCompose() {
     const curr = emailComposeRef.current.style.display
@@ -32,17 +34,29 @@ export function MailIndex() {
   }
 
   function changeFolder(folder) {
+    let entity
+    switch (folder) {
+      case 'received':
+        entity = 'isReceived'
+        break
+      case 'favorite':
+        entity = 'isFavorite'
+        break
+      case 'sent':
+        entity = 'isSent'
+        break
+      case 'draft':
+        entity = 'isDraft'
+        break
+      case 'trash':
+        entity = 'isTrash'
+        break
+    }
+    console.log(entity)
     storageService.query(MAIL_KEY).then((mails) => {
       console.log(mails)
-      if (folder === 'favorite') {
-        console.log(mails.received[0].isFavorite)
-        const mailsList = mails.received
-        const favorite = mailsList.filter((mail) => mail.isFavorite === true)
-        console.log(favorite)
-        setMails(favorite)
-        return
-      }
-      setMails(mails[folder])
+
+      setMails(mails.filter((mail) => mail[entity]))
     })
   }
 
@@ -65,6 +79,7 @@ export function MailIndex() {
         emailComposeRef={emailComposeRef}
         toggleCompose={toggleCompose}
         changeFolder={changeFolder}
+        folder={folder}
       />
       <SearchFilter mailsList={mailsList} setMails={setMails} />
       <MailList mailsList={mailsList} toggleFavorite={toggleFavorite} />

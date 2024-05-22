@@ -10,7 +10,10 @@ export function EmailPreview({ mail, toggleFavorite }) {
         className={`fa-solid fa-star ${mail.isFavorite ? ` favorite` : ``}`}
         onClick={onToggleFavorite}
       ></i>
-      <h2>{mail.from}</h2>
+      <h2>
+        {mail.isSent && <span>To: </span>}
+        {mail.from}
+      </h2>
       <h3>{mail.subject}</h3>
       <p>{mail.body}</p>
       <p>{mail.timeStr}</p>

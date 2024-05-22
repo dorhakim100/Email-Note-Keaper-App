@@ -23,8 +23,13 @@ export function MailList({ mailsList, toggleFavorite }) {
 
   return (
     <div className='mail-list-container'>
-      {mailsList.map((mail) => {
-        return <EmailPreview mail={mail} toggleFavorite={toggleFavorite} />
+      {mailsList.map((mail, index) => {
+        console.log({ [index]: mail.id })
+        return (
+          <div key={mail.id}>
+            <EmailPreview mail={mail} toggleFavorite={toggleFavorite} />
+          </div>
+        )
       })}
     </div>
   )
