@@ -69,15 +69,31 @@ export function NoteIndex() {
         storageService.saveToStorage(NOTE_KEY, updatedNotes)
     }
 
+    function duplicateNote(noteId) {
+        const noteToDuplicate = notes.find(note => note.id === noteId)
+
+        const duplicatedNote = {
+            id: utilService.makeId(),
+            type: noteToDuplicate.type,
+            style: { ...noteToDuplicate.style },
+            info: { ...noteToDuplicate.info }
+        }
+
+        const updatedNotes = [...notes, duplicatedNote]
+        setNotes(updatedNotes)
+        storageService.saveToStorage(NOTE_KEY, updatedNotes)
+
+    }
+
     return <section>
-        <h2>Notes</h2>
+        <h2>Notes:</h2>
         <input
             type="text"
             value={newNoteText}
             onChange={(event) => setNewNoteText(event.target.value)}
             placeholder="Enter Note Text"
         />
-        <button onClick={addNote}>Add Note</button>
+        <button onClick={addNote}>Add Note <i className="fa-solid fa-plus"></i></button>
         <ul className='noteList'>
             {notes.map(note => <li key={note.id} style={{ backgroundColor: note.style.backgroundColor }}>
                 <span>{note.info.txt}</span>
@@ -86,13 +102,14 @@ export function NoteIndex() {
                     if (newText !== null) {
                         editNote(note.id, newText)
                     }
-                }}>Edit</button>
+                }}><i className="fa-solid fa-pen-to-square"></i></button>
+                <button onClick={() => duplicateNote(note.id)}><i className="fa-solid fa-copy"></i></button>
                 <input
                     type="color"
                     value={note.style.backgroundColor}
                     onChange={(event) => changeNoteColor(note.id, event.target.value)}
                 />
-                <button onClick={() => onRemoveNote(note.id)}>X</button>
+                <button onClick={() => onRemoveNote(note.id)}><i className="fa-solid fa-trash"></i></button>
             </li>)}
         </ul>
     </section>
