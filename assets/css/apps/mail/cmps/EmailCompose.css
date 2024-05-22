@@ -1,0 +1,88 @@
+.email-compose-container{
+    position: absolute;
+
+    inset-inline-start: 0px;
+    bottom: 0px;
+
+    /* height: 50vh; */
+    /* width: 40vw; */
+
+    background-color: white;
+
+    display: none;
+}
+
+.compose-header-container{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    background-color: aliceblue;
+    cursor: pointer;
+}
+
+.compose-header-container>.x-btn{
+    margin: 10px;
+    padding: 5px;
+    cursor: pointer;
+
+}
+
+.compose-header-container>.x-btn:hover{
+    background-color: gray;
+
+}
+
+.compose-header-container>*{
+    padding: 15px;
+
+
+}
+
+.inputs-container{
+    display: grid;
+}
+
+.inputs-container>*{
+    display: flex;
+    gap: 15px;
+    border-bottom: 1px solid rgba(128, 128, 128, 0.303);
+    width: 90%;
+    justify-self: center;
+
+    padding: 10px;
+}
+.inputs-container>*>*{
+    border: none;
+    outline: none;
+
+    margin: 5px;
+
+}
+
+.body-input{
+    margin: 10px;
+    width: 90%;
+    height: 25vh;
+
+    border: none;
+    outline: none;
+}
+
+.send-btn{
+
+
+    background-color: rgb(48, 48, 255);
+    color: white;
+
+    padding: 1em;
+    border-radius: 25px;
+
+    border: none;
+
+    margin: 15px;
+
+    width: 80px;
+
+    cursor: pointer;
+}

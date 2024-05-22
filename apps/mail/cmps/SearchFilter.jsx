@@ -7,9 +7,9 @@ export function SearchFilter({ setMails }) {
       </div>
 
       <div className='filter-container'>
-        <button>Date</button>
-        <button>Subject</button>
-        <button>All</button>
+        <button className='btn filter date'>Date</button>
+        <button className='btn filter subject'>Subject</button>
+        <button className='btn filter all'>All</button>
       </div>
     </div>
   )

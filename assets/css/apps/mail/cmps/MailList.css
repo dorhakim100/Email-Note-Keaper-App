@@ -1,5 +1,11 @@
  /* mail list */
 
+.mail-list-container{
+    /* position: relative; */
+}
+
+
+
  .mail-container{
     display: flex;
 
@@ -27,5 +33,10 @@
 
  .mail-container>*{
     padding: 15px;
+ }
+
+ .favorite{
+
+    color: yellow;
  }
 

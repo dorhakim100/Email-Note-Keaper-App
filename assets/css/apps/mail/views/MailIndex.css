@@ -9,7 +9,7 @@
     display: grid;
     /* grid-template-columns: repeat(2, auto); */
     grid-template-columns: min-content auto;
-    grid-template-rows: 4em auto;
+    grid-template-rows: min-content auto;
     
     transition: 0.4s;
 }
