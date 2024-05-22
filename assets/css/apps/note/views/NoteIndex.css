@@ -1,1 +1,15 @@
  /* note index */
+
+ .noteList {
+     display: grid;
+     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+     gap: 10px;
+     list-style: none;
+ }
+
+ .noteList li {
+     background-color: #b0c4de;
+     padding: 10px;
+     border-radius: 5px;
+     box-shadow: 0 2px 5px
+ }
