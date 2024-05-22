@@ -36,6 +36,23 @@ export function NoteIndex() {
         setNewNoteText('')
     }
 
+    function editNote(noteId, newText) {
+        const updatedNotes = notes.map(note => {
+            if (note.id === noteId) {
+                return {
+                    ...note,
+                    info: {
+                        ...note.info,
+                        txt: newText
+                    }
+                };
+            }
+            return note
+        })
+        setNotes(updatedNotes)
+        storageService.saveToStorage(NOTE_KEY, updatedNotes)
+    }
+
     return <section>
         <h2>Notes</h2>
         <input
@@ -48,6 +65,12 @@ export function NoteIndex() {
         <ul className='noteList'>
             {notes.map(note => <li key={note.id}>
                 <span>{note.info.txt}</span>
+                <button onClick={() => {
+                    const newText = prompt('Enter new text for the note:', note.info.txt)
+                    if (newText !== null) {
+                        editNote(note.id, newText)
+                    }
+                }}>Edit</button>
                 <button onClick={() => onRemoveNote(note.id)}>X</button>
             </li>)}
         </ul>
