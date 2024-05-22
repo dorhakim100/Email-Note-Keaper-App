@@ -46,7 +46,7 @@ export function NoteIndex() {
                     }
                 }
             }
-            return note
+            return note//note to self:test with prompt and other method
         })
         setNotes(updatedNotes)
         storageService.saveToStorage(NOTE_KEY, updatedNotes)
@@ -63,7 +63,7 @@ export function NoteIndex() {
                     }
                 }
             }
-            return note;
+            return note//note to self:test with color wheel and other method
         })
         setNotes(updatedNotes)
         storageService.saveToStorage(NOTE_KEY, updatedNotes)
