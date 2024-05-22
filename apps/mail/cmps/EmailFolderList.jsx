@@ -16,7 +16,7 @@ export function EmailFolderList({
   return (
     <div className='nav-bar-container'>
       <div onClick={toggleCompose}>
-        <i class='fa-solid fa-pencil'></i>
+        <i className='fa-solid fa-pencil'></i>
         <h3 className='nav-text'>New Email</h3>
       </div>
 
@@ -27,28 +27,28 @@ export function EmailFolderList({
         </h3>
       </div>
       <div onClick={onChangeFolder} data-folder='favorite'>
-        <i class='fa-regular fa-star' data-folder='favorite'></i>
+        <i className='fa-regular fa-star' data-folder='favorite'></i>
         <h3 className='nav-text' data-folder='favorite'>
           Favorite
         </h3>
       </div>
 
       <div onClick={onChangeFolder} data-folder='sent'>
-        <i class='fa-regular fa-paper-plane' data-folder='sent'></i>
+        <i className='fa-regular fa-paper-plane' data-folder='sent'></i>
         <h3 className='nav-text' data-folder='sent'>
           Sent
         </h3>
       </div>
 
       <div onClick={onChangeFolder} data-folder='draft'>
-        <i class='fa-regular fa-file' data-folder='draft'></i>
+        <i className='fa-regular fa-file' data-folder='draft'></i>
         <h3 className='nav-text' data-folder='draft'>
           Draft
         </h3>
       </div>
 
       <div onClick={onChangeFolder} data-folder='trash'>
-        <i class='fa-solid fa-trash' data-folder='trash'></i>
+        <i className='fa-solid fa-trash' data-folder='trash'></i>
         <h3 className='nav-text' data-folder='trash'>
           Trash
         </h3>

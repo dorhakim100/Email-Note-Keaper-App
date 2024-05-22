@@ -8,7 +8,7 @@ export function EmailCompose({
     <section className='email-compose-container' ref={emailComposeRef}>
       <div className='compose-header-container' onClick={toggleCompose}>
         <h2>New Message</h2>
-        <i class='fa-solid fa-xmark x-btn'></i>
+        <i className='fa-solid fa-xmark x-btn'></i>
       </div>
       <div className='inputs-container'>
         <div className='from-container'>
