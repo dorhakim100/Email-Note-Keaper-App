@@ -1,1 +1,42 @@
  /* mail list */
+
+.mail-list-container{
+    /* position: relative; */
+}
+
+
+
+ .mail-container{
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    border-left: 1px solid rgb(85, 85, 85);
+    border-right: 1px solid rgb(85, 85, 85);
+    border-top: 1px solid rgb(85, 85, 85);
+
+    cursor: pointer;
+
+}
+
+.mail-container:hover{
+    font-weight: bold;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+.mail-container:nth-last-of-type(1){
+
+    border-bottom: 1px solid rgb(85, 85, 85);
+    
+ }
+
+ .mail-container>*{
+    padding: 15px;
+ }
+
+ .favorite{
+
+    color: yellow;
+ }
+

@@ -1,1 +1,20 @@
  /* mail index  */
+
+ .body-container{
+    background-color: aqua;
+
+    width: 100vw;
+    height: calc(100vh - 4em);
+
+    display: grid;
+    /* grid-template-columns: repeat(2, auto); */
+    grid-template-columns: min-content auto;
+    grid-template-rows: min-content auto;
+    
+    transition: 0.4s;
+}
+
+.body-container:has(.nav-bar-container:nth-of-type(1n):hover){
+    
+    grid-template-columns: 15em auto;
+}

@@ -1,0 +1,50 @@
+.filter-search-container{
+    display: grid;
+    grid-template-rows: repeat(2,1fr);
+
+    /* width: fit-content; */
+    height: fit-content;
+
+    background-color: rgb(195, 220, 242);
+}
+
+.search-container{
+
+    display: flex;
+    gap: 5px;
+
+    background-color: rgb(156, 156, 237);
+    width: fit-content;
+
+    padding: 15px;
+
+    margin: 5px;
+
+    border-radius: 15px;
+}
+
+.search-container>input{
+    background-color: rgb(156, 156, 237);
+    outline: none;
+    border: none;
+}
+.search-container>input:focus{
+    background-color: white;
+
+}
+.search-container:has(input:focus) {
+    background-color: white;
+
+}
+
+.filter-container{
+
+}
+
+.btn.filter{
+    /* position: relative; */
+    border-radius: 25px;
+    border: 1px solid gray;
+
+    padding: 5px;
+}

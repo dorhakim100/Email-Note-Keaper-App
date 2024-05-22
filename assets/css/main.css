@@ -14,11 +14,15 @@
 
 @import './apps/note/views/NoteIndex.css';
 
-/* @import './apps/mail/views/MailIndex.css'; */
+@import './apps/mail/views/MailIndex.css';
 
 /* Cmps */
 
 @import './cmps/UserMsg.css';
 @import './cmps/AppHeader.css';
 
-/* @import './apps/mail/cmps/MailList.css'; */
+
+@import './apps/mail/cmps/EmailFolderList.css';
+@import './apps/mail/cmps/Filter.css';
+@import './apps/mail/cmps/MailList.css';
+@import './apps/mail/cmps/EmailCompose.css';
