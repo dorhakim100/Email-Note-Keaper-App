@@ -45,7 +45,7 @@ export function NoteIndex() {
                         ...note.info,
                         txt: newText
                     }
-                };
+                }
             }
             return note
         })
