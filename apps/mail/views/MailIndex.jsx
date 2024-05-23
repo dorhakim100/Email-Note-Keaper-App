@@ -33,7 +33,7 @@ export function MailIndex() {
       : (emailComposeRef.current.style.display = 'block')
   }
 
-  function changeFolder(folder) {
+  function getEntity(folder) {
     let entity
     switch (folder) {
       case 'received':
@@ -52,7 +52,11 @@ export function MailIndex() {
         entity = 'isTrash'
         break
     }
-    console.log(entity)
+    return entity
+  }
+
+  function changeFolder(folder) {
+    const entity = getEntity(folder)
     storageService.query(MAIL_KEY).then((mails) => {
       console.log(mails)
 
@@ -70,7 +74,9 @@ export function MailIndex() {
     console.log(mailsList)
     storageService.put(MAIL_KEY, mail).then(() => {
       storageService.query(MAIL_KEY).then((mails) => {
-        setMails(mails)
+        const entity = getEntity(folder.current)
+        console.log(mails.filter((mail) => mail[entity]))
+        setMails(mails.filter((mail) => mail[entity]))
       })
     })
     // setMails(...mailsList)
