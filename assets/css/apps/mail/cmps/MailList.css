@@ -36,7 +36,46 @@
  }
 
  .favorite{
+   
 
     color: rgb(255, 204, 0);
  }
+
+ .mail-container>i{
+        padding: 10px;
+    border-radius: 50%;
+ }
+
+ .mail-container>i:hover{
+
+
+    background-color: var(--dark-gray);
+ }
+
+ .edit-mail{
+    display: none;
+
+    gap: 15px;
+ }
+
+ .mail-container:hover>.edit-mail{
+    display: flex;
+ }
+ .mail-container:hover>.time-container{
+    display: none;
+ }
+
+ .edit-mail>i{
+    padding: 10px;
+    border-radius: 50%;
+ }
+
+ .edit-mail>i:hover{
+    background-color: var(--dark-gray);
+ }
+
+ .read{
+    background-color: rgb(211, 223, 247);
+ }
+
 

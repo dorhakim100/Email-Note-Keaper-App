@@ -35,7 +35,6 @@ function post(entityType, newEntity) {
 
 function put(entityType, updatedEntity) {
   return query(entityType).then((entities) => {
-    console.log(entities)
     const idx = entities.findIndex((entity) => entity.id === updatedEntity.id)
     if (idx < 0)
       throw new Error(

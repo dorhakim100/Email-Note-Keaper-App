@@ -67,19 +67,28 @@ export function MailIndex() {
   function toggleFavorite(id) {
     console.log(id)
     const mail = mailsList.find((mail) => mail.id === id)
-    console.log(mail)
     mail.isFavorite ? (mail.isFavorite = false) : (mail.isFavorite = true)
-    console.log(mail)
     const newMails = { ...mailsList }
-    console.log(mailsList)
     storageService.put(MAIL_KEY, mail).then(() => {
       storageService.query(MAIL_KEY).then((mails) => {
         const entity = getEntity(folder.current)
-        console.log(mails.filter((mail) => mail[entity]))
         setMails(mails.filter((mail) => mail[entity]))
       })
     })
     // setMails(...mailsList)
+  }
+
+  function toggleRead(id) {
+    console.log(id)
+    const mail = mailsList.find((mail) => mail.id === id)
+    mail.isRead ? (mail.isRead = false) : (mail.isRead = true)
+    const newMails = { ...mailsList }
+    storageService.put(MAIL_KEY, mail).then(() => {
+      storageService.query(MAIL_KEY).then((mails) => {
+        const entity = getEntity(folder.current)
+        setMails(mails.filter((mail) => mail[entity]))
+      })
+    })
   }
 
   return (
@@ -92,7 +101,11 @@ export function MailIndex() {
         folder={folder}
       />
       <SearchFilter mailsList={mailsList} setMails={setMails} />
-      <MailList mailsList={mailsList} toggleFavorite={toggleFavorite} />
+      <MailList
+        mailsList={mailsList}
+        toggleFavorite={toggleFavorite}
+        toggleRead={toggleRead}
+      />
       <EmailCompose
         mailsList={mailsList}
         setMails={setMails}

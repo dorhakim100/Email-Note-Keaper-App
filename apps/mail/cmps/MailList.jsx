@@ -5,7 +5,7 @@ import { utilService } from '../../../services/util.service.js'
 
 import { EmailPreview } from '../cmps/EmailPreview.jsx'
 
-export function MailList({ mailsList, toggleFavorite }) {
+export function MailList({ mailsList, toggleFavorite, toggleRead }) {
   console.log(mailsList)
   mailsList.forEach((mail) => {
     console.log(mail.sentAt)
@@ -27,7 +27,11 @@ export function MailList({ mailsList, toggleFavorite }) {
         console.log({ [index]: mail.id })
         return (
           <div key={mail.id}>
-            <EmailPreview mail={mail} toggleFavorite={toggleFavorite} />
+            <EmailPreview
+              mail={mail}
+              toggleFavorite={toggleFavorite}
+              toggleRead={toggleRead}
+            />
           </div>
         )
       })}
