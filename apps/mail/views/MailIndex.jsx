@@ -66,8 +66,12 @@ export function MailIndex() {
     console.log(mail)
     mail.isFavorite ? (mail.isFavorite = false) : (mail.isFavorite = true)
     console.log(mail)
-    storageService.put(MAIL_KEY, mail).then((mails) => {
-      setMails(mails)
+    const newMails = { ...mailsList }
+    console.log(mailsList)
+    storageService.put(MAIL_KEY, mail).then(() => {
+      storageService.query(MAIL_KEY).then((mails) => {
+        setMails(mails)
+      })
     })
     // setMails(...mailsList)
   }

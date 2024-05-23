@@ -1,5 +1,7 @@
 import { storageService } from '../../../services/async-storage.service.js'
 
+import { MailFolder } from '../cmps/MailFolder.jsx'
+
 const { useRef } = React
 
 export function EmailFolderList({
@@ -9,10 +11,33 @@ export function EmailFolderList({
   changeFolder,
   folder,
 }) {
-  function onChangeFolder({ target }) {
-    const folder = target.dataset.folder
+  const folders = [
+    {
+      name: 'received',
+      icon: 'fa-inbox',
+    },
+    {
+      name: 'favorite',
+      icon: 'fa-star',
+    },
+    {
+      name: 'sent',
+      icon: 'fa-paper-plane',
+    },
+    {
+      name: 'draft',
+      icon: 'fa-file',
+    },
+    {
+      name: 'trash',
+      icon: 'fa-trash',
+    },
+  ]
 
-    changeFolder(folder)
+  function onChangeFolder({ target }) {
+    const folderToChange = target.dataset.folder
+    folder.current = folderToChange
+    changeFolder(folderToChange)
   }
   console.log(folder)
 
@@ -23,43 +48,16 @@ export function EmailFolderList({
         <h3 className='nav-text'>New Email</h3>
       </div>
 
-      <div
-        onClick={onChangeFolder}
-        data-folder='received'
-        className={`folder active-folder`}
-      >
-        <i className='fa-solid fa-inbox' data-folder='received'></i>
-        <h3 className='nav-text' data-folder='received'>
-          Received
-        </h3>
-      </div>
-      <div onClick={onChangeFolder} data-folder='favorite' className='folder'>
-        <i className='fa-regular fa-star' data-folder='favorite'></i>
-        <h3 className='nav-text' data-folder='favorite'>
-          Favorite
-        </h3>
-      </div>
-
-      <div onClick={onChangeFolder} data-folder='sent' className='folder'>
-        <i className='fa-regular fa-paper-plane' data-folder='sent'></i>
-        <h3 className='nav-text' data-folder='sent'>
-          Sent
-        </h3>
-      </div>
-
-      <div onClick={onChangeFolder} data-folder='draft' className='folder'>
-        <i className='fa-regular fa-file' data-folder='draft'></i>
-        <h3 className='nav-text' data-folder='draft'>
-          Draft
-        </h3>
-      </div>
-
-      <div onClick={onChangeFolder} data-folder='trash' className='folder'>
-        <i className='fa-solid fa-trash' data-folder='trash'></i>
-        <h3 className='nav-text' data-folder='trash'>
-          Trash
-        </h3>
-      </div>
+      {folders.map((folderObject) => {
+        return (
+          <MailFolder
+            onChangeFolder={onChangeFolder}
+            name={folderObject.name}
+            icon={folderObject.icon}
+            activeFolder={folder}
+          />
+        )
+      })}
     </div>
   )
 }

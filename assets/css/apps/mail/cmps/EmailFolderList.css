@@ -13,9 +13,9 @@
 .nav-bar-container{
     /* width: 15em; */
 
-    background-color: red;
+    background-color: var(--light-gray);
 
-
+    /* display: none; */
 }
 
 
@@ -32,26 +32,46 @@
 }
 
 .nav-bar-container>div:hover>i{
-    font-size: 2em;
+    font-size: 1.5em;
     
 }
 
 .nav-bar-container>div:hover{
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-    background-color: aliceblue;
+    background-color: var(--mid-gray);
+}
+
+.nav-bar-container:hover{
+    width: calc(10% + 10em);
 }
 
 .folder{
     display: flex;
     align-items: center;
     
-    background-color: blue;
+    /* background-color: blue; */
     border-radius: 25px;
 
 
 }
+
+.folder:first-of-type{
+
+    background-color: rgb(166, 215, 246);
+}
+
+.folder:hover {
+    background-color: var(--dark-gray);
+}
 .active-folder{
-    background-color: white;
+    background-color: rgb(156, 156, 237);
+}
+.folder.active-folder:hover{
+    background-color: rgb(116, 116, 187);
+}
+.folder:first-of-type:hover{
+
+    background-color: rgb(166, 215, 246);
 }
 .nav-text{
     display: none;
