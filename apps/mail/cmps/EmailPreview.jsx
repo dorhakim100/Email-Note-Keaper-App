@@ -25,7 +25,10 @@ export function EmailPreview({ mail, toggleFavorite, toggleRead }) {
       <div className='edit-mail'>
         <i className='fa-solid fa-trash'></i>
         <i
-          className='fa-regular fa-envelope-open'
+          className={`fa-regular ${
+            (mail.isRead && 'fa-envelope') ||
+            (mail.isRead === false && 'fa-envelope-open')
+          }`}
           onClick={() => onReadMail(mail.id)}
         ></i>
       </div>

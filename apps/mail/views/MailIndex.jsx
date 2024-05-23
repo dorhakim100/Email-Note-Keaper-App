@@ -7,6 +7,8 @@ import { EmailCompose } from '../cmps/EmailCompose.jsx'
 
 import { storageService } from '../../../services/async-storage.service.js'
 import { mailService } from '../services/mail.service.js'
+import { showSuccessMsg } from '../../../services/event-bus.service.js'
+import { showErrorMsg } from '../../../services/event-bus.service.js'
 
 export function MailIndex() {
   const MAIL_KEY = mailService.MAIL_KEY
@@ -65,29 +67,59 @@ export function MailIndex() {
   }
 
   function toggleFavorite(id) {
-    console.log(id)
+    let msg
     const mail = mailsList.find((mail) => mail.id === id)
-    mail.isFavorite ? (mail.isFavorite = false) : (mail.isFavorite = true)
+    if (mail.isFavorite) {
+      mail.isFavorite = false
+      msg = 'Removed from favorite successfully'
+    } else {
+      mail.isFavorite = true
+      msg = 'Added to favorite successfully'
+    }
     const newMails = { ...mailsList }
     storageService.put(MAIL_KEY, mail).then(() => {
-      storageService.query(MAIL_KEY).then((mails) => {
-        const entity = getEntity(folder.current)
-        setMails(mails.filter((mail) => mail[entity]))
-      })
+      storageService
+        .query(MAIL_KEY)
+        .then((mails) => {
+          const entity = getEntity(folder.current)
+          setMails(mails.filter((mail) => mail[entity]))
+          showSuccessMsg(msg)
+        })
+        .catch((err) => {
+          showErrorMsg('There was a problem...')
+        })
+        .finally(() => {
+          // setIsLoading(false)
+        })
     })
     // setMails(...mailsList)
   }
 
   function toggleRead(id) {
-    console.log(id)
+    let msg
     const mail = mailsList.find((mail) => mail.id === id)
-    mail.isRead ? (mail.isRead = false) : (mail.isRead = true)
+    if (mail.isRead) {
+      mail.isRead = false
+      msg = 'Mail set as unread successfully'
+    } else {
+      mail.isRead = true
+      msg = 'Mail set as read successfully'
+    }
     const newMails = { ...mailsList }
     storageService.put(MAIL_KEY, mail).then(() => {
-      storageService.query(MAIL_KEY).then((mails) => {
-        const entity = getEntity(folder.current)
-        setMails(mails.filter((mail) => mail[entity]))
-      })
+      storageService
+        .query(MAIL_KEY)
+        .then((mails) => {
+          const entity = getEntity(folder.current)
+          setMails(mails.filter((mail) => mail[entity]))
+          showSuccessMsg(msg)
+        })
+        .catch((err) => {
+          showErrorMsg('There was a problem...')
+        })
+        .finally(() => {
+          // setIsLoading(false)
+        })
     })
   }
 
