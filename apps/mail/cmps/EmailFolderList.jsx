@@ -51,6 +51,7 @@ export function EmailFolderList({
       {folders.map((folderObject) => {
         return (
           <MailFolder
+            key={folderObject.name}
             onChangeFolder={onChangeFolder}
             name={folderObject.name}
             icon={folderObject.icon}

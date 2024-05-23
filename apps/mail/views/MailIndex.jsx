@@ -123,6 +123,76 @@ export function MailIndex() {
     })
   }
 
+  function moveToTrash(id) {
+    let msg
+    const mail = mailsList.find((mail) => mail.id === id)
+    console.log(mail)
+    if (mail.isTrash) {
+      console.log(id)
+
+      msg = 'Mail deleted successfully'
+      storageService
+        .remove(MAIL_KEY, id)
+        .then(() => {
+          storageService.query(MAIL_KEY).then((mails) => {
+            console.log(mails)
+            showSuccessMsg(msg)
+            const entity = getEntity(folder.current)
+            setMails(mails.filter((mail) => mail[entity]))
+          })
+        })
+        .catch((err) => {
+          console.log(err)
+          showErrorMsg('There was a problem...')
+        })
+        .finally(() => {
+          // setIsLoading(false)
+        })
+      return
+    } else if (!mail.isTrash) {
+      msg = 'Mail moved to trash successfully'
+      const newMails = { ...mailsList }
+      mail.isTrash = true
+      storageService.put(MAIL_KEY, mail).then(() => {
+        storageService
+          .query(MAIL_KEY)
+          .then((mails) => {
+            const entity = getEntity(folder.current)
+            setMails(mails.filter((mail) => mail[entity]))
+            showSuccessMsg(msg)
+          })
+          .catch((err) => {
+            showErrorMsg('There was a problem...')
+          })
+          .finally(() => {
+            // setIsLoading(false)
+          })
+      })
+    }
+  }
+
+  function removeFromTrash(id) {
+    const mail = mailsList.find((mail) => mail.id === id)
+    if (!mail.isTrash) return
+    mail.isTrash = false
+    const msg = 'Mail removed from trash successfully'
+    storageService.put(MAIL_KEY, mail).then(() => {
+      storageService
+        .query(MAIL_KEY)
+        .then((mails) => {
+          const entity = getEntity(folder.current)
+          setMails(mails.filter((mail) => mail[entity]))
+          showSuccessMsg(msg)
+        })
+        .catch((err) => {
+          showErrorMsg('There was a problem...')
+        })
+        .finally(() => {
+          // setIsLoading(false)
+        })
+    })
+  }
+
   return (
     <section className='body-container'>
       <EmailFolderList
@@ -137,6 +207,9 @@ export function MailIndex() {
         mailsList={mailsList}
         toggleFavorite={toggleFavorite}
         toggleRead={toggleRead}
+        moveToTrash={moveToTrash}
+        folder={folder}
+        removeFromTrash={removeFromTrash}
       />
       <EmailCompose
         mailsList={mailsList}

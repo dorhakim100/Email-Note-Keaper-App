@@ -1,11 +1,26 @@
-export function EmailPreview({ mail, toggleFavorite, toggleRead }) {
+export function EmailPreview({
+  mail,
+  toggleFavorite,
+  toggleRead,
+  moveToTrash,
+  folder,
+  removeFromTrash,
+}) {
+  console.log(folder)
   function onToggleFavorite({ target }) {
     toggleFavorite(target.dataset.id)
   }
 
   function onReadMail(id) {
-    console.log(mail.isRead)
     toggleRead(id)
+  }
+
+  function onMoveToTrash(id) {
+    moveToTrash(id)
+  }
+
+  function onremoveFromTrash(id) {
+    removeFromTrash(id)
   }
 
   return (
@@ -23,7 +38,16 @@ export function EmailPreview({ mail, toggleFavorite, toggleRead }) {
       <p>{mail.body}</p>
       <p className='time-container'>{mail.timeStr}</p>
       <div className='edit-mail'>
-        <i className='fa-solid fa-trash'></i>
+        <i
+          className='fa-solid fa-trash'
+          onClick={() => onMoveToTrash(mail.id)}
+        ></i>
+        {folder.current === 'trash' && (
+          <i
+            className='fa-solid fa-rotate-left'
+            onClick={() => onremoveFromTrash(mail.id)}
+          ></i>
+        )}
         <i
           className={`fa-regular ${
             (mail.isRead && 'fa-envelope') ||
