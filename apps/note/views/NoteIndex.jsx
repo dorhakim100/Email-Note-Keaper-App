@@ -78,7 +78,7 @@ export function NoteIndex() {
         })
         setNotes(updatedNotes)
         storageService.saveToStorage(noteService.NOTE_KEY, updatedNotes)
-        console.log('notes after color change:', updatedNotes)
+        // console.log('notes after color change:', updatedNotes)
     }
 
     function onDuplicateNote(noteId) {
@@ -103,7 +103,7 @@ export function NoteIndex() {
             id: utilService.makeId(),
             type: 'ToDo',
             style: { backgroundColor: '#b0c4de' },
-            info: { tasks: [newTodo] }
+            info: { tasks: [{ text: newTodo, done: false }] }
         }
         const updatedNotes = [...notes, todo]
         setNotes(updatedNotes)
@@ -119,7 +119,10 @@ export function NoteIndex() {
                     ...note,
                     info: {
                         ...note.info,
-                        tasks: [...note.info.tasks, newTask]
+                        tasks: [
+                            ...note.info.tasks,
+                            { text: newTask, done: false }
+                        ]
                     }
                 }
             }
@@ -129,22 +132,68 @@ export function NoteIndex() {
         storageService.saveToStorage(noteService.NOTE_KEY, updatedNotes)
     }
 
+    function onToggleTask(noteId, taskIndex) {
+        const updatedNotes = notes.map(note => {
+            if (note.id === noteId && note.type === 'ToDo') {
+                const updatedTasks = note.info.tasks.map((task, idx) => {
+                    if (idx === taskIndex) {
+                        return { ...task, done: !task.done }
+                    }
+                    return task
+                })
+                return {
+                    ...note,
+                    info: {
+                        ...note.info,
+                        tasks: updatedTasks
+                    }
+                }
+            }
+            return note
+        })
+        setNotes(updatedNotes)
+        storageService.saveToStorage(noteService.NOTE_KEY, updatedNotes)
+    }
+
+    function onRemoveTask(noteId, taskIndex) {
+        const updatedNotes = notes.map(note => {
+            if (note.id === noteId && note.type === 'ToDo') {
+                const updatedTasks = note.info.tasks.filter((task, index) => index !== taskIndex)
+                return {
+                    ...note,
+                    info: {
+                        ...note.info,
+                        tasks: updatedTasks
+                    }
+                }
+            }
+            return note
+        })
+
+        setNotes(updatedNotes)
+        storageService.saveToStorage(noteService.NOTE_KEY, updatedNotes)
+    }
+
     return <section className='notes-main-page'>
         <h2>Notes:</h2>
-        <input
-            type="text"
-            value={newNoteText}
-            onChange={(event) => setNewNoteText(event.target.value)}
-            placeholder="Enter Note Text:"
-        />
-        <button onClick={addNote}>Add Note <i className="fa-solid fa-plus"></i></button>
-        <input
-            type="text"
-            value={newTodo}
-            onChange={(event) => setNewTodo(event.target.value)}
-            placeholder="Enter Todo:"
-        />
-        <button onClick={addTodo}>Add Todo List <i className="fa-solid fa-list"></i> </button>
+        <div className='new-note'>
+            <input
+                type="text"
+                value={newNoteText}
+                onChange={(event) => setNewNoteText(event.target.value)}
+                placeholder="Enter Note Text:"
+            />
+            <button onClick={addNote}>Add Note <i className="fa-solid fa-plus"></i></button>
+        </div>
+        <div className='new-todo'>
+            <input
+                type="text"
+                value={newTodo}
+                onChange={(event) => setNewTodo(event.target.value)}
+                placeholder="Enter Todo:"
+            />
+            <button onClick={addTodo}>Add Todo List <i className="fa-solid fa-list"></i> </button>
+        </div>
 
         <NoteList
             notes={notes}
@@ -153,6 +202,8 @@ export function NoteIndex() {
             onChangeNoteColor={onChangeNoteColor}
             onDuplicateNote={onDuplicateNote}
             onTodoAddTask={onTodoAddTask}
+            onToggleTask={onToggleTask}
+            onRemoveTask={onRemoveTask}
         />
     </section>
 }

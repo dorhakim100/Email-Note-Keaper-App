@@ -1,8 +1,8 @@
 
-export function NoteList({ notes, onRemoveNote, onEditNote, onChangeNoteColor, onDuplicateNote, onTodoAddTask }) {
+export function NoteList({ notes, onRemoveNote, onEditNote, onChangeNoteColor, onDuplicateNote, onTodoAddTask, onToggleTask, onRemoveTask }) {
 
     return (
-        <section className="note-list-container">
+        <section className='note-list-container'>
             <ul className='noteList'>
                 {notes.map(note => (
                     <li key={note.id} style={{ backgroundColor: note.style.backgroundColor }}>
@@ -21,9 +21,14 @@ export function NoteList({ notes, onRemoveNote, onEditNote, onChangeNoteColor, o
                         )}
                         {note.type === 'ToDo' && (
                             <div>
-                                <ul>
+                                <ul className="todo-list">
                                     {note.info.tasks.map((task, idx) => (
-                                        <li key={idx}>{task}</li>
+                                        <li key={idx} className={task.done ? 'done' : ''}>
+                                            <span onClick={() => onToggleTask(note.id, idx)}>{task.text}</span>
+                                            <div className="task-action">
+                                                <button onClick={() => onRemoveTask(note.id, idx)}><i className="fa-solid fa-trash"></i></button>
+                                            </div>
+                                        </li>
                                     ))}
                                 </ul>
                                 <button onClick={() => {
