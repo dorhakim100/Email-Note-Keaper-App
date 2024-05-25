@@ -1,25 +1,33 @@
+const { useState, useEffect } = React
 import { utilService } from '../../../services/util.service.js'
-import { noteService, NOTE_KEY } from '../services/note.service.js'
+import { noteService } from '../services/note.service.js'
 import { storageService } from '../../../services/storage.service.js'
 import { NoteList } from '../cmps/NoteList.jsx'
-const { useState, useEffect } = React
 
 export function NoteIndex() {
 
     const [notes, setNotes] = useState([])
     const [newNoteText, setNewNoteText] = useState('')
+    const [newTodo, setNewTodo] = useState('')
+
 
     useEffect(() => {
         // const initNotes = storageService.loadFromStorage(NOTE_KEY) || []
-        const initNotes = noteService.notes() || []
+        const initNotes = storageService.loadFromStorage(noteService.NOTE_KEY) || noteService.notes()
         setNotes(initNotes)
+        // const initNotes = noteService.notes() || []
+        // console.log('init notes:', initNotes)
+        // const initTodo = noteService.createTodos()
+        // setNotes(initNotes)
+        // setNotes(initTodo)
     }, [])
 
     function onRemoveNote(noteId) {
         console.log(noteId)
         const updatedNotes = notes.filter(note => note.id !== noteId)
         setNotes(updatedNotes)
-        storageService.saveToStorage(NOTE_KEY, updatedNotes)
+        storageService.saveToStorage(noteService.NOTE_KEY, updatedNotes)
+        console.log('notes after removal:', updatedNotes)
     }
 
     function addNote() {
@@ -32,7 +40,8 @@ export function NoteIndex() {
         }
         const updatedNotes = [...notes, note]
         setNotes(updatedNotes)
-        storageService.saveToStorage(NOTE_KEY, updatedNotes)
+        storageService.saveToStorage(noteService.NOTE_KEY, updatedNotes)
+        console.log('add notes:', updatedNotes)
         setNewNoteText('')
     }
 
@@ -50,7 +59,8 @@ export function NoteIndex() {
             return note//note to self:test with prompt and other method
         })
         setNotes(updatedNotes)
-        storageService.saveToStorage(NOTE_KEY, updatedNotes)
+        storageService.saveToStorage(noteService.NOTE_KEY, updatedNotes)
+        console.log('notes after edit:', updatedNotes)
     }
 
     function onChangeNoteColor(noteId, newColor) {
@@ -67,7 +77,8 @@ export function NoteIndex() {
             return note//note to self:test with color wheel and other method
         })
         setNotes(updatedNotes)
-        storageService.saveToStorage(NOTE_KEY, updatedNotes)
+        storageService.saveToStorage(noteService.NOTE_KEY, updatedNotes)
+        console.log('notes after color change:', updatedNotes)
     }
 
     function onDuplicateNote(noteId) {
@@ -82,8 +93,40 @@ export function NoteIndex() {
 
         const updatedNotes = [...notes, duplicatedNote]
         setNotes(updatedNotes)
-        storageService.saveToStorage(NOTE_KEY, updatedNotes)
+        storageService.saveToStorage(noteService.NOTE_KEY, updatedNotes)
 
+    }
+
+    function addTodo() {
+        if (!newTodo.trim()) return
+        const todo = {
+            id: utilService.makeId(),
+            type: 'ToDo',
+            style: { backgroundColor: '#b0c4de' },
+            info: { tasks: [newTodo] }
+        }
+        const updatedNotes = [...notes, todo]
+        setNotes(updatedNotes)
+        storageService.saveToStorage(noteService.NOTE_KEY, updatedNotes)
+        console.log('add todos:', updatedNotes)
+        setNewTodo('')
+    }
+
+    function onTodoAddTask(noteId, newTask) {
+        const updatedNotes = notes.map(note => {
+            if (note.id === noteId && note.type === 'ToDo') {
+                return {
+                    ...note,
+                    info: {
+                        ...note.info,
+                        tasks: [...note.info.tasks, newTask]
+                    }
+                }
+            }
+            return note
+        })
+        setNotes(updatedNotes)
+        storageService.saveToStorage(noteService.NOTE_KEY, updatedNotes)
     }
 
     return <section className='notes-main-page'>
@@ -95,12 +138,21 @@ export function NoteIndex() {
             placeholder="Enter Note Text:"
         />
         <button onClick={addNote}>Add Note <i className="fa-solid fa-plus"></i></button>
+        <input
+            type="text"
+            value={newTodo}
+            onChange={(event) => setNewTodo(event.target.value)}
+            placeholder="Enter Todo:"
+        />
+        <button onClick={addTodo}>Add Todo List <i className="fa-solid fa-list"></i> </button>
+
         <NoteList
             notes={notes}
             onRemoveNote={onRemoveNote}
             onEditNote={onEditNote}
             onChangeNoteColor={onChangeNoteColor}
             onDuplicateNote={onDuplicateNote}
+            onTodoAddTask={onTodoAddTask}
         />
     </section>
 }

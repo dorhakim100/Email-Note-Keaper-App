@@ -1,16 +1,16 @@
 import { storageService } from '../../../services/storage.service.js'
 import { utilService } from '../../../services/util.service.js'
-// import { storageAsyncService } from '../../../services/async-storage.service.js'
+// import { asyncStorage } from '../../../services/async-storage.service.js'
 
-export const NOTE_KEY = 'noteDB'
+const NOTE_KEY = 'noteDB'
 
 export const noteService = {
     notes,
+    NOTE_KEY,
     // query,
     // get,
     // remove,
     // save,
-
 }
 
 function notes() {
@@ -29,6 +29,7 @@ function notes() {
         ]
         storageService.saveToStorage(NOTE_KEY, notes)
     }
+    console.log('loaded notes:', notes)
     return notes
 }
 
