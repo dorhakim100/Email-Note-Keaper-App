@@ -6,7 +6,7 @@ export function EmailPreview({
   folder,
   removeFromTrash,
 }) {
-  console.log(folder)
+  // console.log(folder)
   function onToggleFavorite({ target }) {
     toggleFavorite(target.dataset.id)
   }

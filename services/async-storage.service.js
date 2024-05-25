@@ -41,6 +41,7 @@ function put(entityType, updatedEntity) {
         `Update failed, cannot find entity with id: ${entityId} in: ${entityType}`
       )
     entities.splice(idx, 1, updatedEntity)
+    console.log('entities:', entities)
     _save(entityType, entities)
     return updatedEntity
   })

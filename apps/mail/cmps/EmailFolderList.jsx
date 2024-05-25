@@ -2,7 +2,10 @@ import { storageService } from '../../../services/async-storage.service.js'
 
 import { MailFolder } from '../cmps/MailFolder.jsx'
 
-const { useRef } = React
+const { useRef, useEffect } = React
+const { Link, Outlet } = ReactRouterDOM
+
+const { useParams, useNavigate } = ReactRouter
 
 export function EmailFolderList({
   mailsList,
@@ -11,6 +14,17 @@ export function EmailFolderList({
   changeFolder,
   folder,
 }) {
+  const params = useParams()
+  const navigate = useNavigate()
+
+  // console.log(params.folder)
+
+  useEffect(() => {
+    // navigate(`/mail/${folder.current}`)
+    // changeFolder('received')
+    console.log(params.folder)
+  }, [params.folder])
+
   const folders = [
     {
       name: 'received',
@@ -36,27 +50,33 @@ export function EmailFolderList({
 
   function onChangeFolder({ target }) {
     const folderToChange = target.dataset.folder
-    folder.current = folderToChange
+    // console.log(folderToChange)
+    // folder.current = folderToChange
+    // navigate(`/mail/${folderToChange}`)
     changeFolder(folderToChange)
   }
   console.log(folder)
 
   return (
     <div className='nav-bar-container'>
-      <div onClick={toggleCompose} className='folder'>
-        <i className='fa-solid fa-pencil'></i>
-        <h3 className='nav-text'>New Email</h3>
-      </div>
+      <Link to={`/mail/compose`}>
+        <div onClick={toggleCompose} className='folder compose'>
+          <i className='fa-solid fa-pencil'></i>
+          <h3 className='nav-text'>New Email</h3>
+        </div>
+      </Link>
 
       {folders.map((folderObject) => {
         return (
-          <MailFolder
-            key={folderObject.name}
-            onChangeFolder={onChangeFolder}
-            name={folderObject.name}
-            icon={folderObject.icon}
-            activeFolder={folder}
-          />
+          <Link to={`/mail/${folder.current}`}>
+            <MailFolder
+              key={folderObject.name}
+              onChangeFolder={onChangeFolder}
+              name={folderObject.name}
+              icon={folderObject.icon}
+              activeFolder={folder}
+            />
+          </Link>
         )
       })}
     </div>

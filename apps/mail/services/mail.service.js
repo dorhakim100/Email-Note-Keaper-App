@@ -5,11 +5,9 @@ import { storageService } from '../../../services/async-storage.service.js'
 
 const MAIL_KEY = 'mailList'
 
-localStorage.clear()
-console.log(localStorage.getItem(MAIL_KEY))
+// localStorage.clear()
 
 const mailList = localStorage.getItem(MAIL_KEY) || createMails()
-console.log(mailList)
 
 const loggedInUser = {
   email: 'user@appsus.com',
@@ -20,6 +18,10 @@ export const mailService = {
   MAIL_KEY,
   mailList,
   loggedInUser,
+  getDefaultFilter,
+  save,
+  _setNextPrevMailId,
+  get,
 }
 
 function createMails() {
@@ -200,4 +202,41 @@ function createMails() {
 
 function getDefaultFilter(filterBy = { txt: '' }) {
   return { txt: filterBy.txt }
+}
+
+function saveToStorage(key, val) {
+  localStorage.setItem(key, JSON.stringify(val))
+}
+
+function loadFromStorage(key) {
+  var val = localStorage.getItem(key)
+  return JSON.parse(val)
+}
+
+function save(mail) {
+  if (mail.id) {
+    return storageService.put(MAIL_KEY, mail)
+  } else {
+    return storageService.post(MAIL_KEY, mail)
+  }
+}
+
+function get(mailId) {
+  return storageService.get(MAIL_KEY, mailId).then((mail) => {
+    mail = _setNextPrevBookId(mail)
+    return mail
+  })
+}
+
+function _setNextPrevMailId(mail) {
+  return storageService.query(MAIL_KEY).then((mails) => {
+    const mailIdx = mails.findIndex((currMail) => currMail.id === mail.id)
+    const nextMail = mails[mailIdx + 1] ? mails[mailIdx + 1] : mails[0]
+    const prevMail = mails[mailIdx - 1]
+      ? mails[mailIdx - 1]
+      : mails[mails.length - 1]
+    mail.nextMailId = nextMail.id
+    mail.prevMailId = prevMail.id
+    return mail
+  })
 }

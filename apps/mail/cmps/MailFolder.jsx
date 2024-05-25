@@ -1,6 +1,11 @@
+const { Link } = ReactRouterDOM
+
+const { useState, useEffect, useRef } = React
+const { useParams, useNavigate } = ReactRouter
+
 export function MailFolder({ onChangeFolder, name, icon, activeFolder }) {
-  console.log(activeFolder)
   return (
+    // <Link to={`/mail/${activeFolder.current}`}>
     <div
       onClick={onChangeFolder}
       data-folder={name}
@@ -11,5 +16,6 @@ export function MailFolder({ onChangeFolder, name, icon, activeFolder }) {
         {name.charAt(0).toUpperCase() + name.slice(1)}
       </h3>
     </div>
+    // </Link>
   )
 }

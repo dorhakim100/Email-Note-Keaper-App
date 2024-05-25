@@ -1,9 +1,17 @@
 const { useState, useEffect, useRef } = React
 
+const { Link, Outlet } = ReactRouterDOM
+
+const { useParams, useNavigate } = ReactRouter
+
+const { Route, Routes } = ReactRouterDOM
+const Router = ReactRouterDOM.HashRouter
+
 import { EmailFolderList } from '../cmps/EmailFolderList.jsx'
 import { SearchFilter } from '../cmps/SearchFilter.jsx'
 import { MailList } from '../cmps/MailList.jsx'
 import { EmailCompose } from '../cmps/EmailCompose.jsx'
+import { EmailDetails } from '../cmps/EmailDetails.jsx'
 
 import { storageService } from '../../../services/async-storage.service.js'
 import { mailService } from '../services/mail.service.js'
@@ -15,24 +23,60 @@ export function MailIndex() {
   // localStorage.clear()
   const [mailsList, setMails] = useState([])
 
-  useEffect(() => {
-    storageService.query(MAIL_KEY).then((mails) => {
-      console.log(mails)
-      setMails(mails.filter((mail) => mail.isReceived))
-    })
-  }, [])
-  // localStorage.clear()
-  // console.log(mails)
+  const [filterBy, setFilterBy] = useState(mailService.getDefaultFilter())
 
   const emailComposeRef = useRef()
 
   const folder = useRef('received')
+  let clickedFolder
+
+  const params = useParams()
+  const navigate = useNavigate()
+
+  // console.log(params)
+
+  useEffect(() => {
+    storageService
+      .query(MAIL_KEY)
+      .then((mails) => {
+        setMails(mails.filter((mail) => mail.isReceived))
+      })
+      .catch((err) => {
+        console.log(err)
+        navigate(`/mail/${folder.current}`)
+      })
+  }, [filterBy])
+
+  useEffect(() => {
+    // console.log(params.folder)
+    // if (!params.folder) {
+    // navigate('/mail/received')
+    // changeFolder('received')
+    // params.folder = 'received'
+    // console.log(params.folder)
+    // return
+    // }
+    // console.log(params.folder)
+    changeFolder(params.folder)
+    // console.log(params.folder)
+    // storageService.query(MAIL_KEY).then((mails) => {
+    // setMails(mails.filter((mail) => mail.isReceived))
+    // navigate(`/mail/${folder.current}`)
+    // console.log('works')
+    // })
+  }, [params.folder])
+  // localStorage.clear()
+  // console.log(mails)
 
   function toggleCompose() {
     const curr = emailComposeRef.current.style.display
-    curr === 'block'
-      ? (emailComposeRef.current.style.display = 'none')
-      : (emailComposeRef.current.style.display = 'block')
+    if (curr === 'block') {
+      emailComposeRef.current.style.display = 'none'
+      navigate(`/mail/${folder.current}`)
+    } else {
+      emailComposeRef.current.style.display = 'block'
+      navigate(`/mail/compose`)
+    }
   }
 
   function getEntity(folder) {
@@ -57,12 +101,17 @@ export function MailIndex() {
     return entity
   }
 
-  function changeFolder(folder) {
-    const entity = getEntity(folder)
+  function changeFolder(paramsFolder) {
+    console.log(paramsFolder)
+    const entity = getEntity(paramsFolder)
+    console.log(entity)
+    clickedFolder = paramsFolder
+    folder.current = paramsFolder
     storageService.query(MAIL_KEY).then((mails) => {
-      console.log(mails)
+      //   console.log(mails)
 
       setMails(mails.filter((mail) => mail[entity]))
+      navigate(`/mail/${clickedFolder}`)
     })
   }
 
@@ -83,6 +132,7 @@ export function MailIndex() {
         .then((mails) => {
           const entity = getEntity(folder.current)
           setMails(mails.filter((mail) => mail[entity]))
+          // mailService.save(mail)
           showSuccessMsg(msg)
         })
         .catch((err) => {
@@ -195,6 +245,7 @@ export function MailIndex() {
 
   return (
     <section className='body-container'>
+      {/* <Link to={`/mail/${folder.current}`}> */}
       <EmailFolderList
         mailsList={mailsList}
         emailComposeRef={emailComposeRef}
@@ -202,8 +253,29 @@ export function MailIndex() {
         changeFolder={changeFolder}
         folder={folder}
       />
+      {/* </Link> */}
       <SearchFilter mailsList={mailsList} setMails={setMails} />
+      {/* <Routes>
+        <Route
+          path='/mail/received'
+          element={
+            <MailList
+              mailsList={mailsList}
+              toggleFavorite={toggleFavorite}
+              toggleRead={toggleRead}
+              moveToTrash={moveToTrash}
+              folder={folder}
+              removeFromTrash={removeFromTrash}
+            />
+          }
+        > */}
+      {/* <Link to='/mail/:mailId'> */}
+      {/* </Link> */}
+      {/* </Route> */}
+      {/* <Route path='/mail/:mailId' element={<EmailDetails />} /> */}
+      {/* </Routes> */}
       <MailList
+        // path={`/mail/${folder.current}`}
         mailsList={mailsList}
         toggleFavorite={toggleFavorite}
         toggleRead={toggleRead}
@@ -217,6 +289,7 @@ export function MailIndex() {
         emailComposeRef={emailComposeRef}
         toggleCompose={toggleCompose}
       />
+      {/* <EmailDetails /> */}/{/* <Outlet /> */}
     </section>
   )
 }
