@@ -41,6 +41,11 @@ export function NoteList({ notes, onRemoveNote, onEditNote, onChangeNoteColor, o
                                 </button>
                             </div>
                         )}
+                        {note.type === 'ImageNote' && (
+                            <div>
+                                <img src={note.info.image} alt="Note" style={{ maxWidth: '100%', maxHeight: '1fr', marginBottom: '10px' }} />
+                            </div>
+                        )}
                         <button onClick={() => onDuplicateNote(note.id)}>
                             <i className="fa-solid fa-copy"></i>
                         </button>

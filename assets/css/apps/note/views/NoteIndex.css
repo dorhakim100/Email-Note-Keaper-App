@@ -14,7 +14,8 @@
  }
 
  .new-note,
- .new-todo {
+ .new-todo,
+ .new-image {
      padding: 10px;
      background-color: lightsteelblue;
      margin-bottom: 10px;
