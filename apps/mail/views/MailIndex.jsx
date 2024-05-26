@@ -48,22 +48,18 @@ export function MailIndex() {
   }, [filterBy])
 
   useEffect(() => {
-    // console.log(params.folder)
-    // if (!params.folder) {
-    // navigate('/mail/received')
-    // changeFolder('received')
-    // params.folder = 'received'
-    // console.log(params.folder)
-    // return
-    // }
-    // console.log(params.folder)
+    if (!params.mailId) return
+    console.log(params.mailId)
+  }, [params.mailId])
+
+  useEffect(() => {
+    if (!params.folder) {
+      changeFolder('received')
+
+      return
+    }
+
     changeFolder(params.folder)
-    // console.log(params.folder)
-    // storageService.query(MAIL_KEY).then((mails) => {
-    // setMails(mails.filter((mail) => mail.isReceived))
-    // navigate(`/mail/${folder.current}`)
-    // console.log('works')
-    // })
   }, [params.folder])
   // localStorage.clear()
   // console.log(mails)
@@ -102,14 +98,11 @@ export function MailIndex() {
   }
 
   function changeFolder(paramsFolder) {
-    console.log(paramsFolder)
     const entity = getEntity(paramsFolder)
-    console.log(entity)
+
     clickedFolder = paramsFolder
     folder.current = paramsFolder
     storageService.query(MAIL_KEY).then((mails) => {
-      //   console.log(mails)
-
       setMails(mails.filter((mail) => mail[entity]))
       navigate(`/mail/${clickedFolder}`)
     })
@@ -243,6 +236,12 @@ export function MailIndex() {
     })
   }
 
+  function openMail(id) {
+    console.log(id)
+    console.log(folder.current)
+    // navigate(`/mail/${folder.current}/${id}`)
+  }
+
   return (
     <section className='body-container'>
       {/* <Link to={`/mail/${folder.current}`}> */}
@@ -274,22 +273,36 @@ export function MailIndex() {
       {/* </Route> */}
       {/* <Route path='/mail/:mailId' element={<EmailDetails />} /> */}
       {/* </Routes> */}
-      <MailList
-        // path={`/mail/${folder.current}`}
-        mailsList={mailsList}
-        toggleFavorite={toggleFavorite}
-        toggleRead={toggleRead}
-        moveToTrash={moveToTrash}
-        folder={folder}
-        removeFromTrash={removeFromTrash}
-      />
+      {params.mailId && (
+        <EmailDetails
+          mailId={params.mailId}
+          folder={folder.current}
+          toggleFavorite={toggleFavorite}
+          toggleRead={toggleRead}
+          moveToTrash={moveToTrash}
+          removeFromTrash={removeFromTrash}
+        />
+      )}
+      {!params.mailId && (
+        <MailList
+          // path={`/mail/${folder.current}`}
+          mailsList={mailsList}
+          toggleFavorite={toggleFavorite}
+          toggleRead={toggleRead}
+          moveToTrash={moveToTrash}
+          folder={folder}
+          removeFromTrash={removeFromTrash}
+          openMail={openMail}
+        />
+      )}
       <EmailCompose
         mailsList={mailsList}
         setMails={setMails}
         emailComposeRef={emailComposeRef}
         toggleCompose={toggleCompose}
       />
-      {/* <EmailDetails /> */}/{/* <Outlet /> */}
+      {/* <EmailDetails /> */}
+      {/* <Outlet /> */}
     </section>
   )
 }

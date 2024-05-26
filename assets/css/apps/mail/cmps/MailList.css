@@ -43,7 +43,7 @@
 
  .mail-container>i{
         padding: 10px;
-    border-radius: 50%;
+      border-radius: 50%;
  }
 
  .mail-container>i:hover{
@@ -52,7 +52,12 @@
     background-color: var(--dark-gray);
  }
 
- .edit-mail{
+ .edit-mail>i{
+    cursor: pointer;
+
+ }
+
+ .mail-container:hover>.edit-mail{
     display: none;
 
     gap: 15px;

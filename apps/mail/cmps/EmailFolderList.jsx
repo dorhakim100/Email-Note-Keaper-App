@@ -19,11 +19,11 @@ export function EmailFolderList({
 
   // console.log(params.folder)
 
-  useEffect(() => {
-    // navigate(`/mail/${folder.current}`)
-    // changeFolder('received')
-    console.log(params.folder)
-  }, [params.folder])
+  // useEffect(() => {
+
+  //   console.log('works')
+  //   console.log(params.folder.mailId)
+  // }, [params.folder.mailId])
 
   const folders = [
     {

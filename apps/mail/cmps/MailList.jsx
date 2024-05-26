@@ -16,20 +16,20 @@ export function MailList({
   moveToTrash,
   folder,
   removeFromTrash,
+  openMail,
 }) {
   const params = useParams()
   const navigate = useNavigate()
 
   // console.log(mailsList)
 
-  useEffect(() => {
-    mailsList.forEach((mail) => {
-      const d = new Date(mail.sentAt)
+  mailsList.forEach((mail) => {
+    const d = new Date(mail.sentAt)
 
-      // console.log(utilService.getMonthName(d))
-      mail.timeStr = `${d.getDay()} ${utilService.getMonthName(d)}`
-    })
-  }, [])
+    // console.log(utilService.getMonthName(d))
+    mail.timeStr = `${d.getDay()} ${utilService.getMonthName(d)}`
+  })
+  useEffect(() => {}, [])
 
   return (
     <div className='mail-list-container'>
@@ -38,7 +38,7 @@ export function MailList({
           {
             if (mail.isTrash === false && folder.current !== 'trash') {
               return (
-                <Link replace to={`/mail/${mail.id}`}>
+                <Link replace to={`/mail/${folder.current}/${mail.id}`}>
                   <div key={mail.id}>
                     <EmailPreview
                       mail={mail}
@@ -47,13 +47,14 @@ export function MailList({
                       moveToTrash={moveToTrash}
                       folder={folder}
                       removeFromTrash={removeFromTrash}
+                      openMail={openMail}
                     />
                   </div>
                 </Link>
               )
             } else if (folder.current === 'trash') {
               return (
-                <Link replace to={`/mail/${mail.id}`}>
+                <Link replace to={`/mail/${folder.current}/${mail.id}`}>
                   <div key={mail.id}>
                     <EmailPreview
                       mail={mail}
@@ -62,6 +63,7 @@ export function MailList({
                       moveToTrash={moveToTrash}
                       folder={folder}
                       removeFromTrash={removeFromTrash}
+                      openMail={openMail}
                     />
                   </div>
                 </Link>

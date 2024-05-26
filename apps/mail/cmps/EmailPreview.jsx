@@ -5,8 +5,8 @@ export function EmailPreview({
   moveToTrash,
   folder,
   removeFromTrash,
+  openMail,
 }) {
-  // console.log(folder)
   function onToggleFavorite({ target }) {
     toggleFavorite(target.dataset.id)
   }
@@ -19,12 +19,19 @@ export function EmailPreview({
     moveToTrash(id)
   }
 
-  function onremoveFromTrash(id) {
+  function onRemoveFromTrash(id) {
     removeFromTrash(id)
   }
 
+  function onOpenMail(id) {
+    openMail(id)
+  }
+
   return (
-    <div className={`mail-container ${mail.isRead && 'read'}`}>
+    <div
+      className={`mail-container ${mail.isRead && 'read'}`}
+      onClick={() => onOpenMail(mail.id)}
+    >
       <i
         data-id={mail.id}
         className={`fa-solid fa-star ${mail.isFavorite ? ` favorite` : ``}`}
@@ -45,7 +52,7 @@ export function EmailPreview({
         {folder.current === 'trash' && (
           <i
             className='fa-solid fa-rotate-left'
-            onClick={() => onremoveFromTrash(mail.id)}
+            onClick={() => onRemoveFromTrash(mail.id)}
           ></i>
         )}
         <i

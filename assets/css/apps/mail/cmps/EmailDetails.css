@@ -1,5 +1,36 @@
+.email-details-container{
+    height: 100%;
+    width: 100%;
+    /* background-color: red; */
+
+    grid-column: 2/3;
+    grid-row: 2/-1;
+}
+
 .email-details{
-    height: 200px;
-    width: 200px;
-    background-color: red;
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    grid-template-rows: repeat(2,1fr) ;
+}
+
+.details-header-container{
+    grid-column: 1/-1;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+}
+
+.details-header-container>h2{
+    margin-inline-start: 15px;
+}
+
+.details-header-container>.edit-mail{
+
+
+}
+
+.email-details>p{
+    margin-inline-start: 25px;
 }
