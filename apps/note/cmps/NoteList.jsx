@@ -46,6 +46,17 @@ export function NoteList({ notes, onRemoveNote, onEditNote, onChangeNoteColor, o
                                 <img src={note.info.image} alt="Note" style={{ maxWidth: '100%', maxHeight: '1fr', marginBottom: '10px' }} />
                             </div>
                         )}
+                        {note.type === 'VideoNote' && (
+                            <div>
+                                <iframe
+                                    width="100%"
+                                    height="315"
+                                    src={`https://www.youtube.com/embed/${note.info.videoId}`}
+                                    allowFullScreen
+                                    title="Video Player"
+                                ></iframe>
+                            </div>
+                        )}
                         <button onClick={() => onDuplicateNote(note.id)}>
                             <i className="fa-solid fa-copy"></i>
                         </button>

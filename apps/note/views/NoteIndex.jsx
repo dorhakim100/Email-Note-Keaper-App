@@ -10,6 +10,7 @@ export function NoteIndex() {
     const [newNoteText, setNewNoteText] = useState('')
     const [newTodo, setNewTodo] = useState('')
     const [newImage, setNewImage] = useState(null)
+    const [videoLink, setVideoLink] = useState('')
 
 
     useEffect(() => {
@@ -204,6 +205,35 @@ export function NoteIndex() {
         setNewImage(null)
     }
 
+    function addVideoNote() {
+        if (!videoLink) return
+
+        const videoId = extractVideoId(videoLink)
+        if (!videoId) {
+            alert('Invalid Link!')
+            return
+        }
+
+        const note = {
+            id: utilService.makeId(),
+            type: 'VideoNote',
+            style: { backgroundColor: '#b0c4de' },
+            info: { videoId }
+        }
+
+        const updatedNotes = [...notes, note]
+        setNotes(updatedNotes)
+        storageService.saveToStorage(noteService.NOTE_KEY, updatedNotes)
+        setVideoLink('')
+
+    }
+
+    function extractVideoId(url) {
+        const regex = /(?:http(?:s)?:\/\/)?(?:www\.)?youtu(?:be\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|\.be\/)([\w\-\_]*)(&(amp;)?[\w?‌​=]*)?/
+        const match = url.match(regex)
+        return match ? match[1] : null
+    }
+
     return <section className='notes-main-page'>
         <h2>Notes:</h2>
         <div className='new-note'>
@@ -231,6 +261,15 @@ export function NoteIndex() {
                 onChange={onImageUpload}
             />
             <button onClick={addImageNote}>Add Image Note <i className="fa-solid fa-image"></i></button>
+        </div>
+        <div className='new-video'>
+            <input
+                type='text'
+                value={videoLink}
+                onChange={(event) => setVideoLink(event.target.value)}
+                placeholder="Enter Youtube Link:"
+            />
+            <button onClick={addVideoNote}>Add Video Note <i className="fa-solid fa-video"></i></button>
         </div>
 
         <NoteList

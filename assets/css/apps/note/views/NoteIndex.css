@@ -15,7 +15,8 @@
 
  .new-note,
  .new-todo,
- .new-image {
+ .new-image,
+ .new-video {
      padding: 10px;
      background-color: lightsteelblue;
      margin-bottom: 10px;
