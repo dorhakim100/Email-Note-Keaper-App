@@ -31,6 +31,49 @@
 
 }
 
+.btn-container{
+    grid-column: 1/-1;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.btn-container>button{
+    cursor: pointer;
+    border: none;
+    background-color: transparent;
+
+
+
+    border-radius: 50%;
+    height: 3em;
+    width: 3em;
+
+    margin: 5px;
+}
+
+.nav-btns>button{
+align-self: center;
+
+cursor: pointer;
+border: none;
+background-color: transparent;
+
+border-radius: 50%;
+height: 3em;
+width: 3em;
+
+margin: 5px;
+}
+
+.btn-container>button:hover{
+    background-color: var(--dark-gray);
+}
+.nav-btns>button:hover{
+    background-color: var(--dark-gray);
+}
+
 .email-details>p{
     margin-inline-start: 25px;
 }
