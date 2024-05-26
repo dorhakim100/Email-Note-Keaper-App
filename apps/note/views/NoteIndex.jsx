@@ -4,14 +4,13 @@ import { noteService } from '../services/note.service.js'
 import { storageService } from '../../../services/storage.service.js'
 import { NoteList } from '../cmps/NoteList.jsx'
 import { VideoNote } from '../cmps/VideoNote.jsx'
+import { ImageNote } from '../cmps/ImageNote.jsx'
 
 export function NoteIndex() {
 
     const [notes, setNotes] = useState([])
     const [newNoteText, setNewNoteText] = useState('')
     const [newTodo, setNewTodo] = useState('')
-    const [newImage, setNewImage] = useState(null)
-
 
     useEffect(() => {
         const initNotes = storageService.loadFromStorage(noteService.NOTE_KEY) || noteService.notes()
@@ -170,35 +169,6 @@ export function NoteIndex() {
         storageService.saveToStorage(noteService.NOTE_KEY, updatedNotes)
     }
 
-    function onImageUpload(event) {
-        const file = event.target.files[0]
-        const reader = new FileReader()
-
-        reader.onloadend = () => {
-            setNewImage(reader.result)
-        }
-
-        if (file) {
-            reader.readAsDataURL(file)
-        }
-    }
-
-    function addImageNote() {
-        if (!newImage) return
-
-        const note = {
-            id: utilService.makeId(),
-            type: 'ImageNote',
-            style: { backgroundColor: '#b0c4de' },
-            info: { image: newImage }
-        }
-
-        const updatedNotes = [...notes, note]
-        setNotes(updatedNotes)
-        storageService.saveToStorage(noteService.NOTE_KEY, updatedNotes)
-        setNewImage(null)
-    }
-
     return <section className='notes-main-page'>
         <h2>Notes:</h2>
         <div className='new-note'>
@@ -219,14 +189,7 @@ export function NoteIndex() {
             />
             <button onClick={addTodo}>Add Todo List <i className="fa-solid fa-list"></i> </button>
         </div>
-        <div className='new-image'>
-            <input
-                type="file"
-                accept="image/*"
-                onChange={onImageUpload}
-            />
-            <button onClick={addImageNote}>Add Image Note <i className="fa-solid fa-image"></i></button>
-        </div>
+        <ImageNote notes={notes} setNotes={setNotes} />
         <VideoNote notes={notes} setNotes={setNotes} />
 
         <NoteList
