@@ -38,35 +38,35 @@ export function MailList({
           {
             if (mail.isTrash === false && folder.current !== 'trash') {
               return (
-                <Link replace to={`/mail/${folder.current}/${mail.id}`}>
-                  <div key={mail.id}>
-                    <EmailPreview
-                      mail={mail}
-                      toggleFavorite={toggleFavorite}
-                      toggleRead={toggleRead}
-                      moveToTrash={moveToTrash}
-                      folder={folder}
-                      removeFromTrash={removeFromTrash}
-                      openMail={openMail}
-                    />
-                  </div>
-                </Link>
+                // <Link replace to={`/mail/${folder.current}/${mail.id}`}>
+                <div key={mail.id}>
+                  <EmailPreview
+                    mail={mail}
+                    toggleFavorite={toggleFavorite}
+                    toggleRead={toggleRead}
+                    moveToTrash={moveToTrash}
+                    folder={folder}
+                    removeFromTrash={removeFromTrash}
+                    openMail={openMail}
+                  />
+                </div>
+                // </Link>
               )
             } else if (folder.current === 'trash') {
               return (
-                <Link replace to={`/mail/${folder.current}/${mail.id}`}>
-                  <div key={mail.id}>
-                    <EmailPreview
-                      mail={mail}
-                      toggleFavorite={toggleFavorite}
-                      toggleRead={toggleRead}
-                      moveToTrash={moveToTrash}
-                      folder={folder}
-                      removeFromTrash={removeFromTrash}
-                      openMail={openMail}
-                    />
-                  </div>
-                </Link>
+                // <Link replace to={`/mail/${folder.current}/${mail.id}`}>
+                <div key={mail.id}>
+                  <EmailPreview
+                    mail={mail}
+                    toggleFavorite={toggleFavorite}
+                    toggleRead={toggleRead}
+                    moveToTrash={moveToTrash}
+                    folder={folder}
+                    removeFromTrash={removeFromTrash}
+                    openMail={openMail}
+                  />
+                </div>
+                // </Link>
               )
             }
           }

@@ -149,8 +149,8 @@ export function MailIndex() {
       msg = 'Mail set as read successfully'
     }
     const newMails = { ...mailsList }
-    storageService.put(MAIL_KEY, mail).then(() => {
-      storageService
+    return storageService.put(MAIL_KEY, mail).then(() => {
+      return storageService
         .query(MAIL_KEY)
         .then((mails) => {
           const entity = getEntity(folder.current)
@@ -174,10 +174,10 @@ export function MailIndex() {
       console.log(id)
 
       msg = 'Mail deleted successfully'
-      storageService
+      return storageService
         .remove(MAIL_KEY, id)
         .then(() => {
-          storageService.query(MAIL_KEY).then((mails) => {
+          return storageService.query(MAIL_KEY).then((mails) => {
             console.log(mails)
             showSuccessMsg(msg)
             const entity = getEntity(folder.current)
@@ -191,13 +191,12 @@ export function MailIndex() {
         .finally(() => {
           // setIsLoading(false)
         })
-      return
     } else if (!mail.isTrash) {
       msg = 'Mail moved to trash successfully'
       const newMails = { ...mailsList }
       mail.isTrash = true
-      storageService.put(MAIL_KEY, mail).then(() => {
-        storageService
+      return storageService.put(MAIL_KEY, mail).then(() => {
+        return storageService
           .query(MAIL_KEY)
           .then((mails) => {
             const entity = getEntity(folder.current)
@@ -239,7 +238,7 @@ export function MailIndex() {
   function openMail(id) {
     console.log(id)
     console.log(folder.current)
-    // navigate(`/mail/${folder.current}/${id}`)
+    navigate(`/mail/${folder.current}/${id}`)
   }
 
   return (

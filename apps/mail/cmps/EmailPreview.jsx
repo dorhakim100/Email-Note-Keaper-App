@@ -1,3 +1,7 @@
+const { useRef } = React
+
+import { PreviewEditController } from './PreviewEditController.jsx'
+
 export function EmailPreview({
   mail,
   toggleFavorite,
@@ -7,35 +11,41 @@ export function EmailPreview({
   removeFromTrash,
   openMail,
 }) {
-  function onToggleFavorite({ target }) {
-    toggleFavorite(target.dataset.id)
+  let isEdit = false
+  const edit = useRef()
+
+  function onToggleFavorite(id, e) {
+    // e.preventDefault()
+    toggleFavorite(e.target.dataset.id)
   }
 
-  function onReadMail(id) {
-    toggleRead(id)
-  }
+  function onOpenMail(id, e) {
+    console.log(isEdit)
+    if (isEdit) return
+    if (edit.current) return
 
-  function onMoveToTrash(id) {
-    moveToTrash(id)
-  }
-
-  function onRemoveFromTrash(id) {
-    removeFromTrash(id)
-  }
-
-  function onOpenMail(id) {
+    // e.preventDefault()
+    console.log(e.target)
     openMail(id)
+    // e.target.addEventListener('onclick', console.log(id))
+    // e.target.addEventListener('click', openMail(id))
   }
 
   return (
     <div
       className={`mail-container ${mail.isRead && 'read'}`}
-      onClick={() => onOpenMail(mail.id)}
+      onClick={(event) => {
+        // isEdit = false
+        onOpenMail(mail.id, event)
+      }}
     >
       <i
         data-id={mail.id}
         className={`fa-solid fa-star ${mail.isFavorite ? ` favorite` : ``}`}
-        onClick={onToggleFavorite}
+        onClick={(event) => {
+          isEdit = true
+          onToggleFavorite(mail.id, event)
+        }}
       ></i>
       <h2>
         {mail.isSent && <span>To: </span>}
@@ -44,25 +54,15 @@ export function EmailPreview({
       <h3>{mail.subject}</h3>
       <p>{mail.body}</p>
       <p className='time-container'>{mail.timeStr}</p>
-      <div className='edit-mail'>
-        <i
-          className='fa-solid fa-trash'
-          onClick={() => onMoveToTrash(mail.id)}
-        ></i>
-        {folder.current === 'trash' && (
-          <i
-            className='fa-solid fa-rotate-left'
-            onClick={() => onRemoveFromTrash(mail.id)}
-          ></i>
-        )}
-        <i
-          className={`fa-regular ${
-            (mail.isRead && 'fa-envelope') ||
-            (mail.isRead === false && 'fa-envelope-open')
-          }`}
-          onClick={() => onReadMail(mail.id)}
-        ></i>
-      </div>
+      <PreviewEditController
+        mail={mail}
+        toggleFavorite={toggleFavorite}
+        toggleRead={toggleRead}
+        moveToTrash={moveToTrash}
+        folder={folder}
+        removeFromTrash={removeFromTrash}
+        edit={edit}
+      />
     </div>
   )
 }
