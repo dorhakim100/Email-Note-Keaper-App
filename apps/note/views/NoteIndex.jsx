@@ -6,15 +6,19 @@ import { NoteList } from '../cmps/NoteList.jsx'
 import { VideoNote } from '../cmps/VideoNote.jsx'
 import { ImageNote } from '../cmps/ImageNote.jsx'
 
+
 export function NoteIndex() {
 
     const [notes, setNotes] = useState([])
     const [newNoteText, setNewNoteText] = useState('')
     const [newTodo, setNewTodo] = useState('')
 
+
     useEffect(() => {
         const initNotes = storageService.loadFromStorage(noteService.NOTE_KEY) || noteService.notes()
+
         setNotes(initNotes)
+
     }, [])
 
     function onRemoveNote(noteId) {

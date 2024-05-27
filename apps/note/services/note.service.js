@@ -15,7 +15,6 @@ export const noteService = {
 
 function notes() {
     let notes = storageService.loadFromStorage(NOTE_KEY)
-
     if (!notes || notes.length === 0) {
         notes = [
             {
