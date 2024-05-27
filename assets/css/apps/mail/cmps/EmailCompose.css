@@ -8,8 +8,9 @@
     /* width: 40vw; */
 
     background-color: white;
-
     display: none;
+
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 
 .compose-header-container{
@@ -19,6 +20,8 @@
 
     background-color: aliceblue;
     cursor: pointer;
+
+   
 }
 
 .compose-header-container>.x-btn{

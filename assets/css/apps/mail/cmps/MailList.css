@@ -7,10 +7,13 @@
 
 
  .mail-container{
-    display: flex;
+    display: grid;
+    grid-template-columns: 1fr 2fr 2fr 4fr 1fr 1fr;
+
 
     align-items: center;
-    justify-content: space-between;
+    /* justify-content: space-between; */
+    justify-items: center;
 
     border-left: 1px solid rgb(85, 85, 85);
     border-right: 1px solid rgb(85, 85, 85);
@@ -36,7 +39,55 @@
  }
 
  .favorite{
+   
 
-    color: yellow;
+    color: rgb(255, 204, 0);
  }
+
+ .mail-container>i{
+        padding: 10px;
+      border-radius: 50%;
+ }
+
+ .mail-container>i:hover{
+
+
+    background-color: var(--dark-gray);
+ }
+
+.mail-container:hover>.preview-body{
+grid-column: 4/6;
+}
+
+ .edit-mail>i{
+    cursor: pointer;
+
+ }
+
+ .mail-container:hover>.edit-mail{
+    display: none;
+
+    gap: 15px;
+ }
+
+ .mail-container:hover>.edit-mail{
+    display: flex;
+ }
+ .mail-container:hover>.time-container{
+    display: none;
+ }
+
+ .edit-mail>i{
+    padding: 10px;
+    border-radius: 50%;
+ }
+
+ .edit-mail>i:hover{
+    background-color: var(--dark-gray);
+ }
+
+ .read{
+    background-color: rgb(211, 223, 247);
+ }
+
 

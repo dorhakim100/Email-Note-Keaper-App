@@ -1,58 +1,84 @@
 import { storageService } from '../../../services/async-storage.service.js'
 
+import { MailFolder } from '../cmps/MailFolder.jsx'
+
+const { useRef, useEffect } = React
+const { Link, Outlet } = ReactRouterDOM
+
+const { useParams, useNavigate } = ReactRouter
+
 export function EmailFolderList({
   mailsList,
   emailComposeRef,
   toggleCompose,
   changeFolder,
+  folder,
 }) {
+  const params = useParams()
+  const navigate = useNavigate()
+
+  // console.log(params.folder)
+
+  // useEffect(() => {
+
+  //   console.log('works')
+  //   console.log(params.folder.mailId)
+  // }, [params.folder.mailId])
+
+  const folders = [
+    {
+      name: 'received',
+      icon: 'fa-inbox',
+    },
+    {
+      name: 'favorite',
+      icon: 'fa-star',
+    },
+    {
+      name: 'sent',
+      icon: 'fa-paper-plane',
+    },
+    {
+      name: 'draft',
+      icon: 'fa-file',
+    },
+    {
+      name: 'trash',
+      icon: 'fa-trash',
+    },
+  ]
+
   function onChangeFolder({ target }) {
-    const folder = target.dataset.folder
-    console.log(folder)
-    console.log(mailsList)
-    changeFolder(folder)
+    const folderToChange = target.dataset.folder
+    // console.log(folderToChange)
+    // folder.current = folderToChange
+    // navigate(`/mail/${folderToChange}`)
+    changeFolder(folderToChange)
   }
+  console.log(folder)
 
   return (
     <div className='nav-bar-container'>
-      <div onClick={toggleCompose}>
-        <i className='fa-solid fa-pencil'></i>
-        <h3 className='nav-text'>New Email</h3>
-      </div>
+      <Link to={`/mail/compose`}>
+        <div onClick={toggleCompose} className='folder compose'>
+          <i className='fa-solid fa-pencil'></i>
+          <h3 className='nav-text'>New Email</h3>
+        </div>
+      </Link>
 
-      <div onClick={onChangeFolder} data-folder='received'>
-        <i className='fa-solid fa-inbox' data-folder='received'></i>
-        <h3 className='nav-text' data-folder='received'>
-          Received
-        </h3>
-      </div>
-      <div onClick={onChangeFolder} data-folder='favorite'>
-        <i className='fa-regular fa-star' data-folder='favorite'></i>
-        <h3 className='nav-text' data-folder='favorite'>
-          Favorite
-        </h3>
-      </div>
-
-      <div onClick={onChangeFolder} data-folder='sent'>
-        <i className='fa-regular fa-paper-plane' data-folder='sent'></i>
-        <h3 className='nav-text' data-folder='sent'>
-          Sent
-        </h3>
-      </div>
-
-      <div onClick={onChangeFolder} data-folder='draft'>
-        <i className='fa-regular fa-file' data-folder='draft'></i>
-        <h3 className='nav-text' data-folder='draft'>
-          Draft
-        </h3>
-      </div>
-
-      <div onClick={onChangeFolder} data-folder='trash'>
-        <i className='fa-solid fa-trash' data-folder='trash'></i>
-        <h3 className='nav-text' data-folder='trash'>
-          Trash
-        </h3>
-      </div>
+      {folders.map((folderObject) => {
+        return (
+          <Link to={`/mail/${folder.current}`}>
+            <MailFolder
+              key={folderObject.name}
+              onChangeFolder={onChangeFolder}
+              name={folderObject.name}
+              icon={folderObject.icon}
+              activeFolder={folder}
+            />
+          </Link>
+        )
+      })}
     </div>
   )
 }

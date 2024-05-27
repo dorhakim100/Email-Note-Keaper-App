@@ -2,57 +2,88 @@
     grid-row: 1/-1;
     grid-column: 1/2;
 
-    transition-duration: 0.4s;
+
     display: flex;
     flex-direction: column;
 
     gap: 15px;
     padding: 5px;
+
+    background-color: var(--light-gray);
+
+     transition: .4s;
+     width: 4.4em;
 }
 
-.nav-bar-container{
-    /* width: 15em; */
 
-    background-color: red;
-
-
+.nav-bar-container:hover{
+    /* width: calc(10% + 10em); */
+    width: 15em;
 }
 
-.nav-bar-container>div>i{
+
+.folder>i{
     padding: 25px;
     /* background-color: green; */
 
     transition: .2s;
 }
 .nav-bar-container>div{
-
+   
     cursor: pointer;
 }
 
-.nav-bar-container>div:hover>i{
-    font-size: 2em;
+.folder:hover>i{
+    font-size: 1.5em;
     
 }
 
-.nav-bar-container>div:hover{
+.folder:hover{
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-    background-color: aliceblue;
+    background-color: var(--mid-gray);
 }
 
-.nav-bar-container>div{
+
+
+.folder{
     display: flex;
     align-items: center;
     
-    background-color: blue;
+    /* background-color: blue; */
     border-radius: 25px;
 
 
 }
 
-.nav-text{
-    display: none;
+.folder.compose{
+
+    background-color: rgb(166, 215, 246);
 }
 
-.nav-bar-container>div:hover>.nav-text{
+.folder:hover {
+    background-color: var(--dark-gray);
+}
+.active-folder{
+    background-color: rgb(156, 156, 237);
+}
+.folder.active-folder:hover{
+    background-color: rgb(116, 116, 187);
+}
+.folder.compose:hover{
+
+    background-color: rgb(153, 201, 231);
+}
+.nav-text{
+    display: none;
+    /* opacity: 0; */
+    transition: 0.4s;
+}
+
+.nav-bar-container:hover>div>.nav-text{
+    /* opacity: 1; */
+    display: block;
+}
+.nav-bar-container:hover>a>div>.nav-text{
+    /* opacity: 1; */
     display: block;
 }
