@@ -89,3 +89,8 @@
 
     cursor: pointer;
 }
+
+.send-btn:hover{
+
+    box-shadow: rgba(0, 166, 255, 0.534) 0px 6px 12px -2px, rgba(0, 166, 255, 0.792) 0px 3px 7px -3px;
+}

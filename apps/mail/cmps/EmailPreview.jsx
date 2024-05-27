@@ -53,7 +53,7 @@ export function EmailPreview({
       </h2>
       <h3>{mail.subject}</h3>
       <p className='preview-body'>
-        {(mail.body.length > 50 && mail.body.substring(0, 50) + '...') ||
+        {(mail.body.length > 50 && mail.body.substring(0, 100) + '...') ||
           mail.body}
       </p>
       <p className='time-container'>{mail.timeStr}</p>

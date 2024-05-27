@@ -50,11 +50,23 @@ export function MailIndex() {
   }, [filterBy])
 
   useEffect(() => {
-    if (!params.mailId) return
-    console.log(params.mailId)
+    if (params.mailId === 'compose') {
+      console.log('works')
+    }
+    //   if (params.mailId) {
+    //     console.log('works')
+    //     return
+    //   }
+    //   if (!params.mailId) return
+    //   console.log(params.mailId)
   }, [params.mailId])
 
   useEffect(() => {
+    if (params.folder === 'compose') {
+      if (params.mailId) return
+      // navigate(`/mail/${folder.current}/compose`)
+      return
+    }
     if (!params.folder) {
       changeFolder('received')
 
@@ -70,10 +82,13 @@ export function MailIndex() {
     const curr = emailComposeRef.current.style.display
     if (curr === 'block') {
       emailComposeRef.current.style.display = 'none'
-      navigate(`/mail/${folder.current}`)
+      console.log(params.mailId)
+      // navigate(`/mail/${folder.current}`)
     } else {
       emailComposeRef.current.style.display = 'block'
-      navigate(`/mail/compose`)
+      if (params.mailId) return
+
+      // navigate(`/mail/${folder.current}/compose`)
     }
   }
 
@@ -114,6 +129,7 @@ export function MailIndex() {
       // console.log(newMails.current)
       setMails(mails.filter((mail) => mail[entity]))
       navigate(`/mail/${clickedFolder}`)
+      console.log('blabla')
     })
   }
 
@@ -301,7 +317,7 @@ export function MailIndex() {
       {/* </Route> */}
       {/* <Route path='/mail/:mailId' element={<EmailDetails />} /> */}
       {/* </Routes> */}
-      {params.mailId && (
+      {params.mailId && params.mailId !== 'compose' && (
         <EmailDetails
           mailId={params.mailId}
           folder={folder.current}
@@ -313,7 +329,7 @@ export function MailIndex() {
           setNextPrevMailId={setNextPrevMailId}
         />
       )}
-      {!params.mailId && (
+      {(!params.mailId || params.mailId === 'compose') && (
         <MailList
           // path={`/mail/${folder.current}`}
           mailsList={mailsList}

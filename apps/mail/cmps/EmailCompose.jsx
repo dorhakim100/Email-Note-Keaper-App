@@ -1,9 +1,19 @@
+const { useRef, useState, useEffect } = React
+
 export function EmailCompose({
   mailList,
   setMails,
   emailComposeRef,
   toggleCompose,
 }) {
+  const checkboxStatus = useRef()
+  const [mailCompose, setCompose] = useState(true)
+
+  useEffect(() => {
+    console.log('bla')
+    // setCompose()
+  }, [checkboxStatus.current])
+
   return (
     <section className='email-compose-container' ref={emailComposeRef}>
       <div className='compose-header-container' onClick={toggleCompose}>
@@ -13,7 +23,20 @@ export function EmailCompose({
       <div className='inputs-container'>
         <div className='from-container'>
           <label htmlFor='from'>From</label>
-          <input type='text' id='from' />
+          <input
+            type='checkbox'
+            checked={checkboxStatus.current}
+            onClick={() => {
+              console.log(checkboxStatus.current)
+              checkboxStatus.current = !checkboxStatus.current
+              setCompose()
+              console.log(checkboxStatus.current)
+            }}
+          />
+          <label htmlFor=''>Me</label>
+          {(checkboxStatus.current && <h3>blabla$mail.com</h3>) || (
+            <input type='text' id='from' />
+          )}
         </div>
         <div className='to-container'>
           <label htmlFor='to'>To</label>

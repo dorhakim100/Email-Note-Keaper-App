@@ -17,13 +17,7 @@ export function EmailFolderList({
   const params = useParams()
   const navigate = useNavigate()
 
-  // console.log(params.folder)
-
-  // useEffect(() => {
-
-  //   console.log('works')
-  //   console.log(params.folder.mailId)
-  // }, [params.folder.mailId])
+  let notReadCounter = 0
 
   const folders = [
     {
@@ -48,6 +42,14 @@ export function EmailFolderList({
     },
   ]
 
+  console.log(mailsList)
+  useEffect(() => {}, [])
+  mailsList.forEach((mail) => {
+    if (!mail.isRead && !mail.isTrash) notReadCounter++
+  })
+
+  console.log(notReadCounter)
+
   function onChangeFolder({ target }) {
     const folderToChange = target.dataset.folder
     // console.log(folderToChange)
@@ -59,12 +61,12 @@ export function EmailFolderList({
 
   return (
     <div className='nav-bar-container'>
-      <Link to={`/mail/compose`}>
-        <div onClick={toggleCompose} className='folder compose'>
-          <i className='fa-solid fa-pencil'></i>
-          <h3 className='nav-text'>New Email</h3>
-        </div>
-      </Link>
+      {/* <Link to={`/mail/${folder.current}/compose`}> */}
+      <div onClick={toggleCompose} className='folder compose'>
+        <i className='fa-solid fa-pencil'></i>
+        <h3 className='nav-text'>New Email</h3>
+      </div>
+      {/* </Link> */}
 
       {folders.map((folderObject) => {
         return (
@@ -75,6 +77,7 @@ export function EmailFolderList({
               name={folderObject.name}
               icon={folderObject.icon}
               activeFolder={folder}
+              notReadCounter={notReadCounter}
             />
           </Link>
         )

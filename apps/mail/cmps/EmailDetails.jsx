@@ -28,6 +28,7 @@ export function EmailDetails({
   const navigate = useNavigate()
 
   useEffect(() => {
+    if (params.mailId === 'compose') return
     mailService
       .get(mailId)
       .then((mail) => {

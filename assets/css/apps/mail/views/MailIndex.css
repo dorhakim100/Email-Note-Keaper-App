@@ -8,7 +8,7 @@
 
     display: grid;
     /* grid-template-columns: repeat(2, auto); */
-    grid-template-columns: 5em auto;
+    grid-template-columns: 3.6em auto;
     grid-template-rows: min-content auto;
     
     transition: 0.4s;
