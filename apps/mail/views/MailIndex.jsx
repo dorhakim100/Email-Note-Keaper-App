@@ -30,6 +30,8 @@ export function MailIndex() {
   const folder = useRef('received')
   let clickedFolder
 
+  const newMails = useRef()
+
   const params = useParams()
   const navigate = useNavigate()
 
@@ -103,6 +105,13 @@ export function MailIndex() {
     clickedFolder = paramsFolder
     folder.current = paramsFolder
     storageService.query(MAIL_KEY).then((mails) => {
+      // if (mail.isTrash === false && folder.current !== 'trash') {
+      // }
+
+      newMails.current = mails
+        .filter((mail) => mail[entity])
+        .filter((mail) => mail.isTrash === false && folder.current !== 'trash')
+      // console.log(newMails.current)
       setMails(mails.filter((mail) => mail[entity]))
       navigate(`/mail/${clickedFolder}`)
     })
@@ -241,6 +250,26 @@ export function MailIndex() {
     navigate(`/mail/${folder.current}/${id}`)
   }
 
+  function setNextPrevMailId(mail, paramsFolder) {
+    const entity = getEntity(paramsFolder)
+    return storageService.query(MAIL_KEY).then((mails) => {
+      const newMails = mails
+        .filter((mail) => mail[entity])
+        .filter((mail) => mail.isTrash === false && folder.current !== 'trash')
+      const mailIdx = newMails.findIndex((currMail) => currMail.id === mail.id)
+      const nextMail = newMails[mailIdx + 1]
+        ? newMails[mailIdx + 1]
+        : newMails[0]
+      const prevMail = newMails[mailIdx - 1]
+        ? newMails[mailIdx - 1]
+        : newMails[newMails.length - 1]
+
+      mail.nextMailId = nextMail.id
+      mail.prevMailId = prevMail.id
+      return mail
+    })
+  }
+
   return (
     <section className='body-container'>
       {/* <Link to={`/mail/${folder.current}`}> */}
@@ -280,6 +309,8 @@ export function MailIndex() {
           toggleRead={toggleRead}
           moveToTrash={moveToTrash}
           removeFromTrash={removeFromTrash}
+          newMails={newMails}
+          setNextPrevMailId={setNextPrevMailId}
         />
       )}
       {!params.mailId && (

@@ -21,7 +21,7 @@ export function MailList({
   const params = useParams()
   const navigate = useNavigate()
 
-  // console.log(mailsList)
+  console.log(mailsList)
 
   mailsList.forEach((mail) => {
     const d = new Date(mail.sentAt)
@@ -38,7 +38,6 @@ export function MailList({
           {
             if (mail.isTrash === false && folder.current !== 'trash') {
               return (
-                // <Link replace to={`/mail/${folder.current}/${mail.id}`}>
                 <div key={mail.id}>
                   <EmailPreview
                     mail={mail}
@@ -50,11 +49,9 @@ export function MailList({
                     openMail={openMail}
                   />
                 </div>
-                // </Link>
               )
             } else if (folder.current === 'trash') {
               return (
-                // <Link replace to={`/mail/${folder.current}/${mail.id}`}>
                 <div key={mail.id}>
                   <EmailPreview
                     mail={mail}
@@ -66,12 +63,10 @@ export function MailList({
                     openMail={openMail}
                   />
                 </div>
-                // </Link>
               )
             }
           }
         })}
-      {/* <Outlet /> */}
     </div>
   )
 }

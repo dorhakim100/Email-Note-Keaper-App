@@ -20,7 +20,7 @@ export const mailService = {
   loggedInUser,
   getDefaultFilter,
   save,
-  _setNextPrevMailId,
+  // _setNextPrevMailId,
   get,
 }
 
@@ -29,7 +29,11 @@ function createMails() {
     {
       id: 'e101',
       subject: 'Miss you!',
-      body: 'Would love to catch up sometimes',
+      body: `Would love to catch up sometimes, They are enjoying their vacation in Hawaii. He is studying for his upcoming exams.
+      She isn’t attending the party tonight.
+They‘re not participating in the competition.
+We aren’t going out for dinner this evening.
+He‘s not wearing a jacket despite the cold weather.`,
       isRead: false,
       isReceived: true,
       isFavorite: true,
@@ -44,8 +48,8 @@ function createMails() {
 
     {
       id: 'e102',
-      subject: 'Bla you!',
-      body: 'Would love to catch up sometimes',
+      subject: `I'm happy.`,
+      body: 'His dog barks loudly.',
       isRead: true,
       isReceived: true,
       isFavorite: true,
@@ -60,8 +64,8 @@ function createMails() {
 
     {
       id: 'e103',
-      subject: 'Blo you!',
-      body: 'Would love to catch up sometimes',
+      subject: 'My school starts at 8:00.',
+      body: 'We always eat dinner together.',
       isRead: false,
       isReceived: true,
       isFavorite: false,
@@ -75,8 +79,8 @@ function createMails() {
     },
     {
       id: 'e104',
-      subject: 'Thank you!',
-      body: 'Fla plo love to catch up sometimes',
+      subject: 'They take the bus to work.',
+      body: `He doesn't like vegetables.`,
       isRead: false,
       isReceived: true,
       isFavorite: true,
@@ -90,8 +94,8 @@ function createMails() {
     },
     {
       id: 'e105',
-      subject: 'Thank you!',
-      body: 'Fla plo love to catch up sometimes',
+      subject: `I don’t want anything to drink.`,
+      body: `Those kids don’t speak English.`,
       isRead: false,
       isReceived: true,
       isFavorite: true,
@@ -105,8 +109,8 @@ function createMails() {
     },
     {
       id: 'e106',
-      subject: 'Thank you!',
-      body: 'Fla plo love to catch up sometimes',
+      subject: 'They will not complete the assignment on time.',
+      body: `We‘ll have dinner at a fancy restaurant tonight.`,
       isRead: true,
       isReceived: false,
       isFavorite: true,
@@ -120,12 +124,12 @@ function createMails() {
     },
     {
       id: 'e107',
-      subject: 'Thank you!',
+      subject: 'They are enjoying their vacation in Hawaii.',
       body: 'Fla plo love to catch up sometimes',
       isRead: true,
-      isReceived: false,
+      isReceived: true,
       isFavorite: false,
-      isSent: true,
+      isSent: false,
       isDraft: false,
       isTrash: false,
       sentAt: 1551133930594,
@@ -150,8 +154,8 @@ function createMails() {
     },
     {
       id: 'e109',
-      subject: 'Thank you!',
-      body: 'Fla plo love to catch up sometimes',
+      subject: 'They are enjoying their vacation in Hawaii.',
+      body: 'Thank you.',
       isRead: true,
       isReceived: false,
       isFavorite: false,
@@ -165,7 +169,7 @@ function createMails() {
     },
     {
       id: 'e110',
-      subject: 'Thank you!',
+      subject: `We aren’t going out for dinner this evening.`,
       body: 'Fla plo love to catch up sometimes',
       isRead: true,
       isReceived: false,
@@ -181,7 +185,7 @@ function createMails() {
     {
       id: 'e111',
       subject: 'Thank you!',
-      body: 'Fla plo love to catch up sometimes',
+      body: `We aren’t going out for dinner this evening.`,
       isRead: false,
       isReceived: true,
       isFavorite: false,
@@ -223,20 +227,20 @@ function save(mail) {
 
 function get(mailId) {
   return storageService.get(MAIL_KEY, mailId).then((mail) => {
-    mail = _setNextPrevMailId(mail)
+    // mail = _setNextPrevMailId(mail)
     return mail
   })
 }
 
-function _setNextPrevMailId(mail) {
-  return storageService.query(MAIL_KEY).then((mails) => {
-    const mailIdx = mails.findIndex((currMail) => currMail.id === mail.id)
-    const nextMail = mails[mailIdx + 1] ? mails[mailIdx + 1] : mails[0]
-    const prevMail = mails[mailIdx - 1]
-      ? mails[mailIdx - 1]
-      : mails[mails.length - 1]
-    mail.nextMailId = nextMail.id
-    mail.prevMailId = prevMail.id
-    return mail
-  })
-}
+// function _setNextPrevMailId(mail) {
+//   return storageService.query(MAIL_KEY).then((mails) => {
+//     const mailIdx = mails.findIndex((currMail) => currMail.id === mail.id)
+//     const nextMail = mails[mailIdx + 1] ? mails[mailIdx + 1] : mails[0]
+//     const prevMail = mails[mailIdx - 1]
+//       ? mails[mailIdx - 1]
+//       : mails[mails.length - 1]
+//     mail.nextMailId = nextMail.id
+//     mail.prevMailId = prevMail.id
+//     return mail
+//   })
+// }

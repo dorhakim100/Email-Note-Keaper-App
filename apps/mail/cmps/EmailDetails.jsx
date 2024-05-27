@@ -10,6 +10,7 @@ const Router = ReactRouterDOM.HashRouter
 import { mailService } from '../services/mail.service.js'
 import { ButtonsController } from './ButtonsController.jsx'
 import { DetailsEditButtons } from './DetailsEditButtons.jsx'
+import { storageService } from '../../../services/async-storage.service.js'
 
 export function EmailDetails({
   mailId,
@@ -18,17 +19,30 @@ export function EmailDetails({
   toggleRead,
   moveToTrash,
   removeFromTrash,
+  newMails,
+  setNextPrevMailId,
 }) {
   const [mail, setMail] = useState(null)
 
   const params = useParams()
   const navigate = useNavigate()
 
-  console.log(folder)
-  mailService.get(mailId).then((mail) => {
-    // console.log(mail)
-    setMail(mail)
-  })
+  useEffect(() => {
+    mailService
+      .get(mailId)
+      .then((mail) => {
+        const nextPrevMail = setNextPrevMailId(mail, folder).then((mail) => {
+          setMail(mail)
+        })
+      })
+      .catch((err) => {
+        console.log(err)
+        navigate(`/mail/${folder.current}`)
+      })
+      .finally(() => {
+        console.log('changed')
+      })
+  }, [params.mailId])
 
   return (
     <React.Fragment>
@@ -36,7 +50,7 @@ export function EmailDetails({
         {!mail && <p>Loading...</p>}
         {mail && (
           <div className='email-details'>
-            <ButtonsController setMail={setMail} folder={folder} />
+            <ButtonsController setMail={setMail} folder={folder} mail={mail} />
             <div className='details-header-container'>
               <h2>{mail.subject}</h2>
               <DetailsEditButtons
@@ -47,6 +61,9 @@ export function EmailDetails({
                 mail={mail}
                 folder={folder}
               />
+            </div>
+            <div className='sender-info'>
+              <h3>{mail.from}</h3>
             </div>
             <p>{mail.body}</p>
           </div>

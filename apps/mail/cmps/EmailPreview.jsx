@@ -52,7 +52,10 @@ export function EmailPreview({
         {mail.from}
       </h2>
       <h3>{mail.subject}</h3>
-      <p>{mail.body}</p>
+      <p className='preview-body'>
+        {(mail.body.length > 50 && mail.body.substring(0, 50) + '...') ||
+          mail.body}
+      </p>
       <p className='time-container'>{mail.timeStr}</p>
       <PreviewEditController
         mail={mail}
