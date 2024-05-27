@@ -1,18 +1,97 @@
 const { useRef, useState, useEffect } = React
 
+import { mailService } from '../services/mail.service.js'
+import { utilService } from '../../../services/util.service.js'
+import { storageService } from '../../../services/async-storage.service.js'
+
+import { showSuccessMsg } from '../../../services/event-bus.service.js'
+import { showErrorMsg } from '../../../services/event-bus.service.js'
+
 export function EmailCompose({
   mailList,
   setMails,
   emailComposeRef,
   toggleCompose,
 }) {
-  const checkboxStatus = useRef()
-  const [mailCompose, setCompose] = useState(true)
+  const isFromMe = useRef(true)
+  const [mailSender, setMailSender] = useState(true)
 
   useEffect(() => {
-    console.log('bla')
+    setMailSender(isFromMe.current)
     // setCompose()
-  }, [checkboxStatus.current])
+  }, [isFromMe.current])
+
+  const loggedUserEmail = mailService.loggedInUser.email
+
+  const mail = {
+    id: utilService.makeId,
+    subject: '',
+    body: ``,
+    isRead: false,
+    isReceived: (!isFromMe.current && true) || false,
+    isFavorite: false,
+    isSent: (isFromMe.current && true) || false,
+    isDraft: false,
+    isTrash: false,
+    sentAt: 1551133930594,
+    removedAt: null,
+    from: isFromMe.current && mailService.loggedInUser.email,
+    to: !isFromMe.current || loggedUserEmail,
+    profilePic: `../../../Profiles-SVG/${utilService.getRandomIntInclusive(
+      1,
+      8
+    )}.svg`,
+  }
+
+  function handleChange(event) {
+    const input = event.target.id
+    switch (input) {
+      case 'from':
+        mail.from = event.target.value
+        break
+      case 'to':
+        mail.to = event.target.value
+        break
+      case 'subject':
+        mail.subject = event.target.value
+        break
+      case 'body':
+        mail.body = event.target.value
+        break
+    }
+    if (isFromMe.current) {
+      mail.from = mailService.loggedInUser.email
+      mail.isSent = true
+      mail.isRead = true
+    }
+    // console.log(mail)
+    // console.log(event.target.value)
+  }
+
+  function onSaveMail() {
+    console.log(mail)
+    storageService
+      .post(mailService.MAIL_KEY, mail)
+      .then(() => {
+        storageService
+          .query((mails) => {
+            setMails(mails)
+            const msg = 'Success'
+            showSuccessMsg(msg)
+          })
+          .catch((err) => {
+            console.log(err)
+            const msg = `Couldn't complete...`
+            showErrorMsg(msg)
+          })
+          .finally(() => {
+            toggleCompose()
+          })
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  }
 
   return (
     <section className='email-compose-container' ref={emailComposeRef}>
@@ -25,26 +104,57 @@ export function EmailCompose({
           <label htmlFor='from'>From</label>
           <input
             type='checkbox'
-            checked={checkboxStatus.current}
+            checked={isFromMe.current}
             onClick={() => {
-              console.log(checkboxStatus.current)
-              checkboxStatus.current = !checkboxStatus.current
-              setCompose()
-              console.log(checkboxStatus.current)
+              isFromMe.current = !isFromMe.current
+              if (!isFromMe.current) {
+                mail.from = ''
+                mail.isSent = false
+              }
+              if (isFromMe.current) {
+                mail.from = mailService.loggedInUser.email
+                mail.isSent = true
+                mail.isRead = true
+              }
+              console.log(mail)
+              setMailSender(isFromMe.current)
             }}
           />
           <label htmlFor=''>Me</label>
-          {(checkboxStatus.current && <h3>blabla$mail.com</h3>) || (
-            <input type='text' id='from' />
+          {(isFromMe.current && (
+            <h3>{mailService.loggedInUser.fullName}</h3>
+          )) || (
+            <input
+              type='text'
+              id='from'
+              onKeyUp={(event) => {
+                if (isFromMe.current) return
+                handleChange(event)
+              }}
+            />
           )}
         </div>
         <div className='to-container'>
           <label htmlFor='to'>To</label>
-          <input type='text' id='to' />
+          {!isFromMe.current && mailService.loggedInUser.fullName}
+          {isFromMe.current && (
+            <input
+              type='text'
+              id='to'
+              onKeyUp={(event) => {
+                if (!isFromMe.current) return
+                handleChange(event)
+              }}
+            />
+          )}
         </div>
         <div className='subject-container'>
           <label htmlFor='subject'>Subject</label>
-          <input type='text' id='subject' />
+          <input
+            type='text'
+            id='subject'
+            onKeyUp={(event) => handleChange(event)}
+          />
         </div>
 
         <textarea
@@ -52,10 +162,19 @@ export function EmailCompose({
           name='txt'
           cols='50'
           rows='20'
+          id='body'
+          onKeyUp={(event) => handleChange(event)}
         ></textarea>
       </div>
 
-      <button className='send-btn'>Send</button>
+      <button
+        className='send-btn'
+        onClick={() => {
+          onSaveMail()
+        }}
+      >
+        Send
+      </button>
     </section>
   )
 }

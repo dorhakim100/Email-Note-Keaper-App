@@ -47,10 +47,14 @@ export function EmailPreview({
           onToggleFavorite(mail.id, event)
         }}
       ></i>
-      <h2>
-        {mail.isSent && <span>To: </span>}
-        {mail.from}
-      </h2>
+
+      {(mail.isSent && (
+        <h2>
+          <span>To: </span>
+          {mail.to}
+        </h2>
+      )) || <h2>{mail.from}</h2>}
+
       <h3>{mail.subject}</h3>
       <p className='preview-body'>
         {(mail.body.length > 50 && mail.body.substring(0, 100) + '...') ||

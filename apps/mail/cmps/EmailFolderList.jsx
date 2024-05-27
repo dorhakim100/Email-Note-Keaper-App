@@ -1,8 +1,9 @@
 import { storageService } from '../../../services/async-storage.service.js'
+import { mailService } from '../services/mail.service.js'
 
 import { MailFolder } from '../cmps/MailFolder.jsx'
 
-const { useRef, useEffect } = React
+const { useRef, useEffect, useState } = React
 const { Link, Outlet } = ReactRouterDOM
 
 const { useParams, useNavigate } = ReactRouter
@@ -17,7 +18,8 @@ export function EmailFolderList({
   const params = useParams()
   const navigate = useNavigate()
 
-  let notReadCounter = 0
+  const [notReadCounter, setNotReadCounter] = useState(0)
+  let counter = 0
 
   const folders = [
     {
@@ -42,22 +44,27 @@ export function EmailFolderList({
     },
   ]
 
-  console.log(mailsList)
-  useEffect(() => {}, [])
-  mailsList.forEach((mail) => {
-    if (!mail.isRead && !mail.isTrash) notReadCounter++
-  })
-
-  console.log(notReadCounter)
+  useEffect(() => {
+    storageService
+      .query(mailService.MAIL_KEY)
+      .then((mails) => {
+        mails.forEach((mail) => {
+          if (!mail.isRead && !mail.isTrash && !mail.isDraft && !mail.isSent)
+            counter++
+          setNotReadCounter(counter)
+        })
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  }, [mailsList])
 
   function onChangeFolder({ target }) {
-    const folderToChange = target.dataset.folder
-    // console.log(folderToChange)
-    // folder.current = folderToChange
-    // navigate(`/mail/${folderToChange}`)
+    let folderToChange = target.dataset.folder
+    if (!folderToChange) folderToChange = 'received'
+
     changeFolder(folderToChange)
   }
-  console.log(folder)
 
   return (
     <div className='nav-bar-container'>

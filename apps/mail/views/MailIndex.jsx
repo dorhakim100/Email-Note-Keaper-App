@@ -62,11 +62,6 @@ export function MailIndex() {
   }, [params.mailId])
 
   useEffect(() => {
-    if (params.folder === 'compose') {
-      if (params.mailId) return
-      // navigate(`/mail/${folder.current}/compose`)
-      return
-    }
     if (!params.folder) {
       changeFolder('received')
 
