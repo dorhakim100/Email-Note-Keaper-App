@@ -1,1 +1,33 @@
  /* note list */
+ .note-list-container {
+     display: flex;
+     flex-direction: column;
+     align-items: center;
+ }
+
+ .todo-list {
+     display: flex;
+     flex-direction: column;
+     padding: 10px;
+ }
+
+ .todo-list li {
+     background-color: whitesmoke;
+     display: flex;
+     align-items: center;
+     gap: 10px;
+     padding: 10px;
+     cursor: pointer;
+ }
+
+ .todo-list li .task-action {
+     margin-left: auto;
+ }
+
+ .todo-list li:nth-child(even) {
+     background-color: lightgray;
+ }
+
+ .done {
+     text-decoration: line-through;
+ }

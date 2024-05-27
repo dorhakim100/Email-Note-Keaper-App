@@ -5,9 +5,6 @@ import { storageService } from '../../../services/async-storage.service.js'
 import { utilService } from '../../../services/util.service.js'
 
 const MAIL_KEY = 'mailList'
-
-// localStorage.clear()
-
 const mailList = localStorage.getItem(MAIL_KEY) || createMails()
 
 const loggedInUser = {
