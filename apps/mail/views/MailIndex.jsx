@@ -168,6 +168,7 @@ export function MailIndex() {
       mail.isRead = true
       msg = 'Mail set as read successfully'
     }
+
     const newMails = { ...mailsList }
     return storageService.put(MAIL_KEY, mail).then(() => {
       return storageService
@@ -256,9 +257,24 @@ export function MailIndex() {
   }
 
   function openMail(id) {
-    console.log(id)
-    console.log(folder.current)
+    const mail = mailsList.find((mail) => mail.id === id)
+    mail.isRead = true
+    const newMails = { ...mailsList }
     navigate(`/mail/${folder.current}/${id}`)
+    storageService.put(MAIL_KEY, mail).then(() => {
+      return storageService
+        .query(MAIL_KEY)
+        .then((mails) => {
+          const entity = getEntity(folder.current)
+          setMails(mails.filter((mail) => mail[entity]))
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+        .finally(() => {
+          // setIsLoading(false)
+        })
+    })
   }
 
   function setNextPrevMailId(mail, paramsFolder) {
