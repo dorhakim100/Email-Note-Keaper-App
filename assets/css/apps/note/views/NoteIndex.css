@@ -1,5 +1,4 @@
  /* note index */
-
  .noteList {
      display: grid;
      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -11,5 +10,19 @@
      background-color: #b0c4de;
      padding: 10px;
      border-radius: 5px;
-     box-shadow: 0 2px 5px
+     box-shadow: 0 2px 5px;
+ }
+
+ .new-note,
+ .new-todo,
+ .new-image,
+ .new-video {
+     padding: 10px;
+     background-color: lightsteelblue;
+     margin-bottom: 10px;
+     border-radius: 5px;
+ }
+
+ button {
+     cursor: pointer;
  }

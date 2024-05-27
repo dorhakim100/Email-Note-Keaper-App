@@ -6,10 +6,10 @@ import { storageService } from '../../../services/async-storage.service.js'
 const MAIL_KEY = 'mailList'
 
 localStorage.clear()
-console.log(localStorage.getItem(MAIL_KEY))
+// console.log(localStorage.getItem(MAIL_KEY))
 
 const mailList = localStorage.getItem(MAIL_KEY) || createMails()
-console.log(mailList)
+// console.log(mailList)
 
 const loggedInUser = {
   email: 'user@appsus.com',
