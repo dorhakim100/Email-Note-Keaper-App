@@ -2,6 +2,7 @@
 
 // import { storageService } from '../../../services/storage.service.js'
 import { storageService } from '../../../services/async-storage.service.js'
+import { utilService } from '../../../services/util.service.js'
 
 const MAIL_KEY = 'mailList'
 
@@ -31,9 +32,9 @@ function createMails() {
       subject: 'Miss you!',
       body: `Would love to catch up sometimes, They are enjoying their vacation in Hawaii. He is studying for his upcoming exams.
       She isn’t attending the party tonight.
-They‘re not participating in the competition.
-We aren’t going out for dinner this evening.
-He‘s not wearing a jacket despite the cold weather.`,
+      They‘re not participating in the competition.
+      We aren’t going out for dinner this evening.
+      He‘s not wearing a jacket despite the cold weather.`,
       isRead: false,
       isReceived: true,
       isFavorite: true,
@@ -44,6 +45,10 @@ He‘s not wearing a jacket despite the cold weather.`,
       removedAt: null,
       from: 'momo@momo.com',
       to: 'user@appsus.com',
+      profilePic: `../../../Profiles-SVG/${utilService.getRandomIntInclusive(
+        1,
+        8
+      )}.svg`,
     },
 
     {
@@ -60,6 +65,10 @@ He‘s not wearing a jacket despite the cold weather.`,
       removedAt: null,
       from: 'momo@momo.com',
       to: 'user@appsus.com',
+      profilePic: `../../../Profiles-SVG/${utilService.getRandomIntInclusive(
+        1,
+        8
+      )}.svg`,
     },
 
     {
@@ -76,6 +85,10 @@ He‘s not wearing a jacket despite the cold weather.`,
       removedAt: null,
       from: 'momo@momo.com',
       to: 'user@appsus.com',
+      profilePic: `../../../Profiles-SVG/${utilService.getRandomIntInclusive(
+        1,
+        8
+      )}.svg`,
     },
     {
       id: 'e104',
@@ -91,6 +104,10 @@ He‘s not wearing a jacket despite the cold weather.`,
       removedAt: null,
       from: 'momo@momo.com',
       to: 'user@appsus.com',
+      profilePic: `../../../Profiles-SVG/${utilService.getRandomIntInclusive(
+        1,
+        8
+      )}.svg`,
     },
     {
       id: 'e105',
@@ -106,6 +123,10 @@ He‘s not wearing a jacket despite the cold weather.`,
       removedAt: null,
       from: 'momo@momo.com',
       to: 'user@appsus.com',
+      profilePic: `../../../Profiles-SVG/${utilService.getRandomIntInclusive(
+        1,
+        8
+      )}.svg`,
     },
     {
       id: 'e106',
@@ -121,6 +142,10 @@ He‘s not wearing a jacket despite the cold weather.`,
       removedAt: null,
       from: 'user@appsus.com',
       to: 'random@user.com',
+      profilePic: `../../../Profiles-SVG/${utilService.getRandomIntInclusive(
+        1,
+        8
+      )}.svg`,
     },
     {
       id: 'e107',
@@ -136,6 +161,10 @@ He‘s not wearing a jacket despite the cold weather.`,
       removedAt: null,
       from: 'user@appsus.com',
       to: 'random2@user.com',
+      profilePic: `../../../Profiles-SVG/${utilService.getRandomIntInclusive(
+        1,
+        8
+      )}.svg`,
     },
     {
       id: 'e108',
@@ -151,6 +180,10 @@ He‘s not wearing a jacket despite the cold weather.`,
       removedAt: null,
       from: 'user@appsus.com',
       to: 'momo@mimi.com',
+      profilePic: `../../../Profiles-SVG/${utilService.getRandomIntInclusive(
+        1,
+        8
+      )}.svg`,
     },
     {
       id: 'e109',
@@ -166,6 +199,10 @@ He‘s not wearing a jacket despite the cold weather.`,
       removedAt: null,
       from: 'momo@momo.com',
       to: 'user@appsus.com',
+      profilePic: `../../../Profiles-SVG/${utilService.getRandomIntInclusive(
+        1,
+        8
+      )}.svg`,
     },
     {
       id: 'e110',
@@ -181,6 +218,10 @@ He‘s not wearing a jacket despite the cold weather.`,
       removedAt: null,
       from: 'momo@momo.com',
       to: 'user@appsus.com',
+      profilePic: `../../../Profiles-SVG/${utilService.getRandomIntInclusive(
+        1,
+        8
+      )}.svg`,
     },
     {
       id: 'e111',
@@ -196,6 +237,10 @@ He‘s not wearing a jacket despite the cold weather.`,
       removedAt: null,
       from: 'momo@momo.com',
       to: 'user@appsus.com',
+      profilePic: `../../../Profiles-SVG/${utilService.getRandomIntInclusive(
+        1,
+        8
+      )}.svg`,
     },
   ]
 

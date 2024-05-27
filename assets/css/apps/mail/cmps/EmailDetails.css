@@ -9,8 +9,9 @@
 
 .email-details{
     display: grid;
-    grid-template-columns: repeat(2,1fr);
-    grid-template-rows: repeat(2,1fr) ;
+    grid-template-rows: repeat(4,1fr);
+    /* grid-template-columns: repeat(2,1fr);
+    grid-template-rows: repeat(2,1fr) ; */
 }
 
 .details-header-container{
@@ -24,6 +25,22 @@
 
 .details-header-container>h2{
     margin-inline-start: 15px;
+}
+.details-header-container>h2>span{
+    margin-inline-start: 15px;
+    font-size: 0.7em;
+    background-color: var(--light-gray);
+    color: var(--dark-gray);
+    padding: 3px;
+    border-radius: 5px;
+
+    cursor: pointer;
+}
+.details-header-container>h2>span:hover{
+
+    background-color: var(--dark-gray);
+    color: var(--light-gray);
+
 }
 
 .details-header-container>.edit-mail{
@@ -76,4 +93,17 @@ margin: 5px;
 
 .email-details>p{
     margin-inline-start: 25px;
+}
+
+.sender-info{
+    display: flex;
+    align-items: center;
+
+    gap: 10px;
+    padding-inline-start: 5px;
+}
+
+.sender-info>img{
+    width: 3em;
+    height: 3em;
 }

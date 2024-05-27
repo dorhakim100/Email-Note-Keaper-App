@@ -52,7 +52,12 @@ export function EmailDetails({
           <div className='email-details'>
             <ButtonsController setMail={setMail} folder={folder} mail={mail} />
             <div className='details-header-container'>
-              <h2>{mail.subject}</h2>
+              <h2>
+                {mail.subject}{' '}
+                <span>
+                  <Link to={`/mail/${folder}`}>{folder}</Link>
+                </span>
+              </h2>
               <DetailsEditButtons
                 toggleFavorite={toggleFavorite}
                 toggleRead={toggleRead}
@@ -63,6 +68,7 @@ export function EmailDetails({
               />
             </div>
             <div className='sender-info'>
+              <img src={mail.profilePic} alt='' />
               <h3>{mail.from}</h3>
             </div>
             <p>{mail.body}</p>
