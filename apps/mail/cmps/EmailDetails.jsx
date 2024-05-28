@@ -11,6 +11,7 @@ import { mailService } from '../services/mail.service.js'
 import { ButtonsController } from './ButtonsController.jsx'
 import { DetailsEditButtons } from './DetailsEditButtons.jsx'
 import { storageService } from '../../../services/async-storage.service.js'
+import { utilService } from '../../../services/util.service.js'
 
 export function EmailDetails({
   mailId,
@@ -33,6 +34,17 @@ export function EmailDetails({
       .get(mailId)
       .then((mail) => {
         const nextPrevMail = setNextPrevMailId(mail, folder).then((mail) => {
+          const date = new Date(mail.sentAt)
+
+          const day = date.getDay()
+          const month = date.getMonth()
+          const monthName = utilService.getMonthName(date)
+          const year = date.getFullYear()
+          const hours = date.getHours()
+          const minutes = date.getMinutes()
+
+          const fullTimeStr = `${day} ${monthName} ${year}, ${hours}:${minutes}`
+          mail.fullTimeStr = fullTimeStr
           setMail(mail)
         })
       })
@@ -59,19 +71,24 @@ export function EmailDetails({
                   <Link to={`/mail/${folder}`}>{folder}</Link>
                 </span>
               </h2>
-              <DetailsEditButtons
-                toggleFavorite={toggleFavorite}
-                toggleRead={toggleRead}
-                moveToTrash={moveToTrash}
-                removeFromTrash={removeFromTrash}
-                mail={mail}
-                folder={folder}
-              />
+              <p>{`${mail.fullTimeStr}`}</p>
             </div>
-            <div className='sender-info'>
-              <img src={mail.profilePic} alt='' />
-              <h3>{mail.from}</h3>
-            </div>
+            <DetailsEditButtons
+              toggleFavorite={toggleFavorite}
+              toggleRead={toggleRead}
+              moveToTrash={moveToTrash}
+              removeFromTrash={removeFromTrash}
+              mail={mail}
+              folder={folder}
+            />
+
+            <img
+              className='sender-info profile-pic'
+              src={mail.profilePic}
+              alt=''
+            />
+            <h3 className='sender-info name'>{mail.from}</h3>
+
             <p>{mail.body}</p>
           </div>
         )}
