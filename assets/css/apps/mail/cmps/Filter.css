@@ -13,7 +13,7 @@
     display: flex;
     gap: 5px;
 
-    background-color: rgb(156, 156, 237);
+    background-color: rgb(177, 177, 245);
     width: fit-content;
 
     padding: 15px;
@@ -21,12 +21,18 @@
     margin: 5px;
 
     border-radius: 15px;
+
+    width: 35vw;
+
+    align-items: center;
+    justify-items: center;
 }
 
 .search-container>input{
-    background-color: rgb(156, 156, 237);
+    background-color: rgb(177, 177, 245);
     outline: none;
     border: none;
+    width: 27vw;
 }
 .search-container>input:focus{
     background-color: white;
@@ -35,6 +41,28 @@
 .search-container:has(input:focus) {
     background-color: white;
 
+}
+
+.search-container:has(input:focus)>.fa-x{
+    opacity: 1;
+    cursor: pointer;
+
+}
+
+.search-container>.fa-x{
+
+padding: 5px;
+border-radius: 50%;
+width: 20px;
+height: 20px;
+text-align: center;
+
+opacity: 0;
+
+}
+.search-container>.fa-x:hover{
+
+background-color: var(--mid-gray);
 }
 
 .filter-container{
