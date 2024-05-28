@@ -33,7 +33,7 @@ export function EmailPreview({
 
   return (
     <div
-      className={`mail-container ${mail.isRead && 'read'}`}
+      className={`mail-container ${(mail.isRead && 'read') || 'not-read'}`}
       onClick={(event) => {
         // isEdit = false
         onOpenMail(mail.id, event)
@@ -49,11 +49,11 @@ export function EmailPreview({
       ></i>
 
       {(mail.isSent && (
-        <h2>
+        <h3>
           <span>To: </span>
           {mail.to}
-        </h2>
-      )) || <h2>{mail.from}</h2>}
+        </h3>
+      )) || <h3>{mail.from}</h3>}
 
       <h3>{mail.subject}</h3>
       <p className='preview-body'>

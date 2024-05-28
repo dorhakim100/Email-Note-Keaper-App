@@ -21,7 +21,7 @@
 
     cursor: pointer;
 
-    font-size: 1em;
+    font-size: 0.9em;
    /* white-space: nowrap; */
    /* text-align: start; */
 }
@@ -109,8 +109,19 @@ grid-column: 4/6;
     background-color: var(--dark-gray);
  }
 
- .read{
-    background-color: rgb(211, 223, 247);
- }
+ 
+ .not-read>h3, .not-read>.time-container{
+    font-family: gmailRobertoBold;
+}
+
+.not-read>p{
+   font-family: gmailRoberto;
+}
+
+.read{
+      background-color: rgb(211, 223, 247);
+}
+
+
 
 

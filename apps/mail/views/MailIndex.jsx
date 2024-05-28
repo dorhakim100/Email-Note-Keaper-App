@@ -308,7 +308,12 @@ export function MailIndex() {
         folder={folder}
       />
       {/* </Link> */}
-      <SearchFilter mailsList={mailsList} setMails={setMails} />
+      <SearchFilter
+        mailsList={mailsList}
+        setMails={setMails}
+        folder={folder.current}
+        getEntity={getEntity}
+      />
       {/* <Routes>
         <Route
           path='/mail/received'
