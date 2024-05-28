@@ -280,10 +280,18 @@ export function MailIndex() {
   function setNextPrevMailId(mail, paramsFolder) {
     const entity = getEntity(paramsFolder)
     return storageService.query(MAIL_KEY).then((mails) => {
-      const newMails = mails
-        .filter((mail) => mail[entity])
-        .filter((mail) => mail.isTrash === false && folder.current !== 'trash')
+      let newMails
+      if (folder.current === 'trash') {
+        newMails = mails.filter((mail) => mail[entity])
+      } else {
+        newMails = mails
+          .filter((mail) => mail[entity])
+          .filter(
+            (mail) => mail.isTrash === false && folder.current !== 'trash'
+          )
+      }
       const mailIdx = newMails.findIndex((currMail) => currMail.id === mail.id)
+      console.log(mailIdx)
       const nextMail = newMails[mailIdx + 1]
         ? newMails[mailIdx + 1]
         : newMails[0]
