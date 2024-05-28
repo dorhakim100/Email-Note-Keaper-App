@@ -12,7 +12,7 @@ export function NoteFilter({ onFilter }) {
 
     return (
         <div className='filter-notes'>
-            <h3>Filter</h3>
+            <h3>Filter:</h3>
             <input
                 name="name"
                 value={filterBy.name}

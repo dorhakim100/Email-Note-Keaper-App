@@ -196,7 +196,7 @@ export function NoteIndex() {
     }
     return <section className='notes-main-page'>
         <h2>Notes:</h2>
-        <NoteFilter onFilter={onFilter} />
+        <NoteFilter className='filter-notes' onFilter={onFilter} />
         <div className='new-note'>
             <input
                 type="text"

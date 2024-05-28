@@ -1,28 +1,23 @@
  /* note index */
- .noteList {
-     display: grid;
-     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-     gap: 10px;
-     list-style: none;
- }
-
- .noteList li {
-     background-color: #b0c4de;
-     padding: 10px;
-     border-radius: 5px;
-     box-shadow: 0 2px 5px;
- }
-
  .new-note,
  .new-todo,
  .new-image,
- .new-video {
+ .new-video,
+ .filter-notes {
      padding: 10px;
      background-color: lightsteelblue;
      margin-bottom: 10px;
      border-radius: 5px;
+     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
  }
 
  button {
+     font-weight: bold;
      cursor: pointer;
+     padding: 8px 12px;
+     background-color: skyblue;
+     color: black;
+     border: none;
+     border-radius: 5px;
+     transition: background-color 0.3s ease;
  }

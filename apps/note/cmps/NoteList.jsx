@@ -3,11 +3,11 @@ export function NoteList({ notes, onRemoveNote, onEditNote, onChangeNoteColor, o
 
     return (
         <section className='note-list-container'>
-            <ul className='noteList'>
+            <ul className='note-list'>
                 {notes.map(note => (
                     <li key={note.id} style={{ backgroundColor: note.style.backgroundColor }}>
                         {note.type === 'NoteTxt' && (
-                            <div>
+                            <div className="note-txt">
                                 <span>{note.info.txt}</span>
                                 <button onClick={() => {
                                     const newText = prompt('Enter new text for the note:', note.info.txt)
@@ -42,12 +42,12 @@ export function NoteList({ notes, onRemoveNote, onEditNote, onChangeNoteColor, o
                             </div>
                         )}
                         {note.type === 'ImageNote' && (
-                            <div>
+                            <div className="image-note">
                                 <img src={note.info.image} alt="Note" style={{ maxWidth: '100%', maxHeight: '1fr', marginBottom: '10px' }} />
                             </div>
                         )}
                         {note.type === 'VideoNote' && (
-                            <div>
+                            <div className="video-note">
                                 <iframe
                                     width="100%"
                                     height="315"
