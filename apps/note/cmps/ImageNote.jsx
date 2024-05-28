@@ -3,7 +3,7 @@ import { utilService } from '../../../services/util.service.js'
 import { noteService } from '../services/note.service.js'
 import { storageService } from '../../../services/storage.service.js'
 
-export function ImageNote({ notes, setNotes }) {
+export function ImageNote({ notes, setNotes, setFilteredNotes }) {
     const [newImage, setNewImage] = useState(null)
 
     function onImageUpload(event) {
@@ -31,8 +31,11 @@ export function ImageNote({ notes, setNotes }) {
 
         const updatedNotes = [...notes, note]
         setNotes(updatedNotes)
+        setFilteredNotes(updatedNotes)
         storageService.saveToStorage(noteService.NOTE_KEY, updatedNotes)
         setNewImage(null)
+
+
     }
     return (
         <div className='new-image'>

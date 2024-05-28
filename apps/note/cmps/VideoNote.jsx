@@ -3,7 +3,7 @@ import { utilService } from '../../../services/util.service.js'
 import { noteService } from '../services/note.service.js'
 import { storageService } from '../../../services/storage.service.js'
 
-export function VideoNote({ notes, setNotes }) {
+export function VideoNote({ notes, setNotes, setFilteredNotes }) {
     const [videoLink, setVideoLink] = useState('')
 
     function addVideoNote() {
@@ -24,8 +24,11 @@ export function VideoNote({ notes, setNotes }) {
 
         const updatedNotes = [...notes, note]
         setNotes(updatedNotes)
+        setFilteredNotes(updatedNotes)
         storageService.saveToStorage(noteService.NOTE_KEY, updatedNotes)
         setVideoLink('')
+
+
     }
 
     function extractVideoId(url) {

@@ -1,17 +1,13 @@
 const { useState, useEffect } = React
-import { noteService } from '../services/note.service.js'
-import { utilService } from '../../../services/util.service.js'
-import { storageService } from '../../../services/storage.service.js'
 
 export function NoteFilter({ onFilter }) {
     const [filterBy, setFilterBy] = useState({ name: '', type: '' })
 
     function handleChange(event) {
         const { name, value } = event.target
-        setFilterBy(prevFilterBy => ({
-            ...prevFilterBy,
-            [name]: value
-        }))
+        const updatedFilter = { ...filterBy, [name]: value }
+        setFilterBy(updatedFilter)
+        onFilter(updatedFilter)
     }
 
     return (
@@ -24,13 +20,17 @@ export function NoteFilter({ onFilter }) {
                 type="text"
                 placeholder='Filter by name'
             />
-            <input
+            <select
                 name="type"
                 value={filterBy.type}
                 onChange={handleChange}
-                type="text"
-                placeholder='Filter by type'
-            />
+            >
+                <option value="">Filter by type</option>
+                <option value="NoteTxt">NoteTxt</option>
+                <option value="ToDo">ToDo</option>
+                <option value="ImageNote">ImageNote</option>
+                <option value="VideoNote">VideoNote</option>
+            </select>
         </div>
     )
 }

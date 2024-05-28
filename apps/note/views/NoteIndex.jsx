@@ -5,19 +5,22 @@ import { storageService } from '../../../services/storage.service.js'
 import { NoteList } from '../cmps/NoteList.jsx'
 import { VideoNote } from '../cmps/VideoNote.jsx'
 import { ImageNote } from '../cmps/ImageNote.jsx'
+import { NoteFilter } from '../cmps/NoteFilter.jsx'
 
 
 export function NoteIndex() {
 
     const [notes, setNotes] = useState([])
+    const [filteredNotes, setFilteredNotes] = useState([])
     const [newNoteText, setNewNoteText] = useState('')
     const [newTodo, setNewTodo] = useState('')
 
 
     useEffect(() => {
         const initNotes = storageService.loadFromStorage(noteService.NOTE_KEY) || noteService.notes()
-
+        // const initNotes = noteService.notes()
         setNotes(initNotes)
+        setFilteredNotes(initNotes)
 
     }, [])
 
@@ -25,6 +28,7 @@ export function NoteIndex() {
         console.log(noteId)
         const updatedNotes = notes.filter(note => note.id !== noteId)
         setNotes(updatedNotes)
+        setFilteredNotes(updatedNotes)
         storageService.saveToStorage(noteService.NOTE_KEY, updatedNotes)
         console.log('notes after removal:', updatedNotes)
     }
@@ -39,6 +43,7 @@ export function NoteIndex() {
         }
         const updatedNotes = [...notes, note]
         setNotes(updatedNotes)
+        setFilteredNotes(updatedNotes)
         storageService.saveToStorage(noteService.NOTE_KEY, updatedNotes)
         console.log('add notes:', updatedNotes)
         setNewNoteText('')
@@ -58,6 +63,7 @@ export function NoteIndex() {
             return note//note to self:test with prompt and other method
         })
         setNotes(updatedNotes)
+        setFilteredNotes(updatedNotes)
         storageService.saveToStorage(noteService.NOTE_KEY, updatedNotes)
         console.log('notes after edit:', updatedNotes)
     }
@@ -76,6 +82,7 @@ export function NoteIndex() {
             return note//note to self:test with color wheel and other method
         })
         setNotes(updatedNotes)
+        setFilteredNotes(updatedNotes)
         storageService.saveToStorage(noteService.NOTE_KEY, updatedNotes)
         // console.log('notes after color change:', updatedNotes)
     }
@@ -92,6 +99,7 @@ export function NoteIndex() {
 
         const updatedNotes = [...notes, duplicatedNote]
         setNotes(updatedNotes)
+        setFilteredNotes(updatedNotes)
         storageService.saveToStorage(noteService.NOTE_KEY, updatedNotes)
 
     }
@@ -106,6 +114,7 @@ export function NoteIndex() {
         }
         const updatedNotes = [...notes, todo]
         setNotes(updatedNotes)
+        setFilteredNotes(updatedNotes)
         storageService.saveToStorage(noteService.NOTE_KEY, updatedNotes)
         console.log('add todos:', updatedNotes)
         setNewTodo('')
@@ -128,6 +137,7 @@ export function NoteIndex() {
             return note
         })
         setNotes(updatedNotes)
+        setFilteredNotes(updatedNotes)
         storageService.saveToStorage(noteService.NOTE_KEY, updatedNotes)
     }
 
@@ -151,6 +161,7 @@ export function NoteIndex() {
             return note
         })
         setNotes(updatedNotes)
+        setFilteredNotes(updatedNotes)
         storageService.saveToStorage(noteService.NOTE_KEY, updatedNotes)
     }
 
@@ -170,11 +181,22 @@ export function NoteIndex() {
         })
 
         setNotes(updatedNotes)
+        setFilteredNotes(updatedNotes)
         storageService.saveToStorage(noteService.NOTE_KEY, updatedNotes)
     }
 
+    function onFilter(filterBy) {
+        const { name = '', type = '' } = filterBy
+        const filtered = notes.filter(note => {
+            const textMatch = !name || (note.info && note.info.txt && note.info.txt.includes(name))
+            const typeMatch = !type || note.type === type
+            return textMatch && typeMatch
+        })
+        setFilteredNotes(filtered)
+    }
     return <section className='notes-main-page'>
         <h2>Notes:</h2>
+        <NoteFilter onFilter={onFilter} />
         <div className='new-note'>
             <input
                 type="text"
@@ -193,11 +215,11 @@ export function NoteIndex() {
             />
             <button onClick={addTodo}>Add Todo List <i className="fa-solid fa-list"></i> </button>
         </div>
-        <ImageNote notes={notes} setNotes={setNotes} />
-        <VideoNote notes={notes} setNotes={setNotes} />
+        <ImageNote notes={filteredNotes} setNotes={setNotes} setFilteredNotes={setFilteredNotes} />
+        <VideoNote notes={filteredNotes} setNotes={setNotes} setFilteredNotes={setFilteredNotes} />
 
         <NoteList
-            notes={notes}
+            notes={filteredNotes}
             onRemoveNote={onRemoveNote}
             onEditNote={onEditNote}
             onChangeNoteColor={onChangeNoteColor}
