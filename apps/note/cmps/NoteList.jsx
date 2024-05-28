@@ -57,17 +57,19 @@ export function NoteList({ notes, onRemoveNote, onEditNote, onChangeNoteColor, o
                                 ></iframe>
                             </div>
                         )}
-                        <button onClick={() => onDuplicateNote(note.id)}>
-                            <i className="fa-solid fa-copy"></i>
-                        </button>
-                        <input
-                            type="color"
-                            value={note.style.backgroundColor}
-                            onChange={(event) => onChangeNoteColor(note.id, event.target.value)}
-                        />
-                        <button onClick={() => onRemoveNote(note.id)}>
-                            <i className="fa-solid fa-trash"></i>
-                        </button>
+                        <div className="edit-buttons">
+                            <button onClick={() => onDuplicateNote(note.id)}>
+                                <i className="fa-solid fa-copy"></i>
+                            </button>
+                            <input
+                                type="color"
+                                value={note.style.backgroundColor}
+                                onChange={(event) => onChangeNoteColor(note.id, event.target.value)}
+                            />
+                            <button onClick={() => onRemoveNote(note.id)}>
+                                <i className="fa-solid fa-trash"></i>
+                            </button>
+                        </div>
                     </li>
                 ))}
             </ul>

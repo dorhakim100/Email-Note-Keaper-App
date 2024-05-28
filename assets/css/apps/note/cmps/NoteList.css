@@ -2,15 +2,11 @@
 .note-list-container {
     display: block;
     padding: 16px;
-    /* background-color: rgb(191, 141, 164); */
-    /* align-self: start; */
-
 }
 
 .note-list {
     display: grid;
     padding: 16px;
-    /* grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); */
 
     @media(min-width:400px) {
         grid-template-columns: repeat(1, 1fr);
@@ -75,4 +71,12 @@
 
 .done {
     text-decoration: line-through;
+}
+
+.edit-buttons {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    margin-top: 10px;
+    gap: 10px;
 }
