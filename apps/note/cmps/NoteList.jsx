@@ -1,5 +1,54 @@
+import Swal from '../../../lib/swal.js'
 
 export function NoteList({ notes, onRemoveNote, onEditNote, onChangeNoteColor, onDuplicateNote, onTodoAddTask, onToggleTask, onRemoveTask }) {
+
+    function handleChangeNote(noteId, currentText) {
+        Swal.fire({
+            text: 'Enter new text for the note:',
+            input: 'text',
+            inputValue: currentText,
+            showCancelButton: true,
+            confirmButtonText: 'Save',
+        }).then((result) => {
+            if (result.isConfirmed && result.value !== currentText) {
+                onEditNote(noteId, result.value)
+            }
+        })
+    }
+
+    function handleChangeTask(noteId) {
+        Swal.fire({
+            text: 'Enter a new task:',
+            input: 'text',
+            showCancelButton: true,
+            confirmButtonText: 'Add Task',
+        }).then((result) => {
+            if (result.isConfirmed && result.value) {
+                onTodoAddTask(noteId, result.value)
+            }
+        })
+    }
+
+    function handleRemoveNote(noteId) {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: 'You will not be able to recover this note!',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                onRemoveNote(noteId)
+                Swal.fire(
+                    'Deleted!',
+                    'Your note has been deleted.',
+                    'success'
+                )
+            }
+        })
+    }
 
     return (
         <section className='note-list-container'>
@@ -9,12 +58,7 @@ export function NoteList({ notes, onRemoveNote, onEditNote, onChangeNoteColor, o
                         {note.type === 'NoteTxt' && (
                             <div className="note-txt">
                                 <span>{note.info.txt}</span>
-                                <button onClick={() => {
-                                    const newText = prompt('Enter new text for the note:', note.info.txt)
-                                    if (newText !== null) {
-                                        onEditNote(note.id, newText)
-                                    }
-                                }}>
+                                <button onClick={() => handleChangeNote(note.id, note.info.txt)}>
                                     <i className="fa-solid fa-pen-to-square"></i>
                                 </button>
                             </div>
@@ -31,12 +75,7 @@ export function NoteList({ notes, onRemoveNote, onEditNote, onChangeNoteColor, o
                                         </li>
                                     ))}
                                 </ul>
-                                <button onClick={() => {
-                                    const newTask = prompt('Enter a new task:')
-                                    if (newTask !== null) {
-                                        onTodoAddTask(note.id, newTask)
-                                    }
-                                }}>
+                                <button onClick={() => handleChangeTask(note.id)}>
                                     <i className="fa-solid fa-list-check"></i>
                                 </button>
                             </div>
@@ -66,7 +105,7 @@ export function NoteList({ notes, onRemoveNote, onEditNote, onChangeNoteColor, o
                                 value={note.style.backgroundColor}
                                 onChange={(event) => onChangeNoteColor(note.id, event.target.value)}
                             />
-                            <button onClick={() => onRemoveNote(note.id)}>
+                            <button onClick={() => handleRemoveNote(note.id)}>
                                 <i className="fa-solid fa-trash"></i>
                             </button>
                         </div>

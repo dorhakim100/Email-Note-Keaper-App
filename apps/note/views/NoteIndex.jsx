@@ -157,9 +157,9 @@ export function NoteIndex() {
             setFilteredNotes(filtered)
         }).catch(error => console.error('Error filtering notes:', error))
     }
-    
+
     return <section className='notes-main-page'>
-        <h2>Notes:</h2>
+        <h2>Notes Dashboard</h2>
         <NoteFilter className='filter-notes' onFilter={onFilter} />
         <div className='new-note'>
             <input
