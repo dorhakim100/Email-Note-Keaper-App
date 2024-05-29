@@ -31,6 +31,8 @@ export function MailIndex() {
   const folder = useRef('received')
   let clickedFolder
 
+  const sortBy = useRef()
+
   const newMails = useRef()
 
   const params = useParams()
@@ -385,6 +387,29 @@ export function MailIndex() {
     })
   }
 
+  function sortEmails() {
+    let entity
+    let sorted
+
+    if (sortBy.current === 'Date') {
+      entity = 'sentAt'
+      sorted = mailsList.sort((a, b) => {
+        if (a.sentAt < b.sentAt) return -1
+        if (a.sentAt > b.sentAt) return 1
+        return 0
+      })
+    } else if (sortBy.current === 'Title') {
+      entity = 'subject'
+      sorted = mailsList.sort((a, b) => {
+        if (a.subject.toUpperCase() < b.subject.toUpperCase()) return -1
+        if (a.subject.toUpperCase() > b.subject.toUpperCase()) return 1
+        return 0
+      })
+    }
+    setMails((prevMails) => [...prevMails])
+    return sorted
+  }
+
   return (
     <section className='body-container'>
       {/* <Link to={`/mail/${folder.current}`}> */}
@@ -404,6 +429,8 @@ export function MailIndex() {
         filterBy={filterBy}
         setFilterBy={setFilterBy}
         filterByTxtReadUnread={filterByTxtReadUnread}
+        sortEmails={sortEmails}
+        sortBy={sortBy}
       />
       {/* <Routes>
         <Route

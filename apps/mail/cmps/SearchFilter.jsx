@@ -13,9 +13,13 @@ export function SearchFilter({
   setFilterBy,
   filterByTxtReadUnread,
   mailsList,
+  sortEmails,
+  sortBy,
 }) {
   const elSearch = useRef()
   const elBtn = useRef()
+
+  let sortStatus
 
   function onFilterReadUnread({ target }) {
     console.log(target)
@@ -73,6 +77,21 @@ export function SearchFilter({
     // }
   }
 
+  const readStatus = [
+    {
+      displayValue: 'All',
+      key: 1,
+    },
+    {
+      displayValue: 'Read',
+      key: 2,
+    },
+    {
+      displayValue: 'Unread',
+      key: 3,
+    },
+  ]
+
   function onClearSearch() {
     console.log(elSearch.current)
     elSearch.current.value = ''
@@ -82,6 +101,12 @@ export function SearchFilter({
       mailsList = filtered
       setMails(filtered)
     })
+  }
+
+  function onSortingMails({ target }) {
+    sortBy.current = target.innerText
+    console.log(mailsList)
+    sortEmails()
   }
 
   return (
@@ -94,31 +119,52 @@ export function SearchFilter({
           type='text'
           placeholder='Search'
         />
+
         <i onClick={onClearSearch} className='fa-solid fa-x'></i>
       </div>
 
       <div className='filter-container'>
-        <button
-          onClick={onFilterReadUnread}
-          data-button='Unread'
-          className={`btn filter ${
-            filterBy.readStatus === 'Unread' && `active`
-          }`}
-        >
-          Unread
-        </button>
-        <button
-          onClick={onFilterReadUnread}
-          className={`btn filter ${filterBy.readStatus === 'Read' && `active`}`}
-        >
-          Read
-        </button>
-        <button
-          onClick={onFilterReadUnread}
-          className={`btn filter ${filterBy.readStatus === 'All' && `active`}`}
-        >
-          All
-        </button>
+        <div className='filter-buttons read-unread'>
+          <button
+            onClick={onFilterReadUnread}
+            className={`btn filter ${
+              filterBy.readStatus === 'All' && `active`
+            }`}
+          >
+            All
+          </button>
+          <button
+            onClick={onFilterReadUnread}
+            data-button='Unread'
+            className={`btn filter ${
+              filterBy.readStatus === 'Unread' && `active`
+            }`}
+          >
+            Unread
+          </button>
+          <button
+            onClick={onFilterReadUnread}
+            className={`btn filter ${
+              filterBy.readStatus === 'Read' && `active`
+            }`}
+          >
+            Read
+          </button>
+        </div>
+        <div className='filter-buttons sorting'>
+          <button
+            onClick={onSortingMails}
+            className={`btn filter ${sortBy.current === 'Date' && `active`}`}
+          >
+            Date
+          </button>
+          <button
+            onClick={onSortingMails}
+            className={`btn filter ${sortBy.current === 'Title' && `active`}`}
+          >
+            Title
+          </button>
+        </div>
       </div>
     </div>
   )

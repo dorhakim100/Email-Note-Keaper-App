@@ -33,7 +33,7 @@ export function EmailCompose({
     isSent: (isFromMe.current && true) || false,
     isDraft: false,
     isTrash: false,
-    sentAt: 1551133930594,
+    sentAt: Date.now(),
     removedAt: null,
     from: isFromMe.current && mailService.loggedInUser.email,
     to: !isFromMe.current || loggedUserEmail,
