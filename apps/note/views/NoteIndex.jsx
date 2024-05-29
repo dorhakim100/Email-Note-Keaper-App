@@ -9,82 +9,65 @@ import { NoteFilter } from '../cmps/NoteFilter.jsx'
 
 
 export function NoteIndex() {
-
     const [notes, setNotes] = useState([])
     const [filteredNotes, setFilteredNotes] = useState([])
     const [newNoteText, setNewNoteText] = useState('')
     const [newTodo, setNewTodo] = useState('')
 
-
     useEffect(() => {
         const initNotes = storageService.loadFromStorage(noteService.NOTE_KEY) || noteService.notes()
-        // const initNotes = noteService.notes()
         setNotes(initNotes)
         setFilteredNotes(initNotes)
 
     }, [])
 
     function onRemoveNote(noteId) {
-        console.log(noteId)
-        const updatedNotes = notes.filter(note => note.id !== noteId)
-        setNotes(updatedNotes)
-        setFilteredNotes(updatedNotes)
-        storageService.saveToStorage(noteService.NOTE_KEY, updatedNotes)
-        console.log('notes after removal:', updatedNotes)
+        noteService.remove(noteId).then(() => {
+            const updatedNotes = notes.filter(note => note.id !== noteId)
+            setNotes(updatedNotes)
+            setFilteredNotes(updatedNotes)
+        }).catch(error => console.error('Error removing note:', error))
     }
 
     function addNote() {
         if (!newNoteText.trim()) return
         const note = {
-            id: utilService.makeId(),
             type: 'NoteTxt',
             style: { backgroundColor: '#b0c4de' },
             info: { txt: newNoteText }
         }
-        const updatedNotes = [...notes, note]
-        setNotes(updatedNotes)
-        setFilteredNotes(updatedNotes)
-        storageService.saveToStorage(noteService.NOTE_KEY, updatedNotes)
-        console.log('add notes:', updatedNotes)
-        setNewNoteText('')
+        noteService.save(note).then(savedNote => {
+            const updatedNotes = [...notes, savedNote]
+            setNotes(updatedNotes)
+            setFilteredNotes(updatedNotes)
+            setNewNoteText('')
+        }).catch(error => console.error('Error adding note:', error))
     }
 
     function onEditNote(noteId, newText) {
-        const updatedNotes = notes.map(note => {
-            if (note.id === noteId) {
-                return {
-                    ...note,
-                    info: {
-                        ...note.info,
-                        txt: newText
-                    }
-                }
-            }
-            return note//note to self:test with prompt and other method
-        })
-        setNotes(updatedNotes)
-        setFilteredNotes(updatedNotes)
-        storageService.saveToStorage(noteService.NOTE_KEY, updatedNotes)
-        console.log('notes after edit:', updatedNotes)
+        const noteToEdit = notes.find(note => note.id === noteId)
+        const updatedNote = {
+            ...noteToEdit,
+            info: { ...noteToEdit.info, txt: newText }
+        }
+        noteService.save(updatedNote).then(() => {
+            const updatedNotes = notes.map(note => note.id === noteId ? updatedNote : note)
+            setNotes(updatedNotes)
+            setFilteredNotes(updatedNotes)
+        }).catch(error => console.error('Error editing note:', error))
     }
 
     function onChangeNoteColor(noteId, newColor) {
-        const updatedNotes = notes.map(note => {
-            if (note.id === noteId) {
-                return {
-                    ...note,
-                    style: {
-                        ...note.style,
-                        backgroundColor: newColor
-                    }
-                }
-            }
-            return note//note to self:test with color wheel and other method
-        })
-        setNotes(updatedNotes)
-        setFilteredNotes(updatedNotes)
-        storageService.saveToStorage(noteService.NOTE_KEY, updatedNotes)
-        // console.log('notes after color change:', updatedNotes)
+        const noteToEdit = notes.find(note => note.id === noteId)
+        const updatedNote = {
+            ...noteToEdit,
+            style: { ...noteToEdit.style, backgroundColor: newColor }
+        }
+        noteService.save(updatedNote).then(() => {
+            const updatedNotes = notes.map(note => note.id === noteId ? updatedNote : note)
+            setNotes(updatedNotes)
+            setFilteredNotes(updatedNotes)
+        }).catch(error => console.error('Error changing note color:', error))
     }
 
     function onDuplicateNote(noteId) {
@@ -107,93 +90,74 @@ export function NoteIndex() {
     function addTodo() {
         if (!newTodo.trim()) return
         const todo = {
-            id: utilService.makeId(),
             type: 'ToDo',
             style: { backgroundColor: '#b0c4de' },
             info: { tasks: [{ text: newTodo, done: false }] }
         }
-        const updatedNotes = [...notes, todo]
-        setNotes(updatedNotes)
-        setFilteredNotes(updatedNotes)
-        storageService.saveToStorage(noteService.NOTE_KEY, updatedNotes)
-        console.log('add todos:', updatedNotes)
-        setNewTodo('')
+        noteService.save(todo).then(savedTodo => {
+            const updatedNotes = [...notes, savedTodo]
+            setNotes(updatedNotes)
+            setFilteredNotes(updatedNotes)
+            setNewTodo('')
+        }).catch(error => console.error('Error adding todo:', error))
     }
 
     function onTodoAddTask(noteId, newTask) {
-        const updatedNotes = notes.map(note => {
-            if (note.id === noteId && note.type === 'ToDo') {
-                return {
-                    ...note,
-                    info: {
-                        ...note.info,
-                        tasks: [
-                            ...note.info.tasks,
-                            { text: newTask, done: false }
-                        ]
-                    }
-                }
+        const noteToEdit = notes.find(note => note.id === noteId)
+        const updatedNote = {
+            ...noteToEdit,
+            info: {
+                ...noteToEdit.info,
+                tasks: [...noteToEdit.info.tasks, { text: newTask, done: false }]
             }
-            return note
-        })
-        setNotes(updatedNotes)
-        setFilteredNotes(updatedNotes)
-        storageService.saveToStorage(noteService.NOTE_KEY, updatedNotes)
+        }
+        noteService.save(updatedNote).then(() => {
+            const updatedNotes = notes.map(note => note.id === noteId ? updatedNote : note)
+            setNotes(updatedNotes)
+            setFilteredNotes(updatedNotes)
+        }).catch(error => console.error('Error adding task:', error))
     }
 
     function onToggleTask(noteId, taskIndex) {
-        const updatedNotes = notes.map(note => {
-            if (note.id === noteId && note.type === 'ToDo') {
-                const updatedTasks = note.info.tasks.map((task, idx) => {
-                    if (idx === taskIndex) {
-                        return { ...task, done: !task.done }
-                    }
-                    return task
-                })
-                return {
-                    ...note,
-                    info: {
-                        ...note.info,
-                        tasks: updatedTasks
-                    }
-                }
-            }
-            return note
-        })
-        setNotes(updatedNotes)
-        setFilteredNotes(updatedNotes)
-        storageService.saveToStorage(noteService.NOTE_KEY, updatedNotes)
+        const noteToEdit = notes.find(note => note.id === noteId)
+        const updatedTasks = noteToEdit.info.tasks.map((task, idx) => idx === taskIndex ? { ...task, done: !task.done } : task)
+        const updatedNote = {
+            ...noteToEdit,
+            info: { ...noteToEdit.info, tasks: updatedTasks }
+        }
+        noteService.save(updatedNote).then(() => {
+            const updatedNotes = notes.map(note => note.id === noteId ? updatedNote : note)
+            setNotes(updatedNotes)
+            setFilteredNotes(updatedNotes)
+        }).catch(error => console.error('Error toggling task:', error))
     }
 
     function onRemoveTask(noteId, taskIndex) {
-        const updatedNotes = notes.map(note => {
-            if (note.id === noteId && note.type === 'ToDo') {
-                const updatedTasks = note.info.tasks.filter((task, index) => index !== taskIndex)
-                return {
-                    ...note,
-                    info: {
-                        ...note.info,
-                        tasks: updatedTasks
-                    }
-                }
-            }
-            return note
-        })
-
-        setNotes(updatedNotes)
-        setFilteredNotes(updatedNotes)
-        storageService.saveToStorage(noteService.NOTE_KEY, updatedNotes)
+        const noteToEdit = notes.find(note => note.id === noteId)
+        const updatedTasks = noteToEdit.info.tasks.filter((_, idx) => idx !== taskIndex)
+        const updatedNote = {
+            ...noteToEdit,
+            info: { ...noteToEdit.info, tasks: updatedTasks }
+        }
+        noteService.save(updatedNote).then(() => {
+            const updatedNotes = notes.map(note => note.id === noteId ? updatedNote : note)
+            setNotes(updatedNotes)
+            setFilteredNotes(updatedNotes)
+        }).catch(error => console.error('Error removing task:', error))
     }
 
     function onFilter(filterBy) {
         const { name = '', type = '' } = filterBy
-        const filtered = notes.filter(note => {
-            const textMatch = !name || (note.info && note.info.txt && note.info.txt.includes(name))
-            const typeMatch = !type || note.type === type
-            return textMatch && typeMatch
-        })
-        setFilteredNotes(filtered)
+        noteService.query().then(notes => {
+            const filtered = notes.filter(note => {
+                const textMatch = !name || (note.info && note.info.txt && note.info.txt.includes(name))
+                const typeMatch = !type || note.type === type
+                return textMatch && typeMatch
+            })
+            setFilteredNotes(filtered)
+        }).catch(error => console.error('Error filtering notes:', error))
     }
+    
     return <section className='notes-main-page'>
         <h2>Notes:</h2>
         <NoteFilter className='filter-notes' onFilter={onFilter} />
