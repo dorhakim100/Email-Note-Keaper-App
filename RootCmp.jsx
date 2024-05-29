@@ -12,6 +12,8 @@ import { MailList } from './apps/mail/cmps/MailList.jsx'
 import { EmailDetails } from './apps/mail/cmps/EmailDetails.jsx'
 
 import { UserMsg } from './cmps/UserMsg.jsx'
+import { Team } from './cmps/Teams.jsx'
+import { Vision } from './cmps/Vision.jsx'
 
 export function App() {
   return (
@@ -20,7 +22,10 @@ export function App() {
         <AppHeader />
         <Routes>
           <Route path='/' element={<Home />} />
-          <Route path='/about' element={<About />} />
+          <Route path='/about' element={<About />}>
+            <Route path='/about/team' element={<Team />} />
+            <Route path='/about/vision' element={<Vision />} />
+          </Route>
           <Route path='/mail' element={<MailIndex />}>
             <Route path='/mail/:folder' element={<MailList />}>
               <Route path='/mail/:folder/:mailId' element={<EmailDetails />} />
