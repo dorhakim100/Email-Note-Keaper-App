@@ -16,7 +16,8 @@
  .new-todo,
  .new-image,
  .new-video,
- .filter-notes {
+ .filter-notes,
+ .note-type-selector {
      padding: 15px;
      background-color: #29527a;
      margin-bottom: 15px;
@@ -25,11 +26,16 @@
      transition: transform 0.2s, background-color 0.3s;
  }
 
+ .filter-notes {
+     color: whitesmoke;
+ }
+
  .new-note:hover,
  .new-todo:hover,
  .new-image:hover,
  .new-video:hover,
- .filter-notes:hover {
+ .filter-notes:hover,
+ .note-type-selector:hover {
      background-color: #e0e8f0;
      transform: scale(1.02);
  }
@@ -58,6 +64,7 @@
      border: none;
      border-radius: 5px;
      transition: background-color 0.3s, transform 0.2s;
+     font-weight: bold;
  }
 
  button:hover {
@@ -81,4 +88,57 @@
      display: flex;
      justify-content: space-between;
      align-items: center;
+ }
+
+ .filter-notes select {
+     font-weight: bold;
+     padding: 10px;
+     border: 2px solid #000000;
+     border-radius: 5px;
+     font-size: 1em;
+     transition: border-color 0.3s;
+
+ }
+
+ .filter-notes select:focus {
+     font-weight: bold;
+ }
+
+ .filter-notes select option {
+     font-weight: bold;
+ }
+
+ .note-type-selector {
+     display: flex;
+     align-items: center;
+     justify-content: center;
+ }
+
+ .note-type-selector label {
+     margin-right: 10px;
+     color: white;
+     font-size: 1.2em;
+     font-weight: bold;
+ }
+
+ .note-type-selector select {
+     padding: 15px 20px;
+     border: 2px solid #d1d9e6;
+     border-radius: 5px;
+     font-size: 1.2em;
+     width: 100%;
+     max-width: 300px;
+     transition: border-color 0.3s;
+     font-weight: bold;
+ }
+
+ .note-type-selector select:focus {
+     border-color: #a0b4d0;
+     outline: none;
+     font-weight: bold;
+ }
+
+ .note-type-selector select option {
+     font-weight: bold;
+
  }
