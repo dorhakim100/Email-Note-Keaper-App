@@ -99,7 +99,6 @@ export function SearchFilter({
 
       <div className='filter-container'>
         <button
-          ref={elBtn}
           onClick={onFilterReadUnread}
           data-button='Unread'
           className={`btn filter ${
@@ -109,14 +108,12 @@ export function SearchFilter({
           Unread
         </button>
         <button
-          ref={elBtn}
           onClick={onFilterReadUnread}
           className={`btn filter ${filterBy.readStatus === 'Read' && `active`}`}
         >
           Read
         </button>
         <button
-          ref={elBtn}
           onClick={onFilterReadUnread}
           className={`btn filter ${filterBy.readStatus === 'All' && `active`}`}
         >

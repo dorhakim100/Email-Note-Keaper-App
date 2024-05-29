@@ -1,0 +1,30 @@
+.about-nav-container{
+    display: flex;
+    
+}
+
+.about-nav-container>*{
+padding: 5px;
+border-radius: 5%;
+}
+
+.about-nav-container>*:hover{
+    background-color: var(--mid-gray);
+}
+
+.team-container{
+    margin: auto;
+    width: 50%;
+    display: flex;
+    justify-items: center;
+
+    padding-inline-start: 1em;
+
+    gap: 2em;
+}
+
+.team-profile{
+    text-align: center;
+
+    border: 1px solid var(--dark-gray);
+}
