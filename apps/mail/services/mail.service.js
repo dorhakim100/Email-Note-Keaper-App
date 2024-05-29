@@ -246,8 +246,9 @@ function createMails() {
   return mails
 }
 
-function getDefaultFilter(filterBy = { txt: '' }) {
-  return { txt: filterBy.txt }
+function getDefaultFilter(filterBy = { txt: '', readStatus: 'All' }) {
+  // console.log(filterBy)
+  return { txt: '', readStatus: 'All' }
 }
 
 function saveToStorage(key, val) {

@@ -80,3 +80,7 @@ background-color: var(--mid-gray);
 .btn.filter:hover{
 background-color: var(--mid-gray);
 }
+
+.filter.active{
+    background-color: var(--dark-gray);
+}

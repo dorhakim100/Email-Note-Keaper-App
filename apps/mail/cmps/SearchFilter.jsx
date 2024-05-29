@@ -7,76 +7,70 @@ export function SearchFilter({
   setMails,
   folder,
   getEntity,
-  filterReadUnread,
+
+  filter,
+  filterBy,
+  setFilterBy,
+  filterByTxtReadUnread,
+  mailsList,
 }) {
   const elSearch = useRef()
-
-  let mailsList
+  const elBtn = useRef()
 
   function onFilterReadUnread({ target }) {
+    console.log(target)
     const btnType = target.innerText
     console.log(btnType)
-    const entity = getEntity(folder)
-    switch (btnType) {
-      case 'Unread':
-        storageService.query(mailService.MAIL_KEY).then((mails) => {
-          const filtered = mails.filter(
-            (mail) => mail[entity] === true && mail.isRead === false
-          )
-
-          setMails(filtered)
-        })
-        break
-      case 'Read':
-        storageService.query(mailService.MAIL_KEY).then((mails) => {
-          const filtered = mails.filter(
-            (mail) => mail[entity] === true && mail.isRead === true
-          )
-
-          setMails(filtered)
-        })
-        break
-      case 'All':
-        storageService.query(mailService.MAIL_KEY).then((mails) => {
-          const filtered = mails.filter((mail) => mail[entity] === true)
-
-          setMails(filtered)
-        })
-        break
-    }
+    filterBy.readStatus = btnType
+    filterByTxtReadUnread()
+      .then((mails) => {
+        setMails(mails)
+      })
+      .catch((err) => {
+        console.log(err)
+      })
   }
 
   function onFilterByTxt({ target }) {
     const value = target.value
     console.log(value)
-    const entity = getEntity(folder)
-    if (!mailsList) {
-      storageService.query(mailService.MAIL_KEY).then((mails) => {
-        const filtered = mails.filter((mail) => mail[entity] === true)
-        const regExp = new RegExp(value, 'i')
-        const searched = filtered.filter(
-          (mail) =>
-            regExp.test(mail.subject) ||
-            regExp.test(mail.to) ||
-            regExp.test(mail.from) ||
-            regExp.test(mail.subject) ||
-            regExp.test(mail.body)
-        )
-        mailsList = searched
-        setMails(mailsList)
+    filterBy.txt = value
+    filterByTxtReadUnread()
+      .then((mails) => {
+        setMails(mails)
       })
-    } else {
-      const searched = mailsList.filter(
-        (mail) =>
-          regExp.test(mail.subject) ||
-          regExp.test(mail.to) ||
-          regExp.test(mail.from) ||
-          regExp.test(mail.subject) ||
-          regExp.test(mail.body)
-      )
-      mailsList = searched
-      setMails(mailsList)
-    }
+      .catch((err) => {
+        console.log(err)
+      })
+    // setMails(mailsList)
+    // const entity = getEntity(folder)
+    // if (!mailsList) {
+    //   storageService.query(mailService.MAIL_KEY).then((mails) => {
+    //     const filtered = mails.filter((mail) => mail[entity] === true)
+    //     const regExp = new RegExp(value, 'i')
+    //     const searched = filtered.filter(
+    //       (mail) =>
+    //         regExp.test(mail.subject) ||
+    //         regExp.test(mail.to) ||
+    //         regExp.test(mail.from) ||
+    //         regExp.test(mail.subject) ||
+    //         regExp.test(mail.body)
+    //     )
+    //     mailsList = searched
+    //     setMails(mailsList)
+    //   })
+    // } else {
+    //   const searched = mailsList.filter(
+    //     (mail) =>
+    //       regExp.test(mail.subject) ||
+    //       regExp.test(mail.to) ||
+    //       regExp.test(mail.from) ||
+    //       regExp.test(mail.subject) ||
+    //       regExp.test(mail.body)
+    //   )
+    //   mailsList = searched
+    //   setMails(mailsList)
+    // }
   }
 
   function onClearSearch() {
@@ -104,13 +98,28 @@ export function SearchFilter({
       </div>
 
       <div className='filter-container'>
-        <button onClick={onFilterReadUnread} className='btn filter date'>
+        <button
+          ref={elBtn}
+          onClick={onFilterReadUnread}
+          data-button='Unread'
+          className={`btn filter ${
+            filterBy.readStatus === 'Unread' && `active`
+          }`}
+        >
           Unread
         </button>
-        <button onClick={onFilterReadUnread} className='btn filter subject'>
+        <button
+          ref={elBtn}
+          onClick={onFilterReadUnread}
+          className={`btn filter ${filterBy.readStatus === 'Read' && `active`}`}
+        >
           Read
         </button>
-        <button onClick={onFilterReadUnread} className='btn filter all'>
+        <button
+          ref={elBtn}
+          onClick={onFilterReadUnread}
+          className={`btn filter ${filterBy.readStatus === 'All' && `active`}`}
+        >
           All
         </button>
       </div>

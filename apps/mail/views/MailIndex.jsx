@@ -24,6 +24,7 @@ export function MailIndex() {
   const [mailsList, setMails] = useState([])
 
   const [filterBy, setFilterBy] = useState(mailService.getDefaultFilter())
+  console.log(filterBy)
 
   const emailComposeRef = useRef()
 
@@ -35,13 +36,15 @@ export function MailIndex() {
   const params = useParams()
   const navigate = useNavigate()
 
-  // console.log(params)
-
   useEffect(() => {
+    console.log(filterBy)
     storageService
       .query(MAIL_KEY)
       .then((mails) => {
-        setMails(mails.filter((mail) => mail.isReceived))
+        // setMails(mails.filter((mail) => mail.isReceived))
+        filter(filterBy).then((mails) => {
+          setMails(mails)
+        })
       })
       .catch((err) => {
         console.log(err)
@@ -72,6 +75,83 @@ export function MailIndex() {
   }, [params.folder])
   // localStorage.clear()
   // console.log(mails)
+
+  function filterByTxtReadUnread() {
+    const entity = getEntity(folder.current)
+    const regExp = new RegExp(filterBy.txt, 'i')
+    switch (filterBy.readStatus) {
+      case 'Unread':
+        return storageService.query(mailService.MAIL_KEY).then((mails) => {
+          if (!filterBy.txt) {
+            return mails.filter(
+              (mail) => mail[entity] === true && mail.isRead === false
+            )
+          } else {
+            return mails
+              .filter((mail) => mail[entity] === true && mail.isRead === false)
+              .filter(
+                (mail) =>
+                  regExp.test(mail.subject) ||
+                  regExp.test(mail.to) ||
+                  regExp.test(mail.from) ||
+                  regExp.test(mail.subject) ||
+                  regExp.test(mail.body)
+              )
+          }
+        })
+        break
+      case 'Read':
+        return storageService.query(mailService.MAIL_KEY).then((mails) => {
+          if (!filterBy.txt) {
+            return mails.filter(
+              (mail) => mail[entity] === true && mail.isRead === true
+            )
+          } else {
+            return mails
+              .filter((mail) => mail[entity] === true && mail.isRead === true)
+              .filter(
+                (mail) =>
+                  regExp.test(mail.subject) ||
+                  regExp.test(mail.to) ||
+                  regExp.test(mail.from) ||
+                  regExp.test(mail.subject) ||
+                  regExp.test(mail.body)
+              )
+          }
+        })
+        break
+      case 'All':
+        return storageService.query(mailService.MAIL_KEY).then((mails) => {
+          if (!filterBy.txt) {
+            return mails.filter((mail) => mail[entity] === true)
+          } else {
+            return mails
+              .filter((mail) => mail[entity] === true)
+              .filter(
+                (mail) =>
+                  regExp.test(mail.subject) ||
+                  regExp.test(mail.to) ||
+                  regExp.test(mail.from) ||
+                  regExp.test(mail.subject) ||
+                  regExp.test(mail.body)
+              )
+          }
+        })
+        break
+    }
+
+    // return storageService.query(mailService.MAIL_KEY).then((mails) => {
+    //   const filtered = mails.filter((mail) => mail[entity] === true)
+    //   return filtered.filter(
+    //     (mail) =>
+    //       regExp.test(mail.subject) ||
+    //       regExp.test(mail.to) ||
+    //       regExp.test(mail.from) ||
+    //       regExp.test(mail.subject) ||
+    //       regExp.test(mail.body)
+    //   )
+    // })
+  }
 
   function toggleCompose() {
     const curr = emailComposeRef.current.style.display
@@ -321,6 +401,9 @@ export function MailIndex() {
         setMails={setMails}
         folder={folder.current}
         getEntity={getEntity}
+        filterBy={filterBy}
+        setFilterBy={setFilterBy}
+        filterByTxtReadUnread={filterByTxtReadUnread}
       />
       {/* <Routes>
         <Route
