@@ -23,19 +23,20 @@ export function ImageNote({ notes, setNotes, setFilteredNotes }) {
         if (!newImage) return
 
         const note = {
-            id: utilService.makeId(),
             type: 'ImageNote',
             style: { backgroundColor: '#b0c4de' },
             info: { image: newImage }
         }
 
-        const updatedNotes = [...notes, note]
-        setNotes(updatedNotes)
-        setFilteredNotes(updatedNotes)
-        storageService.saveToStorage(noteService.NOTE_KEY, updatedNotes)
-        setNewImage(null)
-
-
+        noteService.save(note)
+            .then(savedNote => {
+                const updatedNotes = [...notes, savedNote]
+                setNotes(updatedNotes)
+                setFilteredNotes(updatedNotes)
+                storageService.saveToStorage(noteService.NOTE_KEY, updatedNotes)
+                setNewImage(null)
+            })
+            .catch(error => console.error('Error adding image note:', error))
     }
     return (
         <div className='new-image'>
