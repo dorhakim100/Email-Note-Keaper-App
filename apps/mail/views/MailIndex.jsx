@@ -18,7 +18,7 @@ import { mailService } from '../services/mail.service.js'
 import { showSuccessMsg } from '../../../services/event-bus.service.js'
 import { showErrorMsg } from '../../../services/event-bus.service.js'
 
-export function MailIndex() {
+export function MailIndex({ logo, setLogo }) {
   const MAIL_KEY = mailService.MAIL_KEY
   // localStorage.clear()
   const [mailsList, setMails] = useState([])
@@ -41,21 +41,26 @@ export function MailIndex() {
   const params = useParams()
   const navigate = useNavigate()
 
-  useEffect(() => {
-    storageService
-      .query(MAIL_KEY)
-      .then((mails) => {
-        filter(filterBy).then((mails) => {
-          setMails(mails)
-        })
-      })
-      .catch((err) => {
-        console.log(err)
-        navigate(`/mail/${folder.current}`)
-      })
-  }, [filterBy])
+  // useEffect(() => {
+  //   storageService
+  //     .query(MAIL_KEY)
+  //     .then((mails) => {
+  //       filter(filterBy).then((mails) => {
+  //         setMails(mails)
+  //       })
+  //     })
+  //     .catch((err) => {
+  //       console.log(err)
+  //       navigate(`/mail/${folder.current}`)
+  //     })
+  // }, [filterBy])
 
   useEffect(() => {
+    logo = {
+      name: 'Gmail',
+      src: './Icons-SVG/gmail.svg',
+    }
+    setLogo(logo)
     if (!params.folder) {
       changeFolder('received')
 

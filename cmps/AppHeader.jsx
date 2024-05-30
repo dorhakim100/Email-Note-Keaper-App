@@ -1,12 +1,10 @@
 const { Link, NavLink } = ReactRouterDOM
-const { useRef, useState } = React
+const { useRef, useState, useEffect } = React
 
-export function AppHeader() {
+export function AppHeader({ logo }) {
   const [isHidden, setIsHidden] = useState(useRef(true))
-  console.log(isHidden)
 
   function onToggleNavMenu() {
-    console.log(isHidden.current)
     if (isHidden.current) {
       isHidden.current = false
       setIsHidden({ isHidden, current: false })
@@ -14,7 +12,6 @@ export function AppHeader() {
       isHidden.current = true
       setIsHidden({ isHidden, current: true })
     }
-    console.log(isHidden)
   }
 
   return (
@@ -22,8 +19,8 @@ export function AppHeader() {
       <header className='app-header'>
         <Link to='/'>
           <div className='logo-container'>
-            <h3>Connect.</h3>
-            <img className='logo' src='../Icons-SVG/logo.svg' alt='' />
+            <img className='logo' src={logo.src} alt='' />
+            <h3>{logo.name}</h3>
           </div>
         </Link>
         <i className='fa-solid fa-grip menu-btn' onClick={onToggleNavMenu}></i>

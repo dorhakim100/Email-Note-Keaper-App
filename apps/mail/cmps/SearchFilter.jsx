@@ -135,7 +135,7 @@ export function SearchFilter({
       </div>
       <div className='sorting-buttons-container'>
         <button className='folders-button' onClick={toggleSorting}>
-          <i class='fa-solid fa-sort'></i>
+          <i className='fa-solid fa-sort'></i>
         </button>
       </div>
       <div className='search-container'>

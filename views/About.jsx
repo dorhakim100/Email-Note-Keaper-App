@@ -1,7 +1,14 @@
 const { useState, useEffect } = React
 
 const { Link, Outlet } = ReactRouterDOM
-export function About() {
+export function About({ logo, setLogo }) {
+  useEffect(() => {
+    logo = {
+      name: 'Home',
+      src: './Icons-SVG/home.svg',
+    }
+    setLogo(logo)
+  }, [])
   return (
     <section className='about'>
       <h1>About Page</h1>
