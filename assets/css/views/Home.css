@@ -1,6 +1,58 @@
  /* home */
-
- body{
-    font-family: gmailRoberto;
+ .home {
+     padding: 20px;
+     background-color: #f0f0f0;
+     font-family: Arial, sans-serif;
  }
 
+ .home-content {
+     max-width: 800px;
+     margin: 0 auto;
+     background-color: #fff;
+     border-radius: 8px;
+     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+     padding: 20px;
+ }
+
+ h1 {
+     font-size: 2.5rem;
+     margin-bottom: 20px;
+     color: #333;
+     text-align: center;
+ }
+
+ h2 {
+     font-size: 1.8rem;
+     margin-top: 20px;
+     color: #444;
+ }
+
+ .description p,
+ .user-experience p,
+ .conclusion p {
+     line-height: 1.6;
+     color: #666;
+ }
+
+ .features ul {
+     list-style-type: none;
+     padding-left: 0;
+ }
+
+ .features li {
+     margin-bottom: 10px;
+ }
+
+ .features li ul {
+     margin-left: 20px;
+ }
+
+ .features li ul li {
+     color: #777;
+ }
+
+ .navigation-buttons {
+     display: flex;
+     justify-content: center;
+     margin-top: 20px;
+ }

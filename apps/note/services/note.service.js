@@ -1,16 +1,17 @@
 import { storageService } from '../../../services/storage.service.js'
 import { utilService } from '../../../services/util.service.js'
-// import { asyncStorage } from '../../../services/async-storage.service.js'
+import { storageService as asyncStorageService } from '../../../services/async-storage.service.js'
+
 
 const NOTE_KEY = 'noteDB'
 
 export const noteService = {
     notes,
     NOTE_KEY,
-    // query,
-    // get,
-    // remove,
-    // save,
+    query,
+    get,
+    remove,
+    save,
 }
 
 function notes() {
@@ -32,36 +33,31 @@ function notes() {
     return notes
 }
 
-// function query(filterBy = {}) {
-//     return storageAsyncService.query(NOTE_KEY)
-//         .then(notes => {
-//             if (filterBy.txt) {
-//                 const regExp = new RegExp(filterBy.txt, 'i')
-//                 notes = notes.filter(note => regExp.test(note.type))
-//             }
-//             return notes
-//         })
-// }
+function query(filterBy = {}) {
+    return asyncStorageService.query(NOTE_KEY).then((notes) => {
+        if (filterBy.txt) {
+            const regExp = new RegExp(filterBy.txt, 'i')
+            notes = notes.filter((note) => regExp.test(note.type))
+        }
+        return notes
+    })
+}
 
-// function get(noteId) {
-//     return storageAsyncService.get(NOTE_KEY, noteId)
-//         .then(note => {
-//             return note
-//         })
-// }
-//
-// function remove(noteId) {
-//     return storageAsyncService.remove(NOTE_KEY, noteId)
-// }
-//
-// function save(note) {
-//     if (note.id) {
-//         return storageService.put(NOTE_KEY, note)
-//     } else {
-//         return storageService.post(NOTE_KEY, note)
-//     }
-// }
-//
+function get(noteId) {
+    return asyncStorageService.get(NOTE_KEY, noteId)
+}
+
+function remove(noteId) {
+    return asyncStorageService.remove(NOTE_KEY, noteId)
+}
+
+function save(note) {
+    if (note.id) {
+        return asyncStorageService.put(NOTE_KEY, note)
+    } else {
+        return asyncStorageService.post(NOTE_KEY, note)
+    }
+}
 // note service
 // const notes = [
 //     {

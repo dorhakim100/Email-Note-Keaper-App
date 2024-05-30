@@ -1,28 +1,152 @@
  /* note index */
- .noteList {
-     display: grid;
-     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-     gap: 10px;
-     list-style: none;
+ .notes-main-page {
+     font-family: 'Arial', sans-serif;
+     padding: 20px;
+     margin: auto;
+     min-width: 400px;
  }
 
- .noteList li {
-     background-color: #b0c4de;
-     padding: 10px;
-     border-radius: 5px;
-     box-shadow: 0 2px 5px;
+ h2 {
+     color: #333;
+     margin-bottom: 20px;
+     text-align: center;
+     font-size: 2em;
  }
 
  .new-note,
  .new-todo,
  .new-image,
- .new-video {
+ .new-video,
+ .filter-notes,
+ .new-audio,
+ .note-type-selector {
+     padding: 15px;
+     /* background-color: #29527a; */
+     background-color: lightgray;
+     margin-bottom: 15px;
+     border-radius: 8px;
+     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+     transition: transform 0.2s, background-color 0.3s;
+     display: flex;
+     align-items: center;
+ }
+
+ .filter-notes {
+     /* color: whitesmoke; */
+     color: black;
+ }
+
+ .new-note:hover,
+ .new-todo:hover,
+ .new-image:hover,
+ .new-video:hover,
+ .filter-notes:hover,
+ .new-audio:hover,
+ .note-type-selector:hover {
+     background-color: #e0e8f0;
+     transform: scale(1.02);
+ }
+
+ input[type="text"] {
+     width: calc(100% - 130px);
      padding: 10px;
-     background-color: lightsteelblue;
-     margin-bottom: 10px;
+     border: 2px solid #d1d9e6;
      border-radius: 5px;
+     margin-right: 10px;
+     font-size: 1em;
+     transition: border-color 0.3s;
+ }
+
+ input[type="text"]:focus {
+     border-color: #a0b4d0;
+     outline: none;
  }
 
  button {
+     font-weight: bold;
      cursor: pointer;
+     padding: 10px 15px;
+     background-color: #f0f4f8;
+     color: black;
+     border: none;
+     border-radius: 5px;
+     transition: background-color 0.3s, transform 0.2s;
+     font-weight: bold;
+ }
+
+ button:hover {
+     transform: scale(1.05);
+ }
+
+ button:active {
+     transform: scale(1);
+ }
+
+ button i {
+     margin-left: 5px;
+ }
+
+ .new-note button,
+ .new-todo button {
+     width: 100px;
+ }
+
+ .filter-notes {
+     display: flex;
+     justify-content: space-between;
+     align-items: center;
+ }
+
+ .filter-notes select {
+     font-weight: bold;
+     padding: 10px;
+     border: 2px solid #000000;
+     border-radius: 5px;
+     font-size: 1em;
+     transition: border-color 0.3s;
+
+ }
+
+ .filter-notes select:focus {
+     font-weight: bold;
+ }
+
+ .filter-notes select option {
+     font-weight: bold;
+ }
+
+ .note-type-selector {
+     display: flex;
+     align-items: center;
+     justify-content: center;
+ }
+
+ .note-type-selector label {
+     margin-right: 10px;
+     /* color: white; */
+     color: black;
+     font-size: 1.2em;
+     font-weight: bold;
+ }
+
+ .note-type-selector select {
+     padding: 15px 20px;
+     border: 2px solid #d1d9e6;
+     border-radius: 5px;
+     font-size: 1.2em;
+     width: 100%;
+     max-width: 300px;
+     transition: border-color 0.3s;
+     font-weight: bold;
+ }
+
+ .note-type-selector select:focus {
+     border-color: #a0b4d0;
+     outline: none;
+     font-weight: bold;
+ }
+
+ .note-type-selector select option {
+     font-weight: bold;
+
  }
