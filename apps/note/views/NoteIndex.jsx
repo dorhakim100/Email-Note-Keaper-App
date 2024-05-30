@@ -9,14 +9,20 @@ import { NoteFilter } from '../cmps/NoteFilter.jsx'
 import { AudioNote } from '../cmps/AudioNote.jsx'
 
 
-export function NoteIndex() {
+export function NoteIndex({ logo, setLogo }) {
     const [notes, setNotes] = useState([])
     const [filteredNotes, setFilteredNotes] = useState([])
     const [newNoteText, setNewNoteText] = useState('')
     const [newTodo, setNewTodo] = useState('')
     const [newNoteType, setNewNoteType] = useState('NoteTxt')
 
+
     useEffect(() => {
+        logo = {
+            name: 'Note',
+            src: './Icons-SVG/note.svg',
+        }
+        setLogo(logo)
         const initNotes = storageService.loadFromStorage(noteService.NOTE_KEY) || noteService.notes()
         setNotes(initNotes)
         setFilteredNotes(initNotes)
@@ -76,15 +82,15 @@ export function NoteIndex() {
         }).catch(error => console.error('Error changing note color:', error))
     }
 
-  function onDuplicateNote(noteId) {
-    const noteToDuplicate = notes.find((note) => note.id === noteId)
+    function onDuplicateNote(noteId) {
+        const noteToDuplicate = notes.find((note) => note.id === noteId)
 
-    const duplicatedNote = {
-      id: utilService.makeId(),
-      type: noteToDuplicate.type,
-      style: { ...noteToDuplicate.style },
-      info: { ...noteToDuplicate.info },
-    }
+        const duplicatedNote = {
+            id: utilService.makeId(),
+            type: noteToDuplicate.type,
+            style: { ...noteToDuplicate.style },
+            info: { ...noteToDuplicate.info },
+        }
 
         const updatedNotes = [...notes, duplicatedNote]
         setNotes(updatedNotes)
