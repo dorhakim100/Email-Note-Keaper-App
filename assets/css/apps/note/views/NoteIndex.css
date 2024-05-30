@@ -3,6 +3,7 @@
      font-family: 'Arial', sans-serif;
      padding: 20px;
      margin: auto;
+     min-width: 400px;
  }
 
  h2 {
@@ -20,15 +21,19 @@
  .new-audio,
  .note-type-selector {
      padding: 15px;
-     background-color: #29527a;
+     /* background-color: #29527a; */
+     background-color: lightgray;
      margin-bottom: 15px;
      border-radius: 8px;
      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
      transition: transform 0.2s, background-color 0.3s;
+     display: flex;
+     align-items: center;
  }
 
  .filter-notes {
-     color: whitesmoke;
+     /* color: whitesmoke; */
+     color: black;
  }
 
  .new-note:hover,
@@ -36,7 +41,7 @@
  .new-image:hover,
  .new-video:hover,
  .filter-notes:hover,
- .audio-note:hover,
+ .new-audio:hover,
  .note-type-selector:hover {
      background-color: #e0e8f0;
      transform: scale(1.02);
@@ -118,7 +123,8 @@
 
  .note-type-selector label {
      margin-right: 10px;
-     color: white;
+     /* color: white; */
+     color: black;
      font-size: 1.2em;
      font-weight: bold;
  }

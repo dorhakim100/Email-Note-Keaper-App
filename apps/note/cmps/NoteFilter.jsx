@@ -26,11 +26,11 @@ export function NoteFilter({ onFilter }) {
                 onChange={handleChange}
             >
                 <option value="">Filter by Type</option>
-                <option value="NoteTxt">NoteTxt</option>
-                <option value="ToDo">ToDo</option>
-                <option value="ImageNote">ImageNote</option>
-                <option value="VideoNote">VideoNote</option>
-                <option value="AudioNote">AudioNote</option>
+                <option value="NoteTxt">Note Text</option>
+                <option value="ToDo">Todo List</option>
+                <option value="ImageNote">Image Note</option>
+                <option value="VideoNote">Video Note</option>
+                <option value="AudioNote">Audio Note</option>
             </select>
         </div>
     )

@@ -54,11 +54,11 @@ export function NoteList({ notes, onRemoveNote, onEditNote, onChangeNoteColor, o
         <section className='note-list-container'>
             <ul className='note-list'>
                 {notes.map(note => (
-                    <li key={note.id} style={{ backgroundColor: note.style.backgroundColor }}>
+                    <li className='note-space' key={note.id} style={{ backgroundColor: note.style.backgroundColor }}>
                         {note.type === 'NoteTxt' && (
                             <div className="note-txt">
                                 <span>{note.info.txt}</span>
-                                <button onClick={() => handleChangeNote(note.id, note.info.txt)}>
+                                <button className='edit-note-text' onClick={() => handleChangeNote(note.id, note.info.txt)}>
                                     <i className="fa-solid fa-pen-to-square"></i>
                                 </button>
                             </div>
@@ -75,7 +75,7 @@ export function NoteList({ notes, onRemoveNote, onEditNote, onChangeNoteColor, o
                                         </li>
                                     ))}
                                 </ul>
-                                <button onClick={() => handleChangeTask(note.id)}>
+                                <button className='new-task' onClick={() => handleChangeTask(note.id)}>
                                     <i className="fa-solid fa-list-check"></i>
                                 </button>
                             </div>
@@ -107,7 +107,7 @@ export function NoteList({ notes, onRemoveNote, onEditNote, onChangeNoteColor, o
                             </div>
                         )}
                         <div className="edit-buttons">
-                            <button onClick={() => onDuplicateNote(note.id)}>
+                            <button className='edit-duplicate' onClick={() => onDuplicateNote(note.id)}>
                                 <i className="fa-solid fa-copy"></i>
                             </button>
                             <input
@@ -115,7 +115,7 @@ export function NoteList({ notes, onRemoveNote, onEditNote, onChangeNoteColor, o
                                 value={note.style.backgroundColor}
                                 onChange={(event) => onChangeNoteColor(note.id, event.target.value)}
                             />
-                            <button onClick={() => handleRemoveNote(note.id)}>
+                            <button className='edit-remove' onClick={() => handleRemoveNote(note.id)}>
                                 <i className="fa-solid fa-trash"></i>
                             </button>
                         </div>

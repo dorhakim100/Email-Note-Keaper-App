@@ -2,17 +2,19 @@
 .note-list-container {
     display: block;
     padding: 16px;
+    min-width: 300px;
 }
 
 .note-list {
     display: grid;
     padding: 16px;
+    list-style: none;
+    margin-bottom: 16px;
+
 
     @media(min-width:400px) {
         grid-template-columns: repeat(1, 1fr);
         gap: 50px;
-        list-style: none;
-        margin-bottom: 16px;
     }
 
     @media(min-width:768px) {
@@ -65,6 +67,10 @@
     margin-left: auto;
 }
 
+.task-action button {
+    background: none;
+}
+
 .todo-list li:nth-child(even) {
     background-color: lightgray;
 }
@@ -73,10 +79,27 @@
     text-decoration: line-through;
 }
 
+.note-space {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
 .edit-buttons {
     display: flex;
     justify-content: center;
     align-items: flex-end;
     margin-top: 10px;
     gap: 10px;
+}
+
+.edit-duplicate,
+.edit-remove,.new-task,.edit-note-text {
+    background: none;
+}
+
+.edit-duplicate:hover,
+.edit-remove:hover,.new-task:hover,.edit-note-text:hover {
+    background-color: lightgray;
+    transition: height 0.3s ease;
 }
