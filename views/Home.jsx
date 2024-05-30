@@ -9,7 +9,7 @@ export function Home({ logo, setLogo }) {
     }
     setLogo(logo)
   }, [])
-  // setLogo(logo)
+
   return (
     <section className='home'>
       <div className='home-content'>
