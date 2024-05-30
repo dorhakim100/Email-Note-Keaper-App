@@ -15,6 +15,7 @@ export function SearchFilter({
   mailsList,
   sortEmails,
   sortBy,
+  navBar,
 }) {
   const elSearch = useRef()
   const elBtn = useRef()
@@ -103,8 +104,23 @@ export function SearchFilter({
     sortEmails(target)
   }
 
+  function toggleNavBar() {
+    const elNavBar = navBar.current
+    const curr = elNavBar.style.display
+    if (curr === 'block') {
+      elNavBar.style.display = 'none'
+    } else {
+      elNavBar.style.display = 'block'
+    }
+  }
+
   return (
     <div className='filter-search-container'>
+      <div className='folders-button-container'>
+        <button className='folders-button' onClick={toggleNavBar}>
+          <i className='fa-solid fa-bars'></i>
+        </button>
+      </div>
       <div className='search-container'>
         <i className='fa-solid fa-magnifying-glass'></i>
         <input

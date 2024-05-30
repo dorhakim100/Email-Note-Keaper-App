@@ -62,6 +62,7 @@ export function EmailPreview({
         removeFromTrash={removeFromTrash}
         edit={edit}
       />
+      <img className='preview-pic' src={mail.profilePic} alt='' />
     </div>
   )
 }

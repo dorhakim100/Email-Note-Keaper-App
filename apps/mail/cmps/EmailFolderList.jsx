@@ -14,6 +14,7 @@ export function EmailFolderList({
   toggleCompose,
   changeFolder,
   folder,
+  navBar,
 }) {
   const params = useParams()
   const navigate = useNavigate()
@@ -67,7 +68,7 @@ export function EmailFolderList({
   }
 
   return (
-    <div className='nav-bar-container'>
+    <div className='nav-bar-container' ref={navBar}>
       {/* <Link to={`/mail/${folder.current}/compose`}> */}
       <div onClick={toggleCompose} className='folder compose'>
         <i className='fa-solid fa-pencil'></i>

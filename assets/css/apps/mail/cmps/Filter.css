@@ -86,3 +86,49 @@ background-color: var(--mid-gray);
 .filter.active{
     background-color: var(--dark-gray);
 }
+
+.folders-button-container{
+    display: none;
+}
+
+.folders-button{
+    width: 4em;
+    height: 4em;
+
+    border-radius: 50%;
+    border: 1px solid var(--mid-gray);
+
+    background-color: var(--dark-gray);
+    cursor: pointer;
+}
+
+@media (max-width: 950px) {
+    .filter-search-container{
+        display: grid;
+        grid-template-columns: repeat(2,auto);
+        grid-template-rows: 1fr;
+        align-items: center;
+    }
+}
+@media (max-width: 460px) {
+    .folders-button-container{
+        display: block;
+        justify-self: center;
+    }
+    
+    .filter-search-container{
+        grid-template-columns: 4em auto;
+        grid-template-rows: 1fr;
+
+    }
+    .search-container{
+        width: 70%;
+        grid-column: 2/-1;
+    }
+    .search-container>input{
+        width: 80%;
+    }
+    .filter-container{
+        display: none;
+    }
+}

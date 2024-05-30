@@ -34,6 +34,8 @@ export function MailIndex() {
 
   const newMails = useRef()
 
+  const navBar = useRef()
+
   const params = useParams()
   const navigate = useNavigate()
 
@@ -369,55 +371,59 @@ export function MailIndex() {
 
   return (
     <section className='body-container'>
-      <EmailFolderList
-        mailsList={mailsList}
-        emailComposeRef={emailComposeRef}
-        toggleCompose={toggleCompose}
-        changeFolder={changeFolder}
-        folder={folder}
-      />
-
-      <SearchFilter
-        mailsList={mailsList}
-        setMails={setMails}
-        folder={folder.current}
-        getEntity={getEntity}
-        filterBy={filterBy}
-        setFilterBy={setFilterBy}
-        filterByTxtReadUnread={filterByTxtReadUnread}
-        sortEmails={sortEmails}
-        sortBy={sortBy}
-      />
-
-      {params.mailId && params.mailId !== 'compose' && (
-        <EmailDetails
-          mailId={params.mailId}
-          folder={folder.current}
-          toggleFavorite={toggleFavorite}
-          toggleRead={toggleRead}
-          moveToTrash={moveToTrash}
-          removeFromTrash={removeFromTrash}
-          newMails={newMails}
-          setNextPrevMailId={setNextPrevMailId}
-        />
-      )}
-      {(!params.mailId || params.mailId === 'compose') && (
-        <MailList
+      <div className='screen'>
+        <EmailFolderList
           mailsList={mailsList}
-          toggleFavorite={toggleFavorite}
-          toggleRead={toggleRead}
-          moveToTrash={moveToTrash}
+          emailComposeRef={emailComposeRef}
+          toggleCompose={toggleCompose}
+          changeFolder={changeFolder}
           folder={folder}
-          removeFromTrash={removeFromTrash}
-          openMail={openMail}
+          navBar={navBar}
         />
-      )}
-      <EmailCompose
-        mailsList={mailsList}
-        setMails={setMails}
-        emailComposeRef={emailComposeRef}
-        toggleCompose={toggleCompose}
-      />
+
+        <SearchFilter
+          mailsList={mailsList}
+          setMails={setMails}
+          folder={folder.current}
+          getEntity={getEntity}
+          filterBy={filterBy}
+          setFilterBy={setFilterBy}
+          filterByTxtReadUnread={filterByTxtReadUnread}
+          sortEmails={sortEmails}
+          sortBy={sortBy}
+          navBar={navBar}
+        />
+
+        {params.mailId && params.mailId !== 'compose' && (
+          <EmailDetails
+            mailId={params.mailId}
+            folder={folder.current}
+            toggleFavorite={toggleFavorite}
+            toggleRead={toggleRead}
+            moveToTrash={moveToTrash}
+            removeFromTrash={removeFromTrash}
+            newMails={newMails}
+            setNextPrevMailId={setNextPrevMailId}
+          />
+        )}
+        {(!params.mailId || params.mailId === 'compose') && (
+          <MailList
+            mailsList={mailsList}
+            toggleFavorite={toggleFavorite}
+            toggleRead={toggleRead}
+            moveToTrash={moveToTrash}
+            folder={folder}
+            removeFromTrash={removeFromTrash}
+            openMail={openMail}
+          />
+        )}
+        <EmailCompose
+          mailsList={mailsList}
+          setMails={setMails}
+          emailComposeRef={emailComposeRef}
+          toggleCompose={toggleCompose}
+        />
+      </div>
     </section>
   )
 }

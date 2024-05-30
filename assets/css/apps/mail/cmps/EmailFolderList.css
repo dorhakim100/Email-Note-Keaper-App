@@ -113,3 +113,21 @@
 .nav-bar-container:hover .fa-inbox::after{
     display: none;
 }
+
+@media (max-width: 950px) {
+    .nav-bar-container{
+        /* height: 100vh; */
+    }
+}
+
+@media (max-width: 460px) {
+    .nav-bar-container{
+        display: none;
+        top: 137px;
+        width: 3.4em;
+        box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
+    }
+    i{
+        font-size: 1.3em;
+    }
+}
