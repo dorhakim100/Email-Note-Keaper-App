@@ -20,7 +20,7 @@ import { showErrorMsg } from '../../../services/event-bus.service.js'
 
 export function MailIndex({ logo, setLogo }) {
   const MAIL_KEY = mailService.MAIL_KEY
-  // localStorage.clear()
+  
   const [mailsList, setMails] = useState([])
 
   const [filterBy, setFilterBy] = useState(mailService.getDefaultFilter())
