@@ -11,7 +11,6 @@ export function MailFolder({
   notReadCounter,
 }) {
   return (
-    // <Link to={`/mail/${activeFolder.current}`}>
     <div
       onClick={onChangeFolder}
       data-folder={name}
@@ -28,6 +27,5 @@ export function MailFolder({
           name.charAt(0).toUpperCase() + name.slice(1)}
       </h3>
     </div>
-    // </Link>
   )
 }

@@ -24,7 +24,6 @@ export function MailIndex() {
   const [mailsList, setMails] = useState([])
 
   const [filterBy, setFilterBy] = useState(mailService.getDefaultFilter())
-  console.log(filterBy)
 
   const emailComposeRef = useRef()
 
@@ -39,11 +38,9 @@ export function MailIndex() {
   const navigate = useNavigate()
 
   useEffect(() => {
-    console.log(filterBy)
     storageService
       .query(MAIL_KEY)
       .then((mails) => {
-        // setMails(mails.filter((mail) => mail.isReceived))
         filter(filterBy).then((mails) => {
           setMails(mails)
         })
@@ -55,18 +52,6 @@ export function MailIndex() {
   }, [filterBy])
 
   useEffect(() => {
-    if (params.mailId === 'compose') {
-      console.log('works')
-    }
-    //   if (params.mailId) {
-    //     console.log('works')
-    //     return
-    //   }
-    //   if (!params.mailId) return
-    //   console.log(params.mailId)
-  }, [params.mailId])
-
-  useEffect(() => {
     if (!params.folder) {
       changeFolder('received')
 
@@ -75,8 +60,6 @@ export function MailIndex() {
 
     changeFolder(params.folder)
   }, [params.folder])
-  // localStorage.clear()
-  // console.log(mails)
 
   function filterByTxtReadUnread() {
     const entity = getEntity(folder.current)
@@ -141,31 +124,15 @@ export function MailIndex() {
         })
         break
     }
-
-    // return storageService.query(mailService.MAIL_KEY).then((mails) => {
-    //   const filtered = mails.filter((mail) => mail[entity] === true)
-    //   return filtered.filter(
-    //     (mail) =>
-    //       regExp.test(mail.subject) ||
-    //       regExp.test(mail.to) ||
-    //       regExp.test(mail.from) ||
-    //       regExp.test(mail.subject) ||
-    //       regExp.test(mail.body)
-    //   )
-    // })
   }
 
   function toggleCompose() {
     const curr = emailComposeRef.current.style.display
     if (curr === 'block') {
       emailComposeRef.current.style.display = 'none'
-      console.log(params.mailId)
-      // navigate(`/mail/${folder.current}`)
     } else {
       emailComposeRef.current.style.display = 'block'
       if (params.mailId) return
-
-      // navigate(`/mail/${folder.current}/compose`)
     }
   }
 
@@ -197,16 +164,12 @@ export function MailIndex() {
     clickedFolder = paramsFolder
     folder.current = paramsFolder
     storageService.query(MAIL_KEY).then((mails) => {
-      // if (mail.isTrash === false && folder.current !== 'trash') {
-      // }
-
       newMails.current = mails
         .filter((mail) => mail[entity])
         .filter((mail) => mail.isTrash === false && folder.current !== 'trash')
-      // console.log(newMails.current)
+
       setMails(mails.filter((mail) => mail[entity]))
       navigate(`/mail/${clickedFolder}`)
-      console.log('blabla')
     })
   }
 
@@ -227,17 +190,13 @@ export function MailIndex() {
         .then((mails) => {
           const entity = getEntity(folder.current)
           setMails(mails.filter((mail) => mail[entity]))
-          // mailService.save(mail)
           showSuccessMsg(msg)
         })
         .catch((err) => {
           showErrorMsg('There was a problem...')
         })
-        .finally(() => {
-          // setIsLoading(false)
-        })
+        .finally(() => {})
     })
-    // setMails(...mailsList)
   }
 
   function toggleRead(id) {
@@ -263,25 +222,20 @@ export function MailIndex() {
         .catch((err) => {
           showErrorMsg('There was a problem...')
         })
-        .finally(() => {
-          // setIsLoading(false)
-        })
+        .finally(() => {})
     })
   }
 
   function moveToTrash(id) {
     let msg
     const mail = mailsList.find((mail) => mail.id === id)
-    console.log(mail)
-    if (mail.isTrash) {
-      console.log(id)
 
+    if (mail.isTrash) {
       msg = 'Mail deleted successfully'
       return storageService
         .remove(MAIL_KEY, id)
         .then(() => {
           return storageService.query(MAIL_KEY).then((mails) => {
-            console.log(mails)
             showSuccessMsg(msg)
             const entity = getEntity(folder.current)
             setMails(mails.filter((mail) => mail[entity]))
@@ -291,9 +245,7 @@ export function MailIndex() {
           console.log(err)
           showErrorMsg('There was a problem...')
         })
-        .finally(() => {
-          // setIsLoading(false)
-        })
+        .finally(() => {})
     } else if (!mail.isTrash) {
       msg = 'Mail moved to trash successfully'
       const newMails = { ...mailsList }
@@ -309,9 +261,7 @@ export function MailIndex() {
           .catch((err) => {
             showErrorMsg('There was a problem...')
           })
-          .finally(() => {
-            // setIsLoading(false)
-          })
+          .finally(() => {})
       })
     }
   }
@@ -332,9 +282,7 @@ export function MailIndex() {
         .catch((err) => {
           showErrorMsg('There was a problem...')
         })
-        .finally(() => {
-          // setIsLoading(false)
-        })
+        .finally(() => {})
     })
   }
 
@@ -353,9 +301,7 @@ export function MailIndex() {
         .catch((err) => {
           console.log(err)
         })
-        .finally(() => {
-          // setIsLoading(false)
-        })
+        .finally(() => {})
     })
   }
 
@@ -423,7 +369,6 @@ export function MailIndex() {
 
   return (
     <section className='body-container'>
-      {/* <Link to={`/mail/${folder.current}`}> */}
       <EmailFolderList
         mailsList={mailsList}
         emailComposeRef={emailComposeRef}
@@ -431,7 +376,7 @@ export function MailIndex() {
         changeFolder={changeFolder}
         folder={folder}
       />
-      {/* </Link> */}
+
       <SearchFilter
         mailsList={mailsList}
         setMails={setMails}
@@ -443,25 +388,7 @@ export function MailIndex() {
         sortEmails={sortEmails}
         sortBy={sortBy}
       />
-      {/* <Routes>
-        <Route
-          path='/mail/received'
-          element={
-            <MailList
-              mailsList={mailsList}
-              toggleFavorite={toggleFavorite}
-              toggleRead={toggleRead}
-              moveToTrash={moveToTrash}
-              folder={folder}
-              removeFromTrash={removeFromTrash}
-            />
-          }
-        > */}
-      {/* <Link to='/mail/:mailId'> */}
-      {/* </Link> */}
-      {/* </Route> */}
-      {/* <Route path='/mail/:mailId' element={<EmailDetails />} /> */}
-      {/* </Routes> */}
+
       {params.mailId && params.mailId !== 'compose' && (
         <EmailDetails
           mailId={params.mailId}
@@ -476,7 +403,6 @@ export function MailIndex() {
       )}
       {(!params.mailId || params.mailId === 'compose') && (
         <MailList
-          // path={`/mail/${folder.current}`}
           mailsList={mailsList}
           toggleFavorite={toggleFavorite}
           toggleRead={toggleRead}
@@ -492,8 +418,6 @@ export function MailIndex() {
         emailComposeRef={emailComposeRef}
         toggleCompose={toggleCompose}
       />
-      {/* <EmailDetails /> */}
-      {/* <Outlet /> */}
     </section>
   )
 }

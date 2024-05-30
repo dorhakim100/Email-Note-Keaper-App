@@ -9,14 +9,12 @@ export function ButtonsController({ setMail, folder, mail }) {
   const navigate = useNavigate()
 
   function onChangeMail({ target }) {
-    console.log(mail)
     const navBtn = target.innerText
     switch (navBtn) {
       case '˃':
         mailService
           .get(mail.nextMailId)
           .then((mail) => {
-            console.log(mail)
             setMail(mail)
           })
           .catch((err) => {

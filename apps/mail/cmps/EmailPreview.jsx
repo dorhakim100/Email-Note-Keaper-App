@@ -15,27 +15,20 @@ export function EmailPreview({
   const edit = useRef()
 
   function onToggleFavorite(id, e) {
-    // e.preventDefault()
     toggleFavorite(e.target.dataset.id)
   }
 
   function onOpenMail(id, e) {
-    console.log(isEdit)
     if (isEdit) return
     if (edit.current) return
 
-    // e.preventDefault()
-    console.log(e.target)
     openMail(id)
-    // e.target.addEventListener('onclick', console.log(id))
-    // e.target.addEventListener('click', openMail(id))
   }
 
   return (
     <div
       className={`mail-container ${(mail.isRead && 'read') || 'not-read'}`}
       onClick={(event) => {
-        // isEdit = false
         onOpenMail(mail.id, event)
       }}
     >

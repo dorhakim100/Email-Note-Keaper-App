@@ -18,7 +18,6 @@ export function EmailCompose({
 
   useEffect(() => {
     setMailSender(isFromMe.current)
-    // setCompose()
   }, [isFromMe.current])
 
   const loggedUserEmail = mailService.loggedInUser.email
@@ -64,12 +63,9 @@ export function EmailCompose({
       mail.isSent = true
       mail.isRead = true
     }
-    // console.log(mail)
-    // console.log(event.target.value)
   }
 
   function onSaveMail() {
-    console.log(mail)
     storageService
       .post(mailService.MAIL_KEY, mail)
       .then(() => {
@@ -105,7 +101,7 @@ export function EmailCompose({
           <input
             type='checkbox'
             checked={isFromMe.current}
-            onClick={() => {
+            onChange={() => {
               isFromMe.current = !isFromMe.current
               if (!isFromMe.current) {
                 mail.from = ''
@@ -116,7 +112,6 @@ export function EmailCompose({
                 mail.isSent = true
                 mail.isRead = true
               }
-              console.log(mail)
               setMailSender(isFromMe.current)
             }}
           />

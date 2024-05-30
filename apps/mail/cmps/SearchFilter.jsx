@@ -24,9 +24,7 @@ export function SearchFilter({
   let sortStatus
 
   function onFilterReadUnread({ target }) {
-    console.log(target)
     const btnType = target.innerText
-    console.log(btnType)
     filterBy.readStatus = btnType
     filterByTxtReadUnread()
       .then((mails) => {
@@ -39,7 +37,6 @@ export function SearchFilter({
 
   function onFilterByTxt({ target }) {
     const value = target.value
-    console.log(value)
     filterBy.txt = value
     filterByTxtReadUnread()
       .then((mails) => {
@@ -48,35 +45,6 @@ export function SearchFilter({
       .catch((err) => {
         console.log(err)
       })
-    // setMails(mailsList)
-    // const entity = getEntity(folder)
-    // if (!mailsList) {
-    //   storageService.query(mailService.MAIL_KEY).then((mails) => {
-    //     const filtered = mails.filter((mail) => mail[entity] === true)
-    //     const regExp = new RegExp(value, 'i')
-    //     const searched = filtered.filter(
-    //       (mail) =>
-    //         regExp.test(mail.subject) ||
-    //         regExp.test(mail.to) ||
-    //         regExp.test(mail.from) ||
-    //         regExp.test(mail.subject) ||
-    //         regExp.test(mail.body)
-    //     )
-    //     mailsList = searched
-    //     setMails(mailsList)
-    //   })
-    // } else {
-    //   const searched = mailsList.filter(
-    //     (mail) =>
-    //       regExp.test(mail.subject) ||
-    //       regExp.test(mail.to) ||
-    //       regExp.test(mail.from) ||
-    //       regExp.test(mail.subject) ||
-    //       regExp.test(mail.body)
-    //   )
-    //   mailsList = searched
-    //   setMails(mailsList)
-    // }
   }
 
   const readStatus = [
@@ -95,7 +63,6 @@ export function SearchFilter({
   ]
 
   function onClearSearch() {
-    console.log(elSearch.current)
     elSearch.current.value = ''
     storageService.query(mailService.MAIL_KEY).then((mails) => {
       const entity = getEntity(folder)
@@ -133,10 +100,7 @@ export function SearchFilter({
         sortBy.current = 'Title ˅'
         break
     }
-    // sortBy.current = target.innerText
     sortEmails(target)
-
-    console.log(mailsList)
   }
 
   return (

@@ -77,7 +77,7 @@ export function EmailFolderList({
 
       {folders.map((folderObject) => {
         return (
-          <Link to={`/mail/${folder.current}`}>
+          <Link to={`/mail/${folder.current}`} key={folderObject.name}>
             <MailFolder
               key={folderObject.name}
               onChangeFolder={onChangeFolder}
