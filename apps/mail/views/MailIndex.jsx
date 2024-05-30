@@ -36,6 +36,8 @@ export function MailIndex() {
 
   const navBar = useRef()
 
+  const sortBar = useRef()
+
   const params = useParams()
   const navigate = useNavigate()
 
@@ -335,7 +337,7 @@ export function MailIndex() {
     })
   }
 
-  function sortEmails(btn) {
+  function sortEmails() {
     let entity
     let sorted
 
@@ -371,59 +373,61 @@ export function MailIndex() {
 
   return (
     <section className='body-container'>
-      <div className='screen'>
-        <EmailFolderList
-          mailsList={mailsList}
-          emailComposeRef={emailComposeRef}
-          toggleCompose={toggleCompose}
-          changeFolder={changeFolder}
-          folder={folder}
-          navBar={navBar}
-        />
+      <EmailFolderList
+        mailsList={mailsList}
+        emailComposeRef={emailComposeRef}
+        toggleCompose={toggleCompose}
+        changeFolder={changeFolder}
+        folder={folder}
+        navBar={navBar}
+      />
 
-        <SearchFilter
-          mailsList={mailsList}
-          setMails={setMails}
+      <SearchFilter
+        mailsList={mailsList}
+        setMails={setMails}
+        folder={folder.current}
+        getEntity={getEntity}
+        filterBy={filterBy}
+        setFilterBy={setFilterBy}
+        filterByTxtReadUnread={filterByTxtReadUnread}
+        sortEmails={sortEmails}
+        sortBy={sortBy}
+        navBar={navBar}
+        sortBar={sortBar}
+      />
+
+      {params.mailId && params.mailId !== 'compose' && (
+        <EmailDetails
+          mailId={params.mailId}
           folder={folder.current}
-          getEntity={getEntity}
-          filterBy={filterBy}
-          setFilterBy={setFilterBy}
-          filterByTxtReadUnread={filterByTxtReadUnread}
-          sortEmails={sortEmails}
-          sortBy={sortBy}
-          navBar={navBar}
+          toggleFavorite={toggleFavorite}
+          toggleRead={toggleRead}
+          moveToTrash={moveToTrash}
+          removeFromTrash={removeFromTrash}
+          newMails={newMails}
+          setNextPrevMailId={setNextPrevMailId}
         />
-
-        {params.mailId && params.mailId !== 'compose' && (
-          <EmailDetails
-            mailId={params.mailId}
-            folder={folder.current}
-            toggleFavorite={toggleFavorite}
-            toggleRead={toggleRead}
-            moveToTrash={moveToTrash}
-            removeFromTrash={removeFromTrash}
-            newMails={newMails}
-            setNextPrevMailId={setNextPrevMailId}
-          />
-        )}
-        {(!params.mailId || params.mailId === 'compose') && (
-          <MailList
-            mailsList={mailsList}
-            toggleFavorite={toggleFavorite}
-            toggleRead={toggleRead}
-            moveToTrash={moveToTrash}
-            folder={folder}
-            removeFromTrash={removeFromTrash}
-            openMail={openMail}
-          />
-        )}
-        <EmailCompose
+      )}
+      {(!params.mailId || params.mailId === 'compose') && (
+        <MailList
           mailsList={mailsList}
-          setMails={setMails}
-          emailComposeRef={emailComposeRef}
-          toggleCompose={toggleCompose}
+          toggleFavorite={toggleFavorite}
+          toggleRead={toggleRead}
+          moveToTrash={moveToTrash}
+          folder={folder}
+          removeFromTrash={removeFromTrash}
+          openMail={openMail}
         />
-      </div>
+      )}
+      <EmailCompose
+        mailsList={mailsList}
+        setMails={setMails}
+        emailComposeRef={emailComposeRef}
+        toggleCompose={toggleCompose}
+      />
+      <button onClick={toggleCompose} className='compose-btn'>
+        <i className='fa-solid fa-pencil'></i> Compose
+      </button>
     </section>
   )
 }

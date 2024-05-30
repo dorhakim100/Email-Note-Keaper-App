@@ -165,21 +165,7 @@ grid-column: 4/6;
       border-radius: 50%;
    }
 
-   /* .preview-pic:nth-of-type(2n){
-      background-color: #F4B400;
-   }
-  .mail-container:nth-of-type(2n){
-      background-color: 	#DB4437;
 
-   }
-   
-   .preview-pic:nth-of-type(5n){
-      background-color: #4285F4;
-   }
-   
-   .preview-pic:nth-of-type(7n){
-      background-color: rgb(96, 22, 207);
-   } */
 
    .mail-container>h3:first-of-type{
       grid-column: 2/3;
@@ -226,7 +212,7 @@ grid-column: 4/6;
 
 }
 
-@media (max-width: 460px) {
+@media (max-width: 400px) {
    .mail-container{
       font-size: 0.7em;
    }

@@ -116,11 +116,10 @@
 
 @media (max-width: 950px) {
     .nav-bar-container{
-        /* height: 100vh; */
     }
 }
 
-@media (max-width: 460px) {
+@media (max-width: 400px) {
     .nav-bar-container{
         display: none;
         top: 137px;

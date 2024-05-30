@@ -3,7 +3,7 @@
  .body-container{
     background-color: white;
 
-    width: 100vw;
+    /* width: 100vw; */
     height: calc(100vh - 4em);
 
     display: grid;
@@ -41,7 +41,7 @@ bottom: 0px;
     /* grid-template-columns: 15em auto; */
 }
 
-@media (max-width: 460px) {
+@media (max-width: 400px) {
     .body-container{
         grid-template-columns: auto;
     }

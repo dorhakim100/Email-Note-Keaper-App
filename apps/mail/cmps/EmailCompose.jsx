@@ -66,6 +66,10 @@ export function EmailCompose({
   }
 
   function onSaveMail() {
+    if (mail.body === '' && mail.subject === '' && mail.to === '') {
+      toggleCompose()
+      return
+    }
     storageService
       .post(mailService.MAIL_KEY, mail)
       .then(() => {
@@ -74,6 +78,7 @@ export function EmailCompose({
             setMails(mails)
             const msg = 'Success'
             showSuccessMsg(msg)
+            mails
           })
           .catch((err) => {
             console.log(err)
@@ -91,14 +96,23 @@ export function EmailCompose({
 
   return (
     <section className='email-compose-container' ref={emailComposeRef}>
-      <div className='compose-header-container' onClick={toggleCompose}>
+      <div
+        className='compose-header-container'
+        onClick={() => {
+          mail.isRead = false
+          mail.isReceived = false
+          mail.isSent = false
+          mail.isDraft = true
+          onSaveMail()
+        }}
+      >
         <h2>New Message</h2>
         <i className='fa-solid fa-xmark x-btn'></i>
       </div>
       <div className='inputs-container'>
         <div className='from-container'>
           <label htmlFor='from'>From</label>
-          <input
+          {/* <input
             type='checkbox'
             checked={isFromMe.current}
             onChange={() => {
@@ -115,9 +129,9 @@ export function EmailCompose({
               setMailSender(isFromMe.current)
             }}
           />
-          <label htmlFor=''>Me</label>
+          <label htmlFor=''>Me</label> */}
           {(isFromMe.current && (
-            <h3>{mailService.loggedInUser.fullName}</h3>
+            <h3 className='sender'>{mailService.loggedInUser.fullName}</h3>
           )) || (
             <input
               type='text'

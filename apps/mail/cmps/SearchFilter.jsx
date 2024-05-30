@@ -16,6 +16,7 @@ export function SearchFilter({
   sortEmails,
   sortBy,
   navBar,
+  sortBar,
 }) {
   const elSearch = useRef()
   const elBtn = useRef()
@@ -65,6 +66,7 @@ export function SearchFilter({
 
   function onClearSearch() {
     elSearch.current.value = ''
+    console.log(sortBy.current)
     storageService.query(mailService.MAIL_KEY).then((mails) => {
       const entity = getEntity(folder)
       const filtered = mails.filter((mail) => mail[entity] === true)
@@ -101,7 +103,7 @@ export function SearchFilter({
         sortBy.current = 'Title ˅'
         break
     }
-    sortEmails(target)
+    sortEmails()
   }
 
   function toggleNavBar() {
@@ -114,11 +116,26 @@ export function SearchFilter({
     }
   }
 
+  function toggleSorting() {
+    const elSortBar = sortBar.current
+    const curr = elSortBar.style.display
+    if (curr === 'flex') {
+      elSortBar.style.display = 'none'
+    } else {
+      elSortBar.style.display = 'flex'
+    }
+  }
+
   return (
     <div className='filter-search-container'>
       <div className='folders-button-container'>
         <button className='folders-button' onClick={toggleNavBar}>
           <i className='fa-solid fa-bars'></i>
+        </button>
+      </div>
+      <div className='sorting-buttons-container'>
+        <button className='folders-button' onClick={toggleSorting}>
+          <i class='fa-solid fa-sort'></i>
         </button>
       </div>
       <div className='search-container'>
@@ -133,7 +150,7 @@ export function SearchFilter({
         <i onClick={onClearSearch} className='fa-solid fa-x'></i>
       </div>
 
-      <div className='filter-container'>
+      <div className='filter-container' ref={sortBar}>
         <div className='filter-buttons read-unread'>
           <button
             onClick={onFilterReadUnread}
