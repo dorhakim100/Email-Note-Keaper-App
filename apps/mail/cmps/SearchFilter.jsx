@@ -19,6 +19,8 @@ export function SearchFilter({
   const elSearch = useRef()
   const elBtn = useRef()
 
+  let [sort, setSort] = useState()
+
   let sortStatus
 
   function onFilterReadUnread({ target }) {
@@ -104,9 +106,37 @@ export function SearchFilter({
   }
 
   function onSortingMails({ target }) {
-    sortBy.current = target.innerText
+    const currSorting = target.innerText
+    switch (currSorting) {
+      case 'Date':
+        target.innerText = 'Date ˅'
+        sortBy.current = 'Date ˅'
+        break
+      case 'Title':
+        target.innerText = 'Title ˅'
+        sortBy.current = 'Title ˅'
+        break
+      case 'Date ˅':
+        target.innerText = 'Date ˄'
+        sortBy.current = 'Date ˄'
+        break
+      case 'Title ˅':
+        target.innerText = 'Title ˄'
+        sortBy.current = 'Title ˄'
+        break
+      case 'Date ˄':
+        target.innerText = 'Date ˅'
+        sortBy.current = 'Date ˅'
+        break
+      case 'Title ˄':
+        target.innerText = 'Title ˅'
+        sortBy.current = 'Title ˅'
+        break
+    }
+    // sortBy.current = target.innerText
+    sortEmails(target)
+
     console.log(mailsList)
-    sortEmails()
   }
 
   return (
@@ -154,13 +184,21 @@ export function SearchFilter({
         <div className='filter-buttons sorting'>
           <button
             onClick={onSortingMails}
-            className={`btn filter ${sortBy.current === 'Date' && `active`}`}
+            className={`btn filter ${
+              sortBy.current === 'Date' ||
+              sortBy.current === 'Date ˅' ||
+              (sortBy.current === 'Date ˄' && `active`)
+            }`}
           >
             Date
           </button>
           <button
             onClick={onSortingMails}
-            className={`btn filter ${sortBy.current === 'Title' && `active`}`}
+            className={`btn filter ${
+              sortBy.current === 'Title' ||
+              sortBy.current === 'Title ˅' ||
+              (sortBy.current === 'Title ˄' && `active`)
+            }`}
           >
             Title
           </button>

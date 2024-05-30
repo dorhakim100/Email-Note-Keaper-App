@@ -387,24 +387,35 @@ export function MailIndex() {
     })
   }
 
-  function sortEmails() {
+  function sortEmails(btn) {
     let entity
     let sorted
 
-    if (sortBy.current === 'Date') {
+    if (
+      sortBy.current === 'Date' ||
+      sortBy.current === 'Date ˅' ||
+      sortBy.current === 'Date ˄'
+    ) {
       entity = 'sentAt'
       sorted = mailsList.sort((a, b) => {
         if (a.sentAt < b.sentAt) return -1
         if (a.sentAt > b.sentAt) return 1
         return 0
       })
-    } else if (sortBy.current === 'Title') {
+    } else if (
+      sortBy.current === 'Title' ||
+      sortBy.current === 'Title ˅' ||
+      sortBy.current === 'Title ˄'
+    ) {
       entity = 'subject'
       sorted = mailsList.sort((a, b) => {
         if (a.subject.toUpperCase() < b.subject.toUpperCase()) return -1
         if (a.subject.toUpperCase() > b.subject.toUpperCase()) return 1
         return 0
       })
+    }
+    if (sortBy.current === 'Date ˄' || sortBy.current === 'Title ˄') {
+      sorted.reverse()
     }
     setMails((prevMails) => [...prevMails])
     return sorted

@@ -75,6 +75,8 @@ background-color: var(--mid-gray);
     border: 1px solid gray;
 
     padding: 5px;
+
+    min-width: 60px;
 }
 
 .btn.filter:hover{

@@ -16,7 +16,7 @@ border-radius: 5%;
     margin: auto;
     width: 50%;
     display: flex;
-    justify-items: center;
+    justify-content: center;
 
     padding-inline-start: 1em;
 
