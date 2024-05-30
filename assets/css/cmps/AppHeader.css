@@ -1,7 +1,7 @@
 header {
 
-    background: lightcyan;
-    border-bottom: 2px solid white;
+    background: rgb(252, 252, 252);
+    border-bottom: 1px solid white;
 }
 
 .app-header {
@@ -9,6 +9,24 @@ header {
     justify-content: space-between;
     padding: 20px 0;
 }
+.logo-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+
+}
+
+.logo-container>img{
+    height: 3em;
+}
+
+.logo{
+    /* background-color: rgb(153, 132, 229); */
+    border-radius: 15%;
+    height: 1.5em;
+}
+
 
 nav a {
     margin: .5em;
@@ -23,3 +41,62 @@ nav a.active {
     font-weight: bold;
     text-decoration: overline;
 }
+
+.menu-btn{
+    margin-inline-end: 15px;
+    font-size: 2em;
+
+    padding: 0.25em;
+ 
+    border-radius: 15px;
+    cursor: pointer;
+  }
+
+  .menu-btn:hover{
+    background-color: var(--mid-gray);
+  }
+
+
+ 
+  .nav-menu{
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+
+    justify-items: center;
+
+    position: fixed;
+    inset-inline-end: 0px;
+
+    height: fit-content;
+    width: 40vw;
+    padding: 15px;
+    border-radius: 5%;
+    
+    background-color: white;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+}
+
+.icon{
+    border-radius: 15%;
+    background-color: white;
+
+    width: 4em;
+
+
+}
+
+.icon:hover{
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+
+}
+.hidden{
+    display: none;
+}
+
+@media (max-width:600px) {
+    .icon{
+        width: 10vw;
+    }
+}
+
+ 

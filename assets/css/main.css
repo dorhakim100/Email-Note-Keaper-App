@@ -1,7 +1,7 @@
 /* Setup */
 
 @import './setup/variables.css';
-/* @import './setup/fonts.css'; */
+@import './setup/fonts.css';
 
 /* Basics */
 
@@ -11,6 +11,7 @@
 
 /* Views */
 @import './views/home.css';
+@import './views/about.css';
 
 @import './apps/note/views/NoteIndex.css';
 

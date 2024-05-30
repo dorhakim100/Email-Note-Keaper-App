@@ -11,6 +11,8 @@
     display: none;
 
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+
+    z-index: 2;
 }
 
 .compose-header-container{
@@ -88,4 +90,39 @@
     width: 80px;
 
     cursor: pointer;
+}
+
+.send-btn:hover{
+
+    box-shadow: rgba(0, 166, 255, 0.534) 0px 6px 12px -2px, rgba(0, 166, 255, 0.792) 0px 3px 7px -3px;
+}
+
+.compose-btn{
+    position:fixed;
+    bottom: 30px;
+    right: 25px;
+
+    padding: 20px;
+    border-radius: 50px;
+
+    border: none;
+    height: 60px;
+    width: 150px;
+
+    background-color: #EAF1FC;
+
+    display: none;
+}
+
+.sender{
+    background-color: var(--mid-gray);
+    padding: 3px;
+
+    border-radius: 5px;
+}
+
+@media (max-width: 950px) {
+    .compose-btn{
+        display: block;
+    }   
 }

@@ -1,0 +1,9 @@
+@font-face{
+    font-family: gmailRoberto;
+    src:url('../../fonts/Roboto/Roboto-Regular.ttf');
+}
+
+@font-face {
+    font-family: gmailRobertoBold;
+    src: url('../../fonts/Roboto/Roboto-Bold.ttf');
+}

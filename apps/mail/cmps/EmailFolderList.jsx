@@ -1,8 +1,9 @@
 import { storageService } from '../../../services/async-storage.service.js'
+import { mailService } from '../services/mail.service.js'
 
 import { MailFolder } from '../cmps/MailFolder.jsx'
 
-const { useRef, useEffect } = React
+const { useRef, useEffect, useState } = React
 const { Link, Outlet } = ReactRouterDOM
 
 const { useParams, useNavigate } = ReactRouter
@@ -13,17 +14,13 @@ export function EmailFolderList({
   toggleCompose,
   changeFolder,
   folder,
+  navBar,
 }) {
   const params = useParams()
   const navigate = useNavigate()
 
-  // console.log(params.folder)
-
-  // useEffect(() => {
-
-  //   console.log('works')
-  //   console.log(params.folder.mailId)
-  // }, [params.folder.mailId])
+  const [notReadCounter, setNotReadCounter] = useState(0)
+  let counter = 0
 
   const folders = [
     {
@@ -48,33 +45,47 @@ export function EmailFolderList({
     },
   ]
 
+  useEffect(() => {
+    storageService
+      .query(mailService.MAIL_KEY)
+      .then((mails) => {
+        mails.forEach((mail) => {
+          if (!mail.isRead && !mail.isTrash && !mail.isDraft && !mail.isSent)
+            counter++
+          setNotReadCounter(counter)
+        })
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  }, [mailsList])
+
   function onChangeFolder({ target }) {
-    const folderToChange = target.dataset.folder
-    // console.log(folderToChange)
-    // folder.current = folderToChange
-    // navigate(`/mail/${folderToChange}`)
+    let folderToChange = target.dataset.folder
+    if (!folderToChange) folderToChange = 'received'
+
     changeFolder(folderToChange)
   }
-  console.log(folder)
 
   return (
-    <div className='nav-bar-container'>
-      <Link to={`/mail/compose`}>
-        <div onClick={toggleCompose} className='folder compose'>
-          <i className='fa-solid fa-pencil'></i>
-          <h3 className='nav-text'>New Email</h3>
-        </div>
-      </Link>
+    <div className='nav-bar-container' ref={navBar}>
+      {/* <Link to={`/mail/${folder.current}/compose`}> */}
+      <div onClick={toggleCompose} className='folder compose'>
+        <i className='fa-solid fa-pencil'></i>
+        <h3 className='nav-text'>New Email</h3>
+      </div>
+      {/* </Link> */}
 
       {folders.map((folderObject) => {
         return (
-          <Link to={`/mail/${folder.current}`}>
+          <Link to={`/mail/${folder.current}`} key={folderObject.name}>
             <MailFolder
               key={folderObject.name}
               onChangeFolder={onChangeFolder}
               name={folderObject.name}
               icon={folderObject.icon}
               activeFolder={folder}
+              notReadCounter={notReadCounter}
             />
           </Link>
         )

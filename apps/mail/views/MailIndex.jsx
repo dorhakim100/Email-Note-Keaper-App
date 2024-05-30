@@ -18,7 +18,7 @@ import { mailService } from '../services/mail.service.js'
 import { showSuccessMsg } from '../../../services/event-bus.service.js'
 import { showErrorMsg } from '../../../services/event-bus.service.js'
 
-export function MailIndex() {
+export function MailIndex({ logo, setLogo }) {
   const MAIL_KEY = mailService.MAIL_KEY
   // localStorage.clear()
   const [mailsList, setMails] = useState([])
@@ -30,31 +30,37 @@ export function MailIndex() {
   const folder = useRef('received')
   let clickedFolder
 
+  const sortBy = useRef()
+
   const newMails = useRef()
+
+  const navBar = useRef()
+
+  const sortBar = useRef()
 
   const params = useParams()
   const navigate = useNavigate()
 
-  // console.log(params)
+  // useEffect(() => {
+  //   storageService
+  //     .query(MAIL_KEY)
+  //     .then((mails) => {
+  //       filter(filterBy).then((mails) => {
+  //         setMails(mails)
+  //       })
+  //     })
+  //     .catch((err) => {
+  //       console.log(err)
+  //       navigate(`/mail/${folder.current}`)
+  //     })
+  // }, [filterBy])
 
   useEffect(() => {
-    storageService
-      .query(MAIL_KEY)
-      .then((mails) => {
-        setMails(mails.filter((mail) => mail.isReceived))
-      })
-      .catch((err) => {
-        console.log(err)
-        navigate(`/mail/${folder.current}`)
-      })
-  }, [filterBy])
-
-  useEffect(() => {
-    if (!params.mailId) return
-    console.log(params.mailId)
-  }, [params.mailId])
-
-  useEffect(() => {
+    logo = {
+      name: 'Gmail',
+      src: './Icons-SVG/gmail.svg',
+    }
+    setLogo(logo)
     if (!params.folder) {
       changeFolder('received')
 
@@ -63,17 +69,79 @@ export function MailIndex() {
 
     changeFolder(params.folder)
   }, [params.folder])
-  // localStorage.clear()
-  // console.log(mails)
+
+  function filterByTxtReadUnread() {
+    const entity = getEntity(folder.current)
+    const regExp = new RegExp(filterBy.txt, 'i')
+    switch (filterBy.readStatus) {
+      case 'Unread':
+        return storageService.query(mailService.MAIL_KEY).then((mails) => {
+          if (!filterBy.txt) {
+            return mails.filter(
+              (mail) => mail[entity] === true && mail.isRead === false
+            )
+          } else {
+            return mails
+              .filter((mail) => mail[entity] === true && mail.isRead === false)
+              .filter(
+                (mail) =>
+                  regExp.test(mail.subject) ||
+                  regExp.test(mail.to) ||
+                  regExp.test(mail.from) ||
+                  regExp.test(mail.subject) ||
+                  regExp.test(mail.body)
+              )
+          }
+        })
+        break
+      case 'Read':
+        return storageService.query(mailService.MAIL_KEY).then((mails) => {
+          if (!filterBy.txt) {
+            return mails.filter(
+              (mail) => mail[entity] === true && mail.isRead === true
+            )
+          } else {
+            return mails
+              .filter((mail) => mail[entity] === true && mail.isRead === true)
+              .filter(
+                (mail) =>
+                  regExp.test(mail.subject) ||
+                  regExp.test(mail.to) ||
+                  regExp.test(mail.from) ||
+                  regExp.test(mail.subject) ||
+                  regExp.test(mail.body)
+              )
+          }
+        })
+        break
+      case 'All':
+        return storageService.query(mailService.MAIL_KEY).then((mails) => {
+          if (!filterBy.txt) {
+            return mails.filter((mail) => mail[entity] === true)
+          } else {
+            return mails
+              .filter((mail) => mail[entity] === true)
+              .filter(
+                (mail) =>
+                  regExp.test(mail.subject) ||
+                  regExp.test(mail.to) ||
+                  regExp.test(mail.from) ||
+                  regExp.test(mail.subject) ||
+                  regExp.test(mail.body)
+              )
+          }
+        })
+        break
+    }
+  }
 
   function toggleCompose() {
     const curr = emailComposeRef.current.style.display
     if (curr === 'block') {
       emailComposeRef.current.style.display = 'none'
-      navigate(`/mail/${folder.current}`)
     } else {
       emailComposeRef.current.style.display = 'block'
-      navigate(`/mail/compose`)
+      if (params.mailId) return
     }
   }
 
@@ -105,13 +173,10 @@ export function MailIndex() {
     clickedFolder = paramsFolder
     folder.current = paramsFolder
     storageService.query(MAIL_KEY).then((mails) => {
-      // if (mail.isTrash === false && folder.current !== 'trash') {
-      // }
-
       newMails.current = mails
         .filter((mail) => mail[entity])
         .filter((mail) => mail.isTrash === false && folder.current !== 'trash')
-      // console.log(newMails.current)
+
       setMails(mails.filter((mail) => mail[entity]))
       navigate(`/mail/${clickedFolder}`)
     })
@@ -134,17 +199,13 @@ export function MailIndex() {
         .then((mails) => {
           const entity = getEntity(folder.current)
           setMails(mails.filter((mail) => mail[entity]))
-          // mailService.save(mail)
           showSuccessMsg(msg)
         })
         .catch((err) => {
           showErrorMsg('There was a problem...')
         })
-        .finally(() => {
-          // setIsLoading(false)
-        })
+        .finally(() => {})
     })
-    // setMails(...mailsList)
   }
 
   function toggleRead(id) {
@@ -157,6 +218,7 @@ export function MailIndex() {
       mail.isRead = true
       msg = 'Mail set as read successfully'
     }
+
     const newMails = { ...mailsList }
     return storageService.put(MAIL_KEY, mail).then(() => {
       return storageService
@@ -169,25 +231,20 @@ export function MailIndex() {
         .catch((err) => {
           showErrorMsg('There was a problem...')
         })
-        .finally(() => {
-          // setIsLoading(false)
-        })
+        .finally(() => {})
     })
   }
 
   function moveToTrash(id) {
     let msg
     const mail = mailsList.find((mail) => mail.id === id)
-    console.log(mail)
-    if (mail.isTrash) {
-      console.log(id)
 
+    if (mail.isTrash) {
       msg = 'Mail deleted successfully'
       return storageService
         .remove(MAIL_KEY, id)
         .then(() => {
           return storageService.query(MAIL_KEY).then((mails) => {
-            console.log(mails)
             showSuccessMsg(msg)
             const entity = getEntity(folder.current)
             setMails(mails.filter((mail) => mail[entity]))
@@ -197,9 +254,7 @@ export function MailIndex() {
           console.log(err)
           showErrorMsg('There was a problem...')
         })
-        .finally(() => {
-          // setIsLoading(false)
-        })
+        .finally(() => {})
     } else if (!mail.isTrash) {
       msg = 'Mail moved to trash successfully'
       const newMails = { ...mailsList }
@@ -215,9 +270,7 @@ export function MailIndex() {
           .catch((err) => {
             showErrorMsg('There was a problem...')
           })
-          .finally(() => {
-            // setIsLoading(false)
-          })
+          .finally(() => {})
       })
     }
   }
@@ -238,25 +291,44 @@ export function MailIndex() {
         .catch((err) => {
           showErrorMsg('There was a problem...')
         })
-        .finally(() => {
-          // setIsLoading(false)
-        })
+        .finally(() => {})
     })
   }
 
   function openMail(id) {
-    console.log(id)
-    console.log(folder.current)
+    const mail = mailsList.find((mail) => mail.id === id)
+    mail.isRead = true
+    const newMails = { ...mailsList }
     navigate(`/mail/${folder.current}/${id}`)
+    storageService.put(MAIL_KEY, mail).then(() => {
+      return storageService
+        .query(MAIL_KEY)
+        .then((mails) => {
+          const entity = getEntity(folder.current)
+          setMails(mails.filter((mail) => mail[entity]))
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+        .finally(() => {})
+    })
   }
 
   function setNextPrevMailId(mail, paramsFolder) {
     const entity = getEntity(paramsFolder)
     return storageService.query(MAIL_KEY).then((mails) => {
-      const newMails = mails
-        .filter((mail) => mail[entity])
-        .filter((mail) => mail.isTrash === false && folder.current !== 'trash')
+      let newMails
+      if (folder.current === 'trash') {
+        newMails = mails.filter((mail) => mail[entity])
+      } else {
+        newMails = mails
+          .filter((mail) => mail[entity])
+          .filter(
+            (mail) => mail.isTrash === false && folder.current !== 'trash'
+          )
+      }
       const mailIdx = newMails.findIndex((currMail) => currMail.id === mail.id)
+      console.log(mailIdx)
       const nextMail = newMails[mailIdx + 1]
         ? newMails[mailIdx + 1]
         : newMails[0]
@@ -270,38 +342,66 @@ export function MailIndex() {
     })
   }
 
+  function sortEmails() {
+    let entity
+    let sorted
+
+    if (
+      sortBy.current === 'Date' ||
+      sortBy.current === 'Date ˅' ||
+      sortBy.current === 'Date ˄'
+    ) {
+      entity = 'sentAt'
+      sorted = mailsList.sort((a, b) => {
+        if (a.sentAt < b.sentAt) return -1
+        if (a.sentAt > b.sentAt) return 1
+        return 0
+      })
+    } else if (
+      sortBy.current === 'Title' ||
+      sortBy.current === 'Title ˅' ||
+      sortBy.current === 'Title ˄'
+    ) {
+      entity = 'subject'
+      sorted = mailsList.sort((a, b) => {
+        if (a.subject.toUpperCase() < b.subject.toUpperCase()) return -1
+        if (a.subject.toUpperCase() > b.subject.toUpperCase()) return 1
+        return 0
+      })
+    }
+    if (sortBy.current === 'Date ˄' || sortBy.current === 'Title ˄') {
+      sorted.reverse()
+    }
+    setMails((prevMails) => [...prevMails])
+    return sorted
+  }
+
   return (
     <section className='body-container'>
-      {/* <Link to={`/mail/${folder.current}`}> */}
       <EmailFolderList
         mailsList={mailsList}
         emailComposeRef={emailComposeRef}
         toggleCompose={toggleCompose}
         changeFolder={changeFolder}
         folder={folder}
+        navBar={navBar}
       />
-      {/* </Link> */}
-      <SearchFilter mailsList={mailsList} setMails={setMails} />
-      {/* <Routes>
-        <Route
-          path='/mail/received'
-          element={
-            <MailList
-              mailsList={mailsList}
-              toggleFavorite={toggleFavorite}
-              toggleRead={toggleRead}
-              moveToTrash={moveToTrash}
-              folder={folder}
-              removeFromTrash={removeFromTrash}
-            />
-          }
-        > */}
-      {/* <Link to='/mail/:mailId'> */}
-      {/* </Link> */}
-      {/* </Route> */}
-      {/* <Route path='/mail/:mailId' element={<EmailDetails />} /> */}
-      {/* </Routes> */}
-      {params.mailId && (
+
+      <SearchFilter
+        mailsList={mailsList}
+        setMails={setMails}
+        folder={folder.current}
+        getEntity={getEntity}
+        filterBy={filterBy}
+        setFilterBy={setFilterBy}
+        filterByTxtReadUnread={filterByTxtReadUnread}
+        sortEmails={sortEmails}
+        sortBy={sortBy}
+        navBar={navBar}
+        sortBar={sortBar}
+      />
+
+      {params.mailId && params.mailId !== 'compose' && (
         <EmailDetails
           mailId={params.mailId}
           folder={folder.current}
@@ -313,9 +413,8 @@ export function MailIndex() {
           setNextPrevMailId={setNextPrevMailId}
         />
       )}
-      {!params.mailId && (
+      {(!params.mailId || params.mailId === 'compose') && (
         <MailList
-          // path={`/mail/${folder.current}`}
           mailsList={mailsList}
           toggleFavorite={toggleFavorite}
           toggleRead={toggleRead}
@@ -331,8 +430,9 @@ export function MailIndex() {
         emailComposeRef={emailComposeRef}
         toggleCompose={toggleCompose}
       />
-      {/* <EmailDetails /> */}
-      {/* <Outlet /> */}
+      <button onClick={toggleCompose} className='compose-btn'>
+        <i className='fa-solid fa-pencil'></i> Compose
+      </button>
     </section>
   )
 }

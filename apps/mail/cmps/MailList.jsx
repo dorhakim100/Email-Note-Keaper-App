@@ -21,12 +21,8 @@ export function MailList({
   const params = useParams()
   const navigate = useNavigate()
 
-  console.log(mailsList)
-
   mailsList.forEach((mail) => {
     const d = new Date(mail.sentAt)
-
-    // console.log(utilService.getMonthName(d))
     mail.timeStr = `${d.getDay()} ${utilService.getMonthName(d)}`
   })
   useEffect(() => {}, [])
@@ -70,9 +66,3 @@ export function MailList({
     </div>
   )
 }
-
-// ;<Link to={`/book/${book.id}`}>
-//   <button className='btn full-details back' data-book-id={book.id}>
-//     Full details
-//   </button>
-// </Link>

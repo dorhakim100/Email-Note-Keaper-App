@@ -3,12 +3,12 @@
  .body-container{
     background-color: white;
 
-    width: 100vw;
+    /* width: 100vw; */
     height: calc(100vh - 4em);
 
     display: grid;
     /* grid-template-columns: repeat(2, auto); */
-    grid-template-columns: 5em auto;
+    grid-template-columns: 3.6em auto;
     grid-template-rows: min-content auto;
     
     transition: 0.4s;
@@ -22,18 +22,29 @@
 .mail-list-container{
     grid-column: 2/-1;
     grid-row: 2/3;
+
+
     
 }
 
 .nav-bar-container{
 position: absolute;
-top: 65px;
+top: 5.5em;
 bottom: 0px;
 
 
 }
 
+
 .body-container:has(.nav-bar-container:nth-of-type(1n):hover){
     
     /* grid-template-columns: 15em auto; */
+}
+
+@media (max-width: 400px) {
+    .body-container{
+        grid-template-columns: auto;
+    }
+
+
 }
