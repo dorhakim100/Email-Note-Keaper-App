@@ -30,6 +30,7 @@ export function NoteFilter({ onFilter }) {
                 <option value="ToDo">ToDo</option>
                 <option value="ImageNote">ImageNote</option>
                 <option value="VideoNote">VideoNote</option>
+                <option value="AudioNote">AudioNote</option>
             </select>
         </div>
     )

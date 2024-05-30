@@ -96,6 +96,16 @@ export function NoteList({ notes, onRemoveNote, onEditNote, onChangeNoteColor, o
                                 ></iframe>
                             </div>
                         )}
+                        {note.type === 'AudioNote' && (
+                            <div className='audio'>
+                                <iframe
+                                    width="100%"
+                                    height="166"
+                                    allow="autoplay"
+                                    src={`https://w.soundcloud.com/player/?url=${encodeURIComponent(note.info.audioUrl)}`}
+                                ></iframe>
+                            </div>
+                        )}
                         <div className="edit-buttons">
                             <button onClick={() => onDuplicateNote(note.id)}>
                                 <i className="fa-solid fa-copy"></i>

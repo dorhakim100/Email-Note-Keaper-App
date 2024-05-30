@@ -6,6 +6,7 @@ import { NoteList } from '../cmps/NoteList.jsx'
 import { VideoNote } from '../cmps/VideoNote.jsx'
 import { ImageNote } from '../cmps/ImageNote.jsx'
 import { NoteFilter } from '../cmps/NoteFilter.jsx'
+import { AudioNote } from '../cmps/AudioNote.jsx'
 
 
 export function NoteIndex() {
@@ -175,6 +176,7 @@ export function NoteIndex() {
                     <option value="ToDo">Todo List</option>
                     <option value="ImageNote">Image Note</option>
                     <option value="VideoNote">Video Note</option>
+                    <option value="AudioNote">Audio Note</option>
                 </select>
             </div>
 
@@ -208,6 +210,10 @@ export function NoteIndex() {
 
             {newNoteType === 'VideoNote' && (
                 <VideoNote notes={filteredNotes} setNotes={setNotes} setFilteredNotes={setFilteredNotes} />
+            )}
+
+            {newNoteType === 'AudioNote' && (
+                <AudioNote notes={filteredNotes} setNotes={setNotes} setFilteredNotes={setFilteredNotes} />
             )}
 
             <NoteList

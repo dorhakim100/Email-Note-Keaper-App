@@ -17,6 +17,7 @@
  .new-image,
  .new-video,
  .filter-notes,
+ .new-audio,
  .note-type-selector {
      padding: 15px;
      background-color: #29527a;
@@ -35,6 +36,7 @@
  .new-image:hover,
  .new-video:hover,
  .filter-notes:hover,
+ .audio-note:hover,
  .note-type-selector:hover {
      background-color: #e0e8f0;
      transform: scale(1.02);
