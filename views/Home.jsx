@@ -8,7 +8,7 @@ export function Home({ logo, setLogo }) {
         }
         setLogo(logo)
     }, [])
-    setLogo(logo)
+    // setLogo(logo)
     const navigate = useNavigate()
     return <section className="home">
         <div className="home-content">
