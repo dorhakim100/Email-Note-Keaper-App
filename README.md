@@ -8,9 +8,10 @@ Appsus is an integrated application that seamlessly combines the functionality o
 -Email App:
 -Compose, send, receive, and organize emails efficiently.
 -Support for email attachments and rich text formatting enhances communication flexibility.
+Emails can be categorized and managed with ease.
 -Note App: 
 -Users can create and edit notes effortlessly.
--Various note types are supported, including text notes, to-do lists, images, videos.
+-Various note types are supported, including text notes, to-do lists, images, YouTube videos, and SoundCloud audio.
 -Notes can be customized with different colors and styles for easy categorization.
 
 ## User Experience
