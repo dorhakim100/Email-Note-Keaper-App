@@ -43,10 +43,8 @@ function createMails() {
       removedAt: null,
       from: 'momo@momo.com',
       to: 'user@appsus.com',
-      profilePic: `../../../Profiles-SVG/${utilService.getRandomIntInclusive(
-        1,
-        8
-      )}.svg`,
+      profilePic: `Profiles-SVG/${utilService.getRandomIntInclusive(1, 8)}.svg`,
+      backgroundColor: utilService.getRandomColor(),
     },
 
     {
@@ -63,10 +61,8 @@ function createMails() {
       removedAt: null,
       from: 'momo@momo.com',
       to: 'user@appsus.com',
-      profilePic: `../../../Profiles-SVG/${utilService.getRandomIntInclusive(
-        1,
-        8
-      )}.svg`,
+      profilePic: `Profiles-SVG/${utilService.getRandomIntInclusive(1, 8)}.svg`,
+      backgroundColor: utilService.getRandomColor(),
     },
 
     {
@@ -83,10 +79,8 @@ function createMails() {
       removedAt: null,
       from: 'momo@momo.com',
       to: 'user@appsus.com',
-      profilePic: `../../../Profiles-SVG/${utilService.getRandomIntInclusive(
-        1,
-        8
-      )}.svg`,
+      profilePic: `Profiles-SVG/${utilService.getRandomIntInclusive(1, 8)}.svg`,
+      backgroundColor: utilService.getRandomColor(),
     },
     {
       id: 'e104',
@@ -102,10 +96,8 @@ function createMails() {
       removedAt: null,
       from: 'momo@momo.com',
       to: 'user@appsus.com',
-      profilePic: `../../../Profiles-SVG/${utilService.getRandomIntInclusive(
-        1,
-        8
-      )}.svg`,
+      profilePic: `Profiles-SVG/${utilService.getRandomIntInclusive(1, 8)}.svg`,
+      backgroundColor: utilService.getRandomColor(),
     },
     {
       id: 'e105',
@@ -121,10 +113,8 @@ function createMails() {
       removedAt: null,
       from: 'momo@momo.com',
       to: 'user@appsus.com',
-      profilePic: `../../../Profiles-SVG/${utilService.getRandomIntInclusive(
-        1,
-        8
-      )}.svg`,
+      profilePic: `Profiles-SVG/${utilService.getRandomIntInclusive(1, 8)}.svg`,
+      backgroundColor: utilService.getRandomColor(),
     },
     {
       id: 'e106',
@@ -140,10 +130,8 @@ function createMails() {
       removedAt: null,
       from: 'user@appsus.com',
       to: 'random@user.com',
-      profilePic: `../../../Profiles-SVG/${utilService.getRandomIntInclusive(
-        1,
-        8
-      )}.svg`,
+      profilePic: `Profiles-SVG/${utilService.getRandomIntInclusive(1, 8)}.svg`,
+      backgroundColor: utilService.getRandomColor(),
     },
     {
       id: 'e107',
@@ -159,10 +147,8 @@ function createMails() {
       removedAt: null,
       from: 'user@appsus.com',
       to: 'random2@user.com',
-      profilePic: `../../../Profiles-SVG/${utilService.getRandomIntInclusive(
-        1,
-        8
-      )}.svg`,
+      profilePic: `Profiles-SVG/${utilService.getRandomIntInclusive(1, 8)}.svg`,
+      backgroundColor: utilService.getRandomColor(),
     },
     {
       id: 'e108',
@@ -178,10 +164,8 @@ function createMails() {
       removedAt: null,
       from: 'user@appsus.com',
       to: 'momo@mimi.com',
-      profilePic: `../../../Profiles-SVG/${utilService.getRandomIntInclusive(
-        1,
-        8
-      )}.svg`,
+      profilePic: `Profiles-SVG/${utilService.getRandomIntInclusive(1, 8)}.svg`,
+      backgroundColor: utilService.getRandomColor(),
     },
     {
       id: 'e109',
@@ -197,10 +181,8 @@ function createMails() {
       removedAt: null,
       from: 'momo@momo.com',
       to: 'user@appsus.com',
-      profilePic: `../../../Profiles-SVG/${utilService.getRandomIntInclusive(
-        1,
-        8
-      )}.svg`,
+      profilePic: `Profiles-SVG/${utilService.getRandomIntInclusive(1, 8)}.svg`,
+      backgroundColor: utilService.getRandomColor(),
     },
     {
       id: 'e110',
@@ -216,10 +198,8 @@ function createMails() {
       removedAt: null,
       from: 'momo@momo.com',
       to: 'user@appsus.com',
-      profilePic: `../../../Profiles-SVG/${utilService.getRandomIntInclusive(
-        1,
-        8
-      )}.svg`,
+      profilePic: `Profiles-SVG/${utilService.getRandomIntInclusive(1, 8)}.svg`,
+      backgroundColor: utilService.getRandomColor(),
     },
     {
       id: 'e111',
@@ -235,10 +215,8 @@ function createMails() {
       removedAt: null,
       from: 'momo@momo.com',
       to: 'user@appsus.com',
-      profilePic: `../../../Profiles-SVG/${utilService.getRandomIntInclusive(
-        1,
-        8
-      )}.svg`,
+      profilePic: `Profiles-SVG/${utilService.getRandomIntInclusive(1, 8)}.svg`,
+      backgroundColor: utilService.getRandomColor(),
     },
   ]
 

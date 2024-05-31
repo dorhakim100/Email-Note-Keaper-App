@@ -50,24 +50,10 @@ export function MailIndex({ logo, setLogo }) {
 
   // localStorage.clear()
 
-  // useEffect(() => {
-  //   storageService
-  //     .query(MAIL_KEY)
-  //     .then((mails) => {
-  //       filter(filterBy).then((mails) => {
-  //         setMails(mails)
-  //       })
-  //     })
-  //     .catch((err) => {
-  //       console.log(err)
-  //       navigate(`/mail/${folder.current}`)
-  //     })
-  // }, [filterBy])
-
   useEffect(() => {
     logo = {
       name: 'Gmail',
-      src: '..Icons-SVG/gmail.svg',
+      src: 'Icons-SVG/gmail.svg',
     }
 
     setLogo(logo)

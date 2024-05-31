@@ -1,6 +1,7 @@
-const { useRef } = React
+const { useRef, useEffect } = React
 const { useParams, useNavigate } = ReactRouter
 
+import { utilService } from '../../../services/util.service.js'
 import { PreviewEditController } from './PreviewEditController.jsx'
 
 export function EmailPreview({
@@ -20,6 +21,8 @@ export function EmailPreview({
   mailsList,
   editMail,
 }) {
+  // mail.backgroundColor = utilService.getRandomColor()
+
   let isEdit = false
   const edit = useRef()
 
@@ -91,7 +94,12 @@ export function EmailPreview({
         removeFromTrash={removeFromTrash}
         edit={edit}
       />
-      <img className='preview-pic' src={mail.profilePic} alt='' />
+      <img
+        className='preview-pic'
+        style={{ backgroundColor: mail.backgroundColor }}
+        src={mail.profilePic}
+        alt=''
+      />
     </div>
   )
 }

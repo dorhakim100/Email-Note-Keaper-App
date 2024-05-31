@@ -18,7 +18,7 @@ export function NoteIndex({ logo, setLogo }) {
   useEffect(() => {
     logo = {
       name: 'Note',
-      src: '..Icons-SVG/note.svg',
+      src: 'Icons-SVG/note.svg',
     }
     setLogo(logo)
     const initNotes =

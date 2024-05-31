@@ -55,10 +55,8 @@ export function EmailCompose({
     removedAt: null,
     from: isFromMe.current && mailService.loggedInUser.email,
     to: '',
-    profilePic: `../../../Profiles-SVG/${utilService.getRandomIntInclusive(
-      1,
-      8
-    )}.svg`,
+    profilePic: `Profiles-SVG/${utilService.getRandomIntInclusive(1, 8)}.svg`,
+    backgroundColor: utilService.getRandomColor(),
   })
 
   function handleChange(event) {
