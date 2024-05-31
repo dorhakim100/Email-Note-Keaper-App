@@ -1,4 +1,5 @@
 const { useRef } = React
+const { useParams, useNavigate } = ReactRouter
 
 import { PreviewEditController } from './PreviewEditController.jsx'
 
@@ -10,9 +11,19 @@ export function EmailPreview({
   folder,
   removeFromTrash,
   openMail,
+  toggleCompose,
+  setCompose,
+  searchParams,
+  setSearchParams,
+  compose,
+  removeFromDraft,
+  mailsList,
+  editMail,
 }) {
   let isEdit = false
   const edit = useRef()
+
+  const navigate = useNavigate()
 
   function onToggleFavorite(id, e) {
     toggleFavorite(e.target.dataset.id)
@@ -25,6 +36,21 @@ export function EmailPreview({
     openMail(id)
   }
 
+  function onEditMail(e) {
+    const id = e.target.dataset.id
+    // const mail = mailsList.find((mail) => mail.id === id)
+    // removeFromDraft(id)
+    // toggleCompose()
+    // compose.to = mail.to
+    // compose.subject = mail.subject
+    // compose.body = mail.body
+    // setCompose(compose)
+    // navigate(
+    //   `/mail/draft?to=${compose.to}&subject=${compose.subject}&body=${compose.body}`
+    // )
+    editMail(id)
+  }
+
   return (
     <div
       className={`mail-container ${(mail.isRead && 'read') || 'not-read'}`}
@@ -32,14 +58,26 @@ export function EmailPreview({
         onOpenMail(mail.id, event)
       }}
     >
-      <i
-        data-id={mail.id}
-        className={`fa-solid fa-star ${mail.isFavorite ? ` favorite` : ``}`}
-        onClick={(event) => {
-          isEdit = true
-          onToggleFavorite(mail.id, event)
-        }}
-      ></i>
+      <div className='edit-container'>
+        <i
+          data-id={mail.id}
+          className={`fa-solid fa-star ${mail.isFavorite ? ` favorite` : ``}`}
+          onClick={(event) => {
+            isEdit = true
+            onToggleFavorite(mail.id, event)
+          }}
+        ></i>
+        {folder.current === 'draft' && (
+          <i
+            data-id={mail.id}
+            onClick={(event) => {
+              isEdit = true
+              onEditMail(event)
+            }}
+            className='fa-solid fa-pen-to-square'
+          ></i>
+        )}
+      </div>
 
       {(mail.isSent && (
         <h3>

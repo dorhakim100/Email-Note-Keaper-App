@@ -187,6 +187,8 @@ background-color: var(--mid-gray);
         width: 70%;
         grid-column: 2/3;
         grid-row: 1/2;
+
+        height: 2vh;
     }
     .search-container>input{
         width: 80%;

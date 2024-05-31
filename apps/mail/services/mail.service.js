@@ -20,6 +20,7 @@ export const mailService = {
   save,
   // _setNextPrevMailId,
   get,
+  getComposeFromSearchParams,
 }
 
 function createMails() {
@@ -273,6 +274,14 @@ function get(mailId) {
     // mail = _setNextPrevMailId(mail)
     return mail
   })
+}
+
+function getComposeFromSearchParams(searchParams) {
+  return {
+    to: +searchParams.get('to') || '',
+    subject: searchParams.get('subject') || '',
+    body: searchParams.get('body') || '',
+  }
 }
 
 // function _setNextPrevMailId(mail) {

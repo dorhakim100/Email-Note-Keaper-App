@@ -1,9 +1,9 @@
 const { useState, useEffect } = React
-import { utilService } from '../../../services/util.service.js'
+import Swal from '../../../lib/swal.js'
 import { noteService } from '../services/note.service.js'
 import { storageService } from '../../../services/storage.service.js'
 
-export function VideoNote({ notes, setNotes }) {
+export function VideoNote({ notes, setNotes, setFilteredNotes }) {
     const [videoLink, setVideoLink] = useState('')
 
     function addVideoNote() {
@@ -11,21 +11,29 @@ export function VideoNote({ notes, setNotes }) {
 
         const videoId = extractVideoId(videoLink)
         if (!videoId) {
-            alert('Invalid Link!')
+            Swal.fire({
+                icon: 'error',
+                title: 'Invalid YouTube Link!',
+                text: 'Please enter a valid YouTube video link.'
+            })
             return
         }
 
         const note = {
-            id: utilService.makeId(),
             type: 'VideoNote',
             style: { backgroundColor: '#b0c4de' },
             info: { videoId }
         }
 
-        const updatedNotes = [...notes, note]
-        setNotes(updatedNotes)
-        storageService.saveToStorage(noteService.NOTE_KEY, updatedNotes)
-        setVideoLink('')
+        noteService.save(note)
+            .then(savedNote => {
+                const updatedNotes = [...notes, savedNote]
+                setNotes(updatedNotes)
+                setFilteredNotes(updatedNotes)
+                storageService.saveToStorage(noteService.NOTE_KEY, updatedNotes)
+                setVideoLink('')
+            })
+            .catch(error => console.error('Error adding video note:', error))
     }
 
     function extractVideoId(url) {

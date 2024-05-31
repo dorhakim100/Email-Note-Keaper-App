@@ -1,6 +1,6 @@
 const { useState, useEffect, useRef } = React
 
-const { Link, Outlet } = ReactRouterDOM
+const { Link, Outlet, useSearchParams } = ReactRouterDOM
 
 const { useParams, useNavigate } = ReactRouter
 
@@ -20,7 +20,7 @@ import { showErrorMsg } from '../../../services/event-bus.service.js'
 
 export function MailIndex({ logo, setLogo }) {
   const MAIL_KEY = mailService.MAIL_KEY
-  // localStorage.clear()
+
   const [mailsList, setMails] = useState([])
 
   const [filterBy, setFilterBy] = useState(mailService.getDefaultFilter())
@@ -41,6 +41,15 @@ export function MailIndex({ logo, setLogo }) {
   const params = useParams()
   const navigate = useNavigate()
 
+  const [searchParams, setSearchParams] = useSearchParams()
+  const [compose, setCompose] = useState(
+    mailService.getComposeFromSearchParams(searchParams)
+  )
+
+  console.log(compose)
+
+  // localStorage.clear()
+
   // useEffect(() => {
   //   storageService
   //     .query(MAIL_KEY)
@@ -60,7 +69,9 @@ export function MailIndex({ logo, setLogo }) {
       name: 'Gmail',
       src: './Icons-SVG/gmail.svg',
     }
+
     setLogo(logo)
+
     if (!params.folder) {
       changeFolder('received')
 
@@ -69,6 +80,10 @@ export function MailIndex({ logo, setLogo }) {
 
     changeFolder(params.folder)
   }, [params.folder])
+
+  useEffect(() => {
+    setCompose(compose)
+  }, [searchParams])
 
   function filterByTxtReadUnread() {
     const entity = getEntity(folder.current)
@@ -139,8 +154,15 @@ export function MailIndex({ logo, setLogo }) {
     const curr = emailComposeRef.current.style.display
     if (curr === 'block') {
       emailComposeRef.current.style.display = 'none'
+      if (params.mailId) {
+        navigate(`/mail/${folder.current}/${params.mailId}`)
+      } else {
+        navigate(`/mail/${folder.current}`)
+      }
     } else {
       emailComposeRef.current.style.display = 'block'
+      setSearchParams(compose)
+
       if (params.mailId) return
     }
   }
@@ -171,6 +193,7 @@ export function MailIndex({ logo, setLogo }) {
     const entity = getEntity(paramsFolder)
 
     clickedFolder = paramsFolder
+    console.log(clickedFolder)
     folder.current = paramsFolder
     storageService.query(MAIL_KEY).then((mails) => {
       newMails.current = mails
@@ -275,6 +298,24 @@ export function MailIndex({ logo, setLogo }) {
     }
   }
 
+  function removeFromDraft(id) {
+    const mail = mailsList.find((mail) => mail.id === id)
+
+    return storageService.remove(MAIL_KEY, id).then(() => {
+      return storageService
+        .query(MAIL_KEY)
+        .then((mails) => {
+          const entity = getEntity(folder.current)
+          // setMails(mails.filter((mail) => mail[entity]))
+          return mails
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+        .finally(() => {})
+    })
+  }
+
   function removeFromTrash(id) {
     const mail = mailsList.find((mail) => mail.id === id)
     if (!mail.isTrash) return
@@ -376,6 +417,23 @@ export function MailIndex({ logo, setLogo }) {
     return sorted
   }
 
+  function editMail(id) {
+    const mail = mailsList.find((mail) => mail.id === id)
+    removeFromDraft(id).then((mailsList) => {
+      toggleCompose()
+      compose.to = mail.to
+      compose.subject = mail.subject
+      compose.body = mail.body
+      setCompose(compose)
+      navigate(
+        `/mail/draft?to=${compose.to}&subject=${compose.subject}&body=${compose.body}`
+      )
+      console.log(mailsList)
+      const entity = getEntity(folder.current)
+      setMails(mailsList.filter((mail) => mail[entity]))
+    })
+  }
+
   return (
     <section className='body-container'>
       <EmailFolderList
@@ -422,6 +480,13 @@ export function MailIndex({ logo, setLogo }) {
           folder={folder}
           removeFromTrash={removeFromTrash}
           openMail={openMail}
+          toggleCompose={toggleCompose}
+          setCompose={setCompose}
+          searchParams={searchParams}
+          setSearchParams={setSearchParams}
+          compose={compose}
+          removeFromDraft={removeFromDraft}
+          editMail={editMail}
         />
       )}
       <EmailCompose
@@ -429,7 +494,12 @@ export function MailIndex({ logo, setLogo }) {
         setMails={setMails}
         emailComposeRef={emailComposeRef}
         toggleCompose={toggleCompose}
+        compose={compose}
+        setCompose={setCompose}
+        searchParams={searchParams}
+        setSearchParams={setSearchParams}
       />
+
       <button onClick={toggleCompose} className='compose-btn'>
         <i className='fa-solid fa-pencil'></i> Compose
       </button>
