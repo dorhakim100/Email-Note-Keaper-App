@@ -298,6 +298,24 @@ export function MailIndex({ logo, setLogo }) {
     }
   }
 
+  function removeFromDraft(id) {
+    const mail = mailsList.find((mail) => mail.id === id)
+
+    return storageService.remove(MAIL_KEY, id).then(() => {
+      return storageService
+        .query(MAIL_KEY)
+        .then((mails) => {
+          const entity = getEntity(folder.current)
+          // setMails(mails.filter((mail) => mail[entity]))
+          return mails
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+        .finally(() => {})
+    })
+  }
+
   function removeFromTrash(id) {
     const mail = mailsList.find((mail) => mail.id === id)
     if (!mail.isTrash) return
@@ -399,6 +417,23 @@ export function MailIndex({ logo, setLogo }) {
     return sorted
   }
 
+  function editMail(id) {
+    const mail = mailsList.find((mail) => mail.id === id)
+    removeFromDraft(id).then((mailsList) => {
+      toggleCompose()
+      compose.to = mail.to
+      compose.subject = mail.subject
+      compose.body = mail.body
+      setCompose(compose)
+      navigate(
+        `/mail/draft?to=${compose.to}&subject=${compose.subject}&body=${compose.body}`
+      )
+      console.log(mailsList)
+      const entity = getEntity(folder.current)
+      setMails(mailsList.filter((mail) => mail[entity]))
+    })
+  }
+
   return (
     <section className='body-container'>
       <EmailFolderList
@@ -445,6 +480,13 @@ export function MailIndex({ logo, setLogo }) {
           folder={folder}
           removeFromTrash={removeFromTrash}
           openMail={openMail}
+          toggleCompose={toggleCompose}
+          setCompose={setCompose}
+          searchParams={searchParams}
+          setSearchParams={setSearchParams}
+          compose={compose}
+          removeFromDraft={removeFromDraft}
+          editMail={editMail}
         />
       )}
       <EmailCompose

@@ -17,6 +17,13 @@ export function MailList({
   folder,
   removeFromTrash,
   openMail,
+  toggleCompose,
+  setCompose,
+  searchParams,
+  setSearchParams,
+  compose,
+  removeFromDraft,
+  editMail,
 }) {
   const params = useParams()
   const navigate = useNavigate()
@@ -43,6 +50,14 @@ export function MailList({
                     folder={folder}
                     removeFromTrash={removeFromTrash}
                     openMail={openMail}
+                    toggleCompose={toggleCompose}
+                    setCompose={setCompose}
+                    searchParams={searchParams}
+                    setSearchParams={setSearchParams}
+                    compose={compose}
+                    removeFromDraft={removeFromDraft}
+                    mailsList={mailsList}
+                    editMail={editMail}
                   />
                 </div>
               )
@@ -57,6 +72,14 @@ export function MailList({
                     folder={folder}
                     removeFromTrash={removeFromTrash}
                     openMail={openMail}
+                    toggleCompose={toggleCompose}
+                    setCompose={setCompose}
+                    searchParams={searchParams}
+                    setSearchParams={setSearchParams}
+                    compose={compose}
+                    removeFromDraft={removeFromDraft}
+                    mailsList={mailsList}
+                    editMail={editMail}
                   />
                 </div>
               )

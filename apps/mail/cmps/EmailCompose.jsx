@@ -100,7 +100,6 @@ export function EmailCompose({
       toggleCompose()
       return
     }
-    console.log(mail.current)
     storageService
       .post(mailService.MAIL_KEY, mail.current)
       .then(() => {

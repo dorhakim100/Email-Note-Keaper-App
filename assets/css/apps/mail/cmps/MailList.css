@@ -51,12 +51,12 @@
     color: rgb(255, 204, 0);
  }
 
- .mail-container>i{
+ .mail-container>.edit-container>i{
         padding: 10px;
       border-radius: 50%;
  }
 
- .mail-container>i:hover{
+ .mail-container>.edit-container>i:hover{
 
 
     background-color: var(--dark-gray);
@@ -129,6 +129,15 @@ grid-column: 4/6;
 .preview-pic{
    display: none;
    /* width: 6em; */
+}
+
+.edit-container{
+   display: flex;
+   gap: 15px;
+
+   justify-self: center;
+
+   margin: 5px;
 }
 
 @media (max-width: 950px) {
@@ -215,6 +224,19 @@ grid-column: 4/6;
 @media (max-width: 400px) {
    .mail-container{
       font-size: 0.7em;
+   }
+
+   .edit-container{
+      display: flex;
+      gap: 5px;
+   
+      justify-self: center;
+   
+      /* margin: 5px; */
+   }
+
+   .mail-container>.edit-container>i{
+      padding: 5px;
    }
 }
 
