@@ -21,7 +21,10 @@ export function EmailPreview({
   mailsList,
   editMail,
 }) {
-  // mail.backgroundColor = utilService.getRandomColor()
+  mail.profilePic = `Profiles-SVG/${utilService.getRandomIntInclusive(
+    1,
+    8
+  )}.svg`
 
   let isEdit = false
   const edit = useRef()

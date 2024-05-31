@@ -46,8 +46,6 @@ export function MailIndex({ logo, setLogo }) {
     mailService.getComposeFromSearchParams(searchParams)
   )
 
-  console.log(compose)
-
   // localStorage.clear()
 
   useEffect(() => {
@@ -179,7 +177,7 @@ export function MailIndex({ logo, setLogo }) {
     const entity = getEntity(paramsFolder)
 
     clickedFolder = paramsFolder
-    console.log(clickedFolder)
+
     folder.current = paramsFolder
     storageService.query(MAIL_KEY).then((mails) => {
       newMails.current = mails
