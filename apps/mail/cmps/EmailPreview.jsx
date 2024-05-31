@@ -38,16 +38,7 @@ export function EmailPreview({
 
   function onEditMail(e) {
     const id = e.target.dataset.id
-    // const mail = mailsList.find((mail) => mail.id === id)
-    // removeFromDraft(id)
-    // toggleCompose()
-    // compose.to = mail.to
-    // compose.subject = mail.subject
-    // compose.body = mail.body
-    // setCompose(compose)
-    // navigate(
-    //   `/mail/draft?to=${compose.to}&subject=${compose.subject}&body=${compose.body}`
-    // )
+
     editMail(id)
   }
 

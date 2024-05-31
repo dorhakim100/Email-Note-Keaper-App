@@ -5,7 +5,7 @@ export function Home({ logo, setLogo }) {
   useEffect(() => {
     logo = {
       name: 'Home',
-      src: './Icons-SVG/home.svg',
+      src: '..Icons-SVG/home.svg',
     }
     setLogo(logo)
   }, [])

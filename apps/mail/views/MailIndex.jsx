@@ -67,7 +67,7 @@ export function MailIndex({ logo, setLogo }) {
   useEffect(() => {
     logo = {
       name: 'Gmail',
-      src: './Icons-SVG/gmail.svg',
+      src: '..Icons-SVG/gmail.svg',
     }
 
     setLogo(logo)
