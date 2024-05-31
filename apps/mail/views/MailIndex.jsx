@@ -1,6 +1,6 @@
 const { useState, useEffect, useRef } = React
 
-const { Link, Outlet } = ReactRouterDOM
+const { Link, Outlet, useSearchParams } = ReactRouterDOM
 
 const { useParams, useNavigate } = ReactRouter
 
@@ -41,6 +41,13 @@ export function MailIndex({ logo, setLogo }) {
   const params = useParams()
   const navigate = useNavigate()
 
+  const [searchParams, setSearchParams] = useSearchParams()
+  const [compose, setCompose] = useState(
+    mailService.getComposeFromSearchParams(searchParams)
+  )
+
+  console.log(compose)
+
   // localStorage.clear()
 
   // useEffect(() => {
@@ -62,7 +69,9 @@ export function MailIndex({ logo, setLogo }) {
       name: 'Gmail',
       src: './Icons-SVG/gmail.svg',
     }
+
     setLogo(logo)
+
     if (!params.folder) {
       changeFolder('received')
 
@@ -71,6 +80,10 @@ export function MailIndex({ logo, setLogo }) {
 
     changeFolder(params.folder)
   }, [params.folder])
+
+  useEffect(() => {
+    setCompose(compose)
+  }, [searchParams])
 
   function filterByTxtReadUnread() {
     const entity = getEntity(folder.current)
@@ -141,8 +154,15 @@ export function MailIndex({ logo, setLogo }) {
     const curr = emailComposeRef.current.style.display
     if (curr === 'block') {
       emailComposeRef.current.style.display = 'none'
+      if (params.mailId) {
+        navigate(`/mail/${folder.current}/${params.mailId}`)
+      } else {
+        navigate(`/mail/${folder.current}`)
+      }
     } else {
       emailComposeRef.current.style.display = 'block'
+      setSearchParams(compose)
+
       if (params.mailId) return
     }
   }
@@ -173,6 +193,7 @@ export function MailIndex({ logo, setLogo }) {
     const entity = getEntity(paramsFolder)
 
     clickedFolder = paramsFolder
+    console.log(clickedFolder)
     folder.current = paramsFolder
     storageService.query(MAIL_KEY).then((mails) => {
       newMails.current = mails
@@ -431,7 +452,12 @@ export function MailIndex({ logo, setLogo }) {
         setMails={setMails}
         emailComposeRef={emailComposeRef}
         toggleCompose={toggleCompose}
+        compose={compose}
+        setCompose={setCompose}
+        searchParams={searchParams}
+        setSearchParams={setSearchParams}
       />
+
       <button onClick={toggleCompose} className='compose-btn'>
         <i className='fa-solid fa-pencil'></i> Compose
       </button>

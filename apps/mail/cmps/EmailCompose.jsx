@@ -1,5 +1,7 @@
 const { useRef, useState, useEffect } = React
 
+// const { useSearchParams } = ReactRouterDOM
+
 import { mailService } from '../services/mail.service.js'
 import { utilService } from '../../../services/util.service.js'
 import { storageService } from '../../../services/async-storage.service.js'
@@ -12,20 +14,37 @@ export function EmailCompose({
   setMails,
   emailComposeRef,
   toggleCompose,
+  compose,
+  setCompose,
+  searchParams,
+  setSearchParams,
 }) {
   const isFromMe = useRef(true)
   const [mailSender, setMailSender] = useState(true)
+
+  const to = useRef()
+  const subject = useRef()
+  const body = useRef()
 
   useEffect(() => {
     setMailSender(isFromMe.current)
   }, [isFromMe.current])
 
+  useEffect(() => {
+    console.log(compose)
+    to.current.value = compose.to
+    subject.current.value = compose.subject
+    body.current.value = compose.body
+    setCompose(compose)
+    console.log(to.current)
+  }, [searchParams])
+
   const loggedUserEmail = mailService.loggedInUser.email
 
-  const mail = {
+  const mail = useRef({
     id: utilService.makeId,
     subject: '',
-    body: ``,
+    body: '',
     isRead: false,
     isReceived: (!isFromMe.current && true) || false,
     isFavorite: false,
@@ -35,43 +54,55 @@ export function EmailCompose({
     sentAt: Date.now(),
     removedAt: null,
     from: isFromMe.current && mailService.loggedInUser.email,
-    to: !isFromMe.current || loggedUserEmail,
+    to: '',
     profilePic: `../../../Profiles-SVG/${utilService.getRandomIntInclusive(
       1,
       8
     )}.svg`,
-  }
+  })
 
   function handleChange(event) {
     const input = event.target.id
     switch (input) {
       case 'from':
-        mail.from = event.target.value
+        mail.current.from = event.target.value
         break
       case 'to':
-        mail.to = event.target.value
+        mail.current.to = event.target.value
+        compose.to = event.target.value
         break
       case 'subject':
-        mail.subject = event.target.value
+        mail.current.subject = event.target.value
+        compose.subject = event.target.value
         break
       case 'body':
-        mail.body = event.target.value
+        mail.current.body = event.target.value
+        compose.body = event.target.value
         break
     }
+    console.log(mail.current)
+    setCompose(compose)
+    setSearchParams(compose)
     if (isFromMe.current) {
-      mail.from = mailService.loggedInUser.email
-      mail.isSent = true
-      mail.isRead = true
+      mail.current.from = mailService.loggedInUser.email
+      mail.current.isSent = true
+      mail.current.isRead = true
     }
   }
 
   function onSaveMail() {
-    if (mail.body === '' && mail.subject === '' && mail.to === '') {
+    console.log(mail.current)
+    if (
+      mail.current.body === '' &&
+      mail.current.subject === '' &&
+      mail.current.to === ''
+    ) {
       toggleCompose()
       return
     }
+    console.log(mail.current)
     storageService
-      .post(mailService.MAIL_KEY, mail)
+      .post(mailService.MAIL_KEY, mail.current)
       .then(() => {
         storageService
           .query((mails) => {
@@ -99,10 +130,10 @@ export function EmailCompose({
       <div
         className='compose-header-container'
         onClick={() => {
-          mail.isRead = false
-          mail.isReceived = false
-          mail.isSent = false
-          mail.isDraft = true
+          mail.current.isRead = false
+          mail.current.isReceived = false
+          mail.current.isSent = false
+          mail.current.isDraft = true
           onSaveMail()
         }}
       >
@@ -148,6 +179,7 @@ export function EmailCompose({
           {!isFromMe.current && mailService.loggedInUser.fullName}
           {isFromMe.current && (
             <input
+              ref={to}
               type='text'
               id='to'
               onKeyUp={(event) => {
@@ -160,6 +192,7 @@ export function EmailCompose({
         <div className='subject-container'>
           <label htmlFor='subject'>Subject</label>
           <input
+            ref={subject}
             type='text'
             id='subject'
             onKeyUp={(event) => handleChange(event)}
@@ -167,6 +200,7 @@ export function EmailCompose({
         </div>
 
         <textarea
+          ref={body}
           className='body-input'
           name='txt'
           cols='50'
