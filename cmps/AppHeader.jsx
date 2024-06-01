@@ -29,7 +29,7 @@ export function AppHeader({ logo }) {
         <NavLink to='/'>
           <img
             className='icon'
-            src='../Icons-SVG/home.svg'
+            src='Icons-SVG/home.svg'
             alt=''
             onClick={onToggleNavMenu}
           />
@@ -37,7 +37,7 @@ export function AppHeader({ logo }) {
         <NavLink to='/about'>
           <img
             className='icon'
-            src='../Icons-SVG/about.svg'
+            src='Icons-SVG/about.svg'
             alt=''
             onClick={onToggleNavMenu}
           />
@@ -45,7 +45,7 @@ export function AppHeader({ logo }) {
         <NavLink to='/mail'>
           <img
             className='icon'
-            src='../Icons-SVG/gmail.svg'
+            src='Icons-SVG/gmail.svg'
             alt=''
             onClick={onToggleNavMenu}
           />
@@ -53,7 +53,7 @@ export function AppHeader({ logo }) {
         <NavLink to='/note'>
           <img
             className='icon'
-            src='../Icons-SVG/note.svg'
+            src='Icons-SVG/note.svg'
             alt=''
             onClick={onToggleNavMenu}
           />

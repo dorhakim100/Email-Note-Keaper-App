@@ -127,6 +127,7 @@ background-color: var(--mid-gray);
 
 .sorting-buttons-container{
     /* display: none; */
+
     grid-column: 2/3;
     justify-self: end;
     
@@ -134,11 +135,15 @@ background-color: var(--mid-gray);
 
 .sorting-buttons-container>.folders-button{
     background-color: var(--mid-gray);
+    margin: 0px;
 }
 .sorting-buttons-container>.folders-button:hover{
     background-color: var(--dark-gray);
 }
+   .folders-button>i{
 
+        margin-inline-start: 0px;
+    }
 
 @media (max-width: 950px) {
     .filter-search-container{
@@ -163,6 +168,15 @@ background-color: var(--mid-gray);
 
 
  
+}
+@media (max-width: 450px) {
+    .search-container{
+        width: 85%;
+
+
+        /* height: 2vh; */
+    }
+    
 }
 @media (max-width: 400px) {
    .filter-search-container{
@@ -193,5 +207,7 @@ background-color: var(--mid-gray);
     .search-container>input{
         width: 80%;
     }
+
+ 
    
 }

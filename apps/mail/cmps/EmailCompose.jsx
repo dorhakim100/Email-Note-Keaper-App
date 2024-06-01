@@ -31,12 +31,10 @@ export function EmailCompose({
   }, [isFromMe.current])
 
   useEffect(() => {
-    console.log(compose)
     to.current.value = compose.to
     subject.current.value = compose.subject
     body.current.value = compose.body
     setCompose(compose)
-    console.log(to.current)
   }, [searchParams])
 
   const loggedUserEmail = mailService.loggedInUser.email
@@ -55,10 +53,8 @@ export function EmailCompose({
     removedAt: null,
     from: isFromMe.current && mailService.loggedInUser.email,
     to: '',
-    profilePic: `../../../Profiles-SVG/${utilService.getRandomIntInclusive(
-      1,
-      8
-    )}.svg`,
+    profilePic: `Profiles-SVG/${utilService.getRandomIntInclusive(1, 8)}.svg`,
+    backgroundColor: utilService.getRandomColor(),
   })
 
   function handleChange(event) {

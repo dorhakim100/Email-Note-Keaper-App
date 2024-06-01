@@ -85,6 +85,7 @@ export function EmailDetails({
             <img
               className='sender-info profile-pic'
               src={mail.profilePic}
+              style={{ backgroundColor: mail.backgroundColor }}
               alt=''
             />
             <h3 className='sender-info name'>{mail.from}</h3>

@@ -46,28 +46,12 @@ export function MailIndex({ logo, setLogo }) {
     mailService.getComposeFromSearchParams(searchParams)
   )
 
-  console.log(compose)
-
   // localStorage.clear()
-
-  // useEffect(() => {
-  //   storageService
-  //     .query(MAIL_KEY)
-  //     .then((mails) => {
-  //       filter(filterBy).then((mails) => {
-  //         setMails(mails)
-  //       })
-  //     })
-  //     .catch((err) => {
-  //       console.log(err)
-  //       navigate(`/mail/${folder.current}`)
-  //     })
-  // }, [filterBy])
 
   useEffect(() => {
     logo = {
       name: 'Gmail',
-      src: './Icons-SVG/gmail.svg',
+      src: 'Icons-SVG/gmail.svg',
     }
 
     setLogo(logo)
@@ -193,7 +177,7 @@ export function MailIndex({ logo, setLogo }) {
     const entity = getEntity(paramsFolder)
 
     clickedFolder = paramsFolder
-    console.log(clickedFolder)
+
     folder.current = paramsFolder
     storageService.query(MAIL_KEY).then((mails) => {
       newMails.current = mails

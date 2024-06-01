@@ -54,15 +54,22 @@
     border-bottom: 1px solid rgba(128, 128, 128, 0.303);
     width: 90%;
     justify-self: center;
+    align-items: center;
 
     padding: 10px;
 }
-.inputs-container>*>*{
-    border: none;
+.to-container>input{
+     border: none;
     outline: none;
 
     margin: 5px;
 
+}
+.subject-container>input{
+     border: none;
+    outline: none;
+
+    margin: 5px;   
 }
 
 .body-input{
@@ -121,8 +128,21 @@
     border-radius: 5px;
 }
 
+
 @media (max-width: 950px) {
     .compose-btn{
         display: block;
     }   
+}
+
+@media (max-width: 400px) {
+
+    .email-compose-container{
+        font-size: 1em;
+
+    }
+
+    .to-container>input{
+        
+    }
 }

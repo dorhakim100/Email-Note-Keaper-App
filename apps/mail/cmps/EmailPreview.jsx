@@ -1,6 +1,7 @@
-const { useRef } = React
+const { useRef, useEffect } = React
 const { useParams, useNavigate } = ReactRouter
 
+import { utilService } from '../../../services/util.service.js'
 import { PreviewEditController } from './PreviewEditController.jsx'
 
 export function EmailPreview({
@@ -20,6 +21,11 @@ export function EmailPreview({
   mailsList,
   editMail,
 }) {
+  mail.profilePic = `Profiles-SVG/${utilService.getRandomIntInclusive(
+    1,
+    8
+  )}.svg`
+
   let isEdit = false
   const edit = useRef()
 
@@ -38,16 +44,7 @@ export function EmailPreview({
 
   function onEditMail(e) {
     const id = e.target.dataset.id
-    // const mail = mailsList.find((mail) => mail.id === id)
-    // removeFromDraft(id)
-    // toggleCompose()
-    // compose.to = mail.to
-    // compose.subject = mail.subject
-    // compose.body = mail.body
-    // setCompose(compose)
-    // navigate(
-    //   `/mail/draft?to=${compose.to}&subject=${compose.subject}&body=${compose.body}`
-    // )
+
     editMail(id)
   }
 
@@ -100,7 +97,12 @@ export function EmailPreview({
         removeFromTrash={removeFromTrash}
         edit={edit}
       />
-      <img className='preview-pic' src={mail.profilePic} alt='' />
+      <img
+        className='preview-pic'
+        style={{ backgroundColor: mail.backgroundColor }}
+        src={mail.profilePic}
+        alt=''
+      />
     </div>
   )
 }
