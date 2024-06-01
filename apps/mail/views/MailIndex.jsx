@@ -353,7 +353,7 @@ export function MailIndex({ logo, setLogo }) {
           )
       }
       const mailIdx = newMails.findIndex((currMail) => currMail.id === mail.id)
-      console.log(mailIdx)
+
       const nextMail = newMails[mailIdx + 1]
         ? newMails[mailIdx + 1]
         : newMails[0]

@@ -76,7 +76,7 @@ export function EmailCompose({
         compose.body = event.target.value
         break
     }
-    console.log(mail.current)
+
     setCompose(compose)
     setSearchParams(compose)
     if (isFromMe.current) {
@@ -87,7 +87,6 @@ export function EmailCompose({
   }
 
   function onSaveMail() {
-    console.log(mail.current)
     if (
       mail.current.body === '' &&
       mail.current.subject === '' &&
