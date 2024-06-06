@@ -29,6 +29,7 @@
 .mail-container:hover{
     font-weight: bold;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    
 }
 
 .mail-container:nth-last-of-type(1){
@@ -123,7 +124,7 @@ grid-column: 4/6;
 }
 
 .read{
-      background-color: rgb(211, 223, 247);
+      background-color: rgb(223, 232, 251);
 }
 
 .preview-pic{

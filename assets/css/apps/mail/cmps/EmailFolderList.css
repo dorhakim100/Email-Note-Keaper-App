@@ -9,16 +9,29 @@
     gap: 15px;
     padding: 5px;
 
+    padding-inline-start: 0px;
+
     background-color: var(--light-gray);
 
      transition: .4s;
-     width: 3em;
+     width: 3.3em;
 }
 
 
 .nav-bar-container:hover{
     /* width: calc(10% + 10em); */
     width: 15em;
+    padding-inline-start: 0px;
+}
+
+.nav-bar-container:hover .folder{
+        /* padding: 10px; */
+        /* margin-inline-start: 0px; */
+    padding-inline-start: 0px;
+    border-top-left-radius: 0px;
+    border-bottom-left-radius: 0px;
+ left: 0px;
+ width: 100%;
 }
 
 
@@ -29,18 +42,23 @@
     transition: .2s;
 }
 .nav-bar-container>div{
-   
+    
     cursor: pointer;
 }
 
-.folder:hover>i{
+
+
+.folder>i{
     /* font-size: 1.5em; */
+
     
 }
 
 .folder:hover{
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
     background-color: var(--mid-gray);
+    position: relative;
+   
 }
 
 
@@ -51,8 +69,10 @@
     
     /* background-color: blue; */
     border-radius: 25px;
-
-
+    margin-inline-start: 0px;
+    position: relative;
+    left: 2.5px;
+    width: 3em;
 }
 
 .folder.compose{
@@ -64,10 +84,10 @@
     background-color: var(--dark-gray);
 }
 .active-folder{
-    background-color: rgb(156, 156, 237);
+    background-color: rgb(156, 169, 237);
 }
 .folder.active-folder:hover{
-    background-color: rgb(116, 116, 187);
+    background-color: rgb(156, 169, 237);
 }
 .folder.compose:hover{
 
