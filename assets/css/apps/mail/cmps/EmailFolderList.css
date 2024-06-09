@@ -73,6 +73,7 @@
     position: relative;
     left: 2.5px;
     width: 3em;
+    transition: 0.2s;
 }
 
 .folder.compose{
@@ -81,13 +82,13 @@
 }
 
 .folder:hover {
-    background-color: var(--dark-gray);
+    background-color: var(--mid-gray);
 }
 .active-folder{
     background-color: rgb(156, 169, 237);
 }
 .folder.active-folder:hover{
-    background-color: rgb(156, 169, 237);
+    background-color: rgb(141, 154, 217);
 }
 .folder.compose:hover{
 

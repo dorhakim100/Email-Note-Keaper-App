@@ -31,6 +31,10 @@
 
     align-items: center;
     justify-items: center;
+    /* position: fixed;
+    top: 5px;
+    left: 10em;
+    width: 25%; */
 }
 
 .search-container>input{
@@ -210,4 +214,15 @@ background-color: var(--mid-gray);
 
  
    
+}
+
+@media (min-width: 950px) {
+
+    .search-container{
+        position: fixed;
+    top: 5px;
+    left: 10em;
+    width: 25%;
+    }
+    
 }
