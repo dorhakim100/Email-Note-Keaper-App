@@ -2,6 +2,14 @@
 
 .mail-list-container{
     /* position: relative; */
+    height: 80vh;
+    width: calc(100vw - 3.8em);
+    overflow-y: scroll;
+    border-radius: 10px;
+
+   position: absolute;
+   inset-inline-end: 0px;
+   z-index: 0;
 }
 
 
@@ -32,6 +40,12 @@
     
 }
 
+.mail-list-container>div:first-of-type>.mail-container{
+
+   border-top-left-radius: 10px;
+   border-top-right-radius: 10px;
+    
+ }
 .mail-container:nth-last-of-type(1){
 
     border-bottom: 1px solid var(--mid-gray);
@@ -239,6 +253,12 @@ grid-column: 4/6;
    .mail-container>.edit-container>i{
       padding: 5px;
    }
+
+   .mail-list-container{
+      width: 100%;
+     inset-inline-start: 0px;
+
+  }
 }
 
 

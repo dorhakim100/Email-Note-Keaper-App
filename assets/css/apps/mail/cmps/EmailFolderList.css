@@ -12,9 +12,14 @@
     padding-inline-start: 0px;
 
     background-color: var(--light-gray);
+    background-color: aliceblue;
 
      transition: .4s;
      width: 3.3em;
+
+     position: absolute;
+     inset-inline-start: 0px;
+     z-index: 2;
 }
 
 
