@@ -418,8 +418,54 @@ export function MailIndex({ logo, setLogo }) {
     })
   }
 
+  function toggleNavBar() {
+    const elNavBar = navBar.current
+    const curr = elNavBar.style.display
+    if (curr === 'block') {
+      elNavBar.style.display = 'none'
+    } else {
+      elNavBar.style.display = 'block'
+    }
+  }
+
+  function toggleHoverNavBar({ target }) {
+    const elFolderButtons = document.querySelector('.folders-button')
+    const elNavBar = navBar.current
+    const elFolders = document.querySelectorAll('.folder')
+    const elNavTexts = document.querySelectorAll('.nav-text')
+    const elInboxFolderContainer = document.querySelector(
+      '.inbox-folder-container'
+    )
+
+    if (!elFolders[0].classList.contains('nav-bar-container-hover')) {
+      elFolderButtons.classList.add('folders-button-active')
+      elNavBar.style.width = '15em'
+      for (let i = 0; i < elFolders.length; i++) {
+        elFolders[i].classList.add('nav-bar-container-hover')
+        elNavTexts[i].style.display = 'block'
+      }
+      elInboxFolderContainer.style.width = '9em'
+    } else {
+      elFolderButtons.classList.remove('folders-button-active')
+      elNavBar.style.width = ''
+      for (let i = 0; i < elFolders.length; i++) {
+        elFolders[i].classList.remove('nav-bar-container-hover')
+        elNavTexts[i].style.display = ''
+      }
+      elInboxFolderContainer.style.width = ''
+    }
+  }
+
   return (
     <section className='body-container'>
+      <div
+        className='nav-bar-toggle-container'
+        onClick={(event) => toggleHoverNavBar(event)}
+      >
+        <button className='folders-button'>
+          <i className='fa-solid fa-bars'></i>
+        </button>
+      </div>
       <EmailFolderList
         mailsList={mailsList}
         emailComposeRef={emailComposeRef}
@@ -441,6 +487,7 @@ export function MailIndex({ logo, setLogo }) {
         sortBy={sortBy}
         navBar={navBar}
         sortBar={sortBar}
+        toggleNavBar={toggleNavBar}
       />
 
       {params.mailId && params.mailId !== 'compose' && (

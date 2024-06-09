@@ -17,6 +17,7 @@ export function SearchFilter({
   sortBy,
   navBar,
   sortBar,
+  toggleNavBar,
 }) {
   const elSearch = useRef()
   const elBtn = useRef()
@@ -106,15 +107,15 @@ export function SearchFilter({
     sortEmails()
   }
 
-  function toggleNavBar() {
-    const elNavBar = navBar.current
-    const curr = elNavBar.style.display
-    if (curr === 'block') {
-      elNavBar.style.display = 'none'
-    } else {
-      elNavBar.style.display = 'block'
-    }
-  }
+  // function toggleNavBar() {
+  //   const elNavBar = navBar.current
+  //   const curr = elNavBar.style.display
+  //   if (curr === 'block') {
+  //     elNavBar.style.display = 'none'
+  //   } else {
+  //     elNavBar.style.display = 'block'
+  //   }
+  // }
 
   function toggleSorting() {
     const elSortBar = sortBar.current
