@@ -7,15 +7,15 @@
     flex-direction: column;
 
     gap: 15px;
-    padding: 5px;
+    padding: 12px;
 
     padding-inline-start: 0px;
 
     background-color: var(--light-gray);
     background-color: aliceblue;
 
-     transition: .4s;
-     width: 3.3em;
+     transition: 0.4s;
+     width: 5em;
 
      position: absolute;
      inset-inline-start: 0px;
@@ -32,11 +32,18 @@
 .nav-bar-container:hover .folder{
         /* padding: 10px; */
         /* margin-inline-start: 0px; */
-    padding-inline-start: 0px;
+    /* padding-inline-start: 0px; */
     border-top-left-radius: 0px;
     border-bottom-left-radius: 0px;
     left: 0px;
     width: 15em;
+}
+
+.nav-bar-container:hover .compose{
+    width: 10em;
+    height: 4em;
+    border-radius: 10px;
+    
 }
 
 
@@ -81,11 +88,31 @@
     left: 2.5px;
     width: 3em;
     transition: 0.2s;
+    transition: 0.4s;
+    
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .folder.compose{
+    /* height: 4em; */
+    /* width: 4em; */
+    transition: 0.4s;
 
+    text-align: center;
+    padding: 15px;
+
+    font-size: 1em;
+
+    margin-inline-start: 5px;
+    border-radius: 10px;
     background-color: rgb(166, 215, 246);
+}
+
+.folder.compose>i{
+    padding: 0;
+    font-size: 1.5em;
+    margin: auto;
 }
 
 .folder:hover {
@@ -93,7 +120,11 @@
 }
 .active-folder{
     background-color: rgb(156, 169, 237);
+
 }
+
+
+
 .folder.active-folder:hover{
     background-color: rgb(141, 154, 217);
 }
@@ -117,6 +148,7 @@
 }
 
 .inbox-folder-container{
+    transition: 0.4s;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -159,6 +191,7 @@
     width: 15em;
     
 }
+
 @media (max-width: 950px) {
     .nav-bar-container{
     }

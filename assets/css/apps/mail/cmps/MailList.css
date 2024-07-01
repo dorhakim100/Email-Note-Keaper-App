@@ -3,7 +3,7 @@
 .mail-list-container{
     /* position: relative; */
     height: 80vh;
-    width: calc(100vw - 3.8em);
+    width: calc(100vw - 5.8em);
     overflow-y: scroll;
     border-radius: 10px;
 
@@ -35,10 +35,11 @@
 }
 
 .mail-container:hover{
-    font-weight: bold;
+   font-family: gmailRobertoBold;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
     
 }
+
 
 .mail-list-container>div:first-of-type>.mail-container{
 
@@ -48,7 +49,7 @@
  }
 .mail-container:nth-last-of-type(1){
 
-    border-bottom: 1px solid var(--mid-gray);
+    /* border-bottom: 1px solid var(--mid-gray); */
     
  }
 
@@ -138,7 +139,7 @@ grid-column: 4/6;
 }
 
 .read{
-      background-color: rgb(223, 232, 251);
+      background-color: rgba(0, 76, 255, 0.071);
 }
 
 .preview-pic{

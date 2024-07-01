@@ -443,6 +443,15 @@ export function MailIndex({ logo, setLogo }) {
       for (let i = 0; i < elFolders.length; i++) {
         elFolders[i].classList.add('nav-bar-container-hover')
         elNavTexts[i].style.display = 'block'
+        elFolders[i].style.left = '0'
+        if (i === 0) {
+          elFolders[i].style.borderRadius = '10'
+          elFolders[i].style.width = '10em'
+          elFolders[i].style.height = '4em'
+        } else {
+          elFolders[i].style.borderTopLeftRadius = '0'
+          elFolders[i].style.borderBottomLeftRadius = '0'
+        }
       }
       elInboxFolderContainer.style.width = '9em'
     } else {
@@ -450,7 +459,11 @@ export function MailIndex({ logo, setLogo }) {
       elNavBar.style.width = ''
       for (let i = 0; i < elFolders.length; i++) {
         elFolders[i].classList.remove('nav-bar-container-hover')
+        elFolders[i].style.left = ''
         elNavTexts[i].style.display = ''
+        elFolders[i].style.borderRadius = ''
+        elFolders[i].style.width = ''
+        elFolders[i].style.height = ''
       }
       elInboxFolderContainer.style.width = ''
     }
